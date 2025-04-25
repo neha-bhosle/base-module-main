@@ -1,0 +1,284 @@
+#root {
+  width: 100%;
+  height: 100vh;
+  font-family: "inter";
+}
+
+::-webkit-scrollbar {
+  width: 7px !important;
+  color: #145da0 !important;
+}
+
+.react-calendar__navigation {
+  background-color: #eaf3fc;
+  border-top-left-radius: 17.51px;
+  border-top-right-radius: 17.51px;
+  height: auto !important;
+}
+
+.react-calendar__tile--active {
+  background: #145da0 !important;
+  color: #ffffff !important;
+}
+
+.react-calendar button {
+  border-radius: 50%;
+  width: 54px;
+  height: 77.89px;
+  padding: 0px 32px;
+}
+
+.react-calendar {
+  width: auto !important;
+  border: 1px solid #d2d2d2 !important;
+  color: #393939 !important;
+  border-radius: 17.51px;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.002em;
+  text-align: center;
+  height: 625px;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  width: 54px;
+  height: 58px;
+  color: #bcbcbc;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: #145da0 !important;
+  color: #ffffff;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #393939 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.react-calendar__navigation__next2-button {
+  display: none;
+}
+.react-calendar__navigation__prev2-button {
+  display: none;
+}
+
+.react-calendar__navigation__prev-98-button {
+  display: none;
+}
+.react-calendar__navigation button {
+  min-width: 75px !important;
+}
+.react-calendar__navigation__label {
+  pointer-events: none;
+  font-family: inter;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 29px;
+  letter-spacing: 0.0025em;
+  color: #0c3860;
+}
+
+.react-calendar__month-view__weekdays__weekday abbr[title] {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+  .sq-card-message-error,
+  .sq-visible::before,
+  .sq-card-message {
+    display: none;
+    visibility: hidden !important;
+  }
+}
+
+@media print {
+  .print-container {
+    padding: 20px;
+  }
+}
+
+.mat-mdc-fab {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.material-icons {
+  font-size: 19px !important;
+}
+
+.mat-icon {
+  height: auto !important;
+  width: auto !important;
+}
+
+main {
+  width: 47%;
+  margin: auto;
+  text-align: center;
+}
+
+@media (min-width: 3000px) {
+  main {
+    width: 60%;
+  }
+}
+
+@media (max-width: 856px) {
+  main {
+    width: 95%;
+  }
+}
+
+main #join-flow button {
+  margin-top: 20px;
+  background-color: #2d8cff;
+  color: #ffffff;
+  text-decoration: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: inline-block;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+main #join-flow button:hover {
+  background-color: #2681f2;
+}
+
+button[aria-label="End"],
+button[aria-label="Leave"],
+button[aria-label="Flip Video"] {
+  display: none;
+}
+
+.endButton {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #f44336;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect */
+.endButton:hover {
+  background-color: #d32f2f;
+}
+
+/* Active effect */
+.endButton:active {
+  background-color: #b71c1c;
+}
+
+.cdk-overlay-container {
+  z-index: 3000 !important;
+}
+
+.mat-mdc-progress-bar,
+.mat-mdc-slider {
+  width: 94% !important;
+}
+
+@media (max-width: 900px) {
+  .videocontrols {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: baseline !important;
+    min-width: 331px;
+    width: 55%;
+    flex: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .microphonecontrols,
+  .speakercontrols {
+    min-width: auto !important;
+    width: auto !important;
+    flex: 1;
+  }
+}
+
+@media print {
+  .print-section {
+    page-break-after: always;
+  }
+  /* Ensure content fits within the page */
+  * {
+    overflow: visible !important;
+  }
+}
+
+@media print {
+  .pageBreak {
+    page-break-before: always;
+    break-inside: avoid;
+  }
+
+  .avoidBlank {
+    page-break-inside: avoid;
+    padding: 10px;
+  }
+}
+
+.rbc-current-time-indicator {
+  height: 2px !important;
+  background-color: red !important;
+}
+
+.rbc-day-slot .rbc-event-content {
+  margin-top: -4px;
+}
+
+.rbc-timeslot-group {
+  min-height: 55px !important;
+}
+
+.rbc-event-label {
+  display: none !important;
+}
+
+.rbc-day-slot .rbc-event,
+.rbc-day-slot .rbc-background-event {
+  min-height: 18px !important;
+}
+
+/* Apply aliceblue to the first cell */
+.rbc-agenda-view .rbc-agenda-date-cell:nth-child(odd) {
+  background-color: aliceblue;
+}
+
+/* Apply rgb(86, 164, 233) to the even cells */
+.rbc-agenda-view .rbc-agenda-date-cell:nth-child(even) {
+  background-color: rgb(86, 164, 233);
+}
+
+.rbc-today {
+  background-color: #d8e5ee !important;
+}
+
+.rbc-agenda-time-cell{
+  color: white  !important;
+}
