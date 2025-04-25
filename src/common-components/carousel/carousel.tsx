@@ -1,7 +1,3 @@
-import React, { useEffect, useState } from "react";
-import loginScreen1 from "../../assets/images/login01.svg";
-import loginScreen2 from "../../assets/images/login02.svg";
-import loginScreen from "../../assets/images/login03.svg";
 import loginScreenStatic from "../../assets/images/loginScreenStatic.svg";
 import { carouselStyles } from "./widgets/carouselStyles";
 

@@ -21,8 +21,9 @@ const AuthLayout = (props: React.PropsWithChildren) => {
             flexDirection: "column",
             justifyContent: "center",
             paddingX: isMobile ? "5%" : "25%",
-            height: "100%"
-          }}>
+            height: "100%",
+          }}
+        >
           {props.children}
         </Box>
       </Grid>

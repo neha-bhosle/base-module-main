@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-escape */
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, Checkbox, Grid, Typography, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Grid,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -19,12 +26,16 @@ import { RootState } from "../../redux/store";
 import {
   getDataFromLocalStorage,
   removeDataFromLocalStorage,
-  saveToLocalStorage
+  saveToLocalStorage,
 } from "../../utils/localStorage";
 import { AlertSeverity } from "../alert/alert";
 import CustomInput from "../custom-input/customInput";
 import CustomLabel from "../customLabel/customLabel";
-import { forgotPassword, rememberMeStyles, filled } from "./widgets/loginStyles";
+import {
+  forgotPassword,
+  rememberMeStyles,
+  filled,
+} from "./widgets/loginStyles";
 
 function Login() {
   const isMobile = useMediaQuery("(max-width:399px)");
@@ -33,9 +44,11 @@ function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [loginData] = useState({
     username: "",
-    password: ""
+    password: "",
   });
-  const { data, status, error }: MyApiState = useSelector((state: RootState) => state.loginReducer);
+  const { data, status, error }: MyApiState = useSelector(
+    (state: RootState) => state.loginReducer
+  );
 
   useEffect(() => {
     switch (status) {
@@ -57,7 +70,7 @@ function Login() {
           snackbarAction.showSnackbarAction({
             isSnackbarOpen: true,
             severity: AlertSeverity.ERROR,
-            message: error
+            message: error,
           })
         );
         break;
@@ -69,7 +82,9 @@ function Login() {
   useEffect(() => {
     const creds = getDataFromLocalStorage("credential");
     if (creds) {
-      const creds: typeof loginData = JSON.parse(getDataFromLocalStorage("credential") || "{}");
+      const creds: typeof loginData = JSON.parse(
+        getDataFromLocalStorage("credential") || "{}"
+      );
       setValue("username", creds?.username);
       setValue("password", creds?.password);
       setRememberMe(true);
@@ -81,7 +96,7 @@ function Login() {
     formState: { errors },
     setValue,
     handleSubmit,
-    getValues
+    getValues,
   } = useForm({
     defaultValues: loginData,
     resolver: yupResolver(
@@ -91,13 +106,13 @@ function Login() {
           .required("Enter Email")
           .transform((value) => value?.toLowerCase())
           .matches(/^\w+([\.-]?\w+)*(\+\w+)?@\w+([\.-]?\w+)*(\.\w{2,})$/, {
-            message: "Please Enter a valid Email"
+            message: "Please Enter a valid Email",
           })
           .required("Please enter a valid Email")
           .max(255, "Email should be at most 255 characters"),
-        password: yup.string().required("Enter Password")
+        password: yup.string().required("Enter Password"),
       })
-    )
+    ),
   });
 
   const getRoleFromAccessToken = (accessToken: string): string => {
@@ -108,7 +123,7 @@ function Login() {
       "uma_authorization",
       "default-roles-qa",
       "default-roles-development",
-      "default-roles-prod"
+      "default-roles-prod",
     ]);
     const filteredRoles = roles.filter((item) => !ignoreSet.has(item));
     const role = filteredRoles[0];
@@ -136,7 +151,11 @@ function Login() {
         <img src={logo} width={isMobile ? "263px" : "inherit"} />
         <Grid mt={3} item xs={12}>
           <Box>
-            <CustomLabel label={loginConstants.EMAIL_ID} isRequired={false} isAuth={true} />
+            <CustomLabel
+              label={loginConstants.EMAIL_ID}
+              isRequired={false}
+              isAuth={true}
+            />
             <Controller
               control={control}
               name="username"
@@ -158,7 +177,11 @@ function Login() {
         </Grid>
         <Grid item xs={12}>
           <Box>
-            <CustomLabel label={loginConstants.PASSWORD} isRequired={false} isAuth={true} />
+            <CustomLabel
+              label={loginConstants.PASSWORD}
+              isRequired={false}
+              isAuth={true}
+            />
             <Controller
               control={control}
               name="password"
@@ -180,7 +203,8 @@ function Login() {
             alignItems={"center"}
             gap={1}
             mt={1.5}
-            justifyContent={"space-between"}>
+            justifyContent={"space-between"}
+          >
             <Box display={"flex"} alignItems={"center"} gap={1}>
               <Checkbox
                 onClick={handleRememberMe}
@@ -188,8 +212,8 @@ function Login() {
                 sx={{
                   padding: "0",
                   "& svg": {
-                    fontSize: "18px !important"
-                  }
+                    fontSize: "18px !important",
+                  },
                 }}
                 size="medium"
               />
@@ -198,7 +222,10 @@ function Login() {
               </Typography>
             </Box>
             <Box>
-              <Typography onClick={() => navigate("../forgot-password")} sx={forgotPassword}>
+              <Typography
+                onClick={() => navigate("../forgot-password")}
+                sx={forgotPassword}
+              >
                 {loginConstants.FORGOT_PASSWORD}
               </Typography>
             </Box>
