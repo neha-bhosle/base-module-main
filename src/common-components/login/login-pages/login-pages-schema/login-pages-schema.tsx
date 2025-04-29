@@ -7,7 +7,7 @@ export const EnterOtpSchema = yup.object().shape({
     .required("Enter Email")
     .transform((value) => value?.toLowerCase())
     .matches(/^\w+([\.-]?\w+)*(\+\w+)?@\w+([\.-]?\w+)*(\.\w{2,})$/, {
-      message: "Please Enter a valid Email",
+      message: loginConstants.ENTER_VALID,
     })
     .required(loginConstants.ENTER_VALID)
     .max(255, "Email should be at most 255 characters"),
