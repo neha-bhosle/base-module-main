@@ -10,7 +10,17 @@
     "build:qa": "vite build --mode qa",
     "build:prod": "vite build --mode production",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky install",
+    "eslint:clear": "eslint --clear-cache"
+  },  "lint-staged": {
+    "*.{css,scss}": [
+      "npx prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "npx prettier --write"
+    ]
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -50,6 +60,7 @@
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react-swc": "^3.9.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
