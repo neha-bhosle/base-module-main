@@ -1,25 +1,24 @@
 export const rememberMeStyles = {
   color: "#8F8F8F",
-  fontFamily: "Inter",
+  fontFamily: "Figtree",
   fontSize: "14px",
   fontStyle: "normal",
   fontWeight: 400,
   lineHeight: "150%",
   letterSpacing: "0.035px",
-  cursor: "pointer"
+  cursor: "pointer",
 };
 
 export const forgotPassword = {
   color: "var(--Primary-Brand, #145DA0)",
   textAlign: "right",
-  fontFamily: "Inter",
+  fontFamily: "Figtree",
   fontSize: "14px",
   fontStyle: "normal",
   fontWeight: 400,
   lineHeight: "150%",
   letterSpacing: "0.035px",
-  textDecorationLine: "underline",
-  cursor: "pointer"
+  cursor: "pointer",
 };
 
 export const errStyle = {
@@ -33,15 +32,15 @@ export const errStyle = {
   marginBottom: "0px",
   marginLeft: "0px",
   marginTop: "8px",
-  fontFamily: "Inter"
+  fontFamily: "Figtree",
 };
 
 export const filled = {
   borderRadius: "8px",
-  background: "var(--Primary-Brand, #145DA0)",
+  background: "var(--Primary-Brand, #0068FF)",
   color: "var(--Solid-White, var(--common-white-main, #FFF))",
   textAlign: "center",
-  fontFamily: "Inter",
+  fontFamily: "Figtree",
   fontSize: 14,
   fontStyle: "normal",
   fontWeight: 500,
@@ -51,6 +50,6 @@ export const filled = {
   textTransform: "inherit",
   height: "40px",
   "&:hover": {
-    backgroundColor: "var(--Primary-Brand, #1B5984)"
-  }
+    backgroundColor: "var(--Primary-Brand, #1B5984)",
+  },
 };

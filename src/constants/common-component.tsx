@@ -1,11 +1,17 @@
 export const loginConstants = {
-  ENTER_EMAIL: "Enter Your Email",
-  EMAIL_ID: "Email Id",
+  ENTER_EMAIL_OR_PHONE: "Enter Your Email ID / Phone Number",
+  EMAIL_ID_OR_PHONE: "Email ID / Phone Number",
+  // EMAIL_ID:"Enter",
   ENTER_PASSWORD: "Enter Password",
   PASSWORD: "Password",
   REMEMBER_ME: "Remember Me",
   FORGOT_PASSWORD: "Forgot Password",
+  OTP_VERIFICATION: "OTP Verification",
+  CHECK_CODE: "Check the code in invitation email of ",
+  EMAIL_DUMMY: "johndoe@example.com",
   SIGN_IN: "Sign In",
+  LOG_IN:"Log In",
+  SEND_VERIFICATION: "Send Verification Code",
   DOESNT_HAVE_ACCOUNT: "Doesn't have account?",
   SIGN_UP: "Sign Up",
   REQUEST_RESET: "Request Link",
@@ -24,13 +30,33 @@ export const loginConstants = {
   RESET_SUB_TEXT: "You can reset password to log in",
   SET_PASSWORD: "Set Password",
   SET_SUB_TEXT: "You can set password to log in",
-  ENTER_NEW_PASSWORD: "Enter new password"
+  ENTER_NEW_PASSWORD: "Enter new password",
+  ADDRESS_LINE_LOGIN_SCREEN: "205 Champion Way Suite 11 Georgetown KY 40324",
+  CONTACT_LOGIN_SCREEN: "(502) 603-0020",
+  LOG_IN_TO_ACC: "Log in to your account",
+  WELCOME_BACK: " Please enter your details.",
+  PRACTICE_EASY: "2025 Practice Easy",
+  SUPPORT: "Support",
+  PRIVACY: "Privacy",
+  COOKIE_SETTINGS: "Cookie Settings",
+  CONTACT_INFO: "Contact Info",
+  ENTER_TO_RECIEVE_CODE: "Please Enter our email to recieve verification code",
+  DIDNT_RECIEVER_CODE: "If you did't recieve the code? ",
+  RESEND: "Resend ",
+  TIME_OTP: "in 00:32",
+  VERIFY_OTP: "Verify OTP",
+  SET_NEW_PASSWORD: "Set New Password",
+  NEW_PASSWORD: "New Password",
+  CONFIRM_LOGIN: "Confirm & Login",
+  ENTER_CODE: "Enter Code",
+  ENTER_NEW_PASS:"Enter New Password",
+  PRACTICEEASILY:"PracticeEasily"
 };
 
 export const commonPublicRouteConstants = {
-  LOGIN: "/auth/login"
+  LOGIN: "/auth/login",
 };
 
 export const commonComponentConstant = {
-  BEARER: "Bearer"
+  BEARER: "Bearer",
 };

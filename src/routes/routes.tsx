@@ -1,10 +1,15 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
-import { LOGIN } from "src/models/routesConstant";
-import Login from "../common-components/login/login";
+import EnterOtp from "src/common-components/login/login-pages/enter-otp";
+import ForgotPassword from "src/common-components/login/login-pages/forgot-password";
+import SetPassword from "src/common-components/login/login-pages/set-password";
+import {
+  ENTER_OTP,
+  FORGOT_PASSWORD,
+  LOGIN,
+  SET_PASSWORD,
+} from "src/models/routesConstant";
+import Login from "../common-components/login/login-pages/login";
 import AuthLayout from "../layouts/auth-layout";
-import NotAuthorized from "../pages/error/not-authorized";
-import NotFound from "../pages/error/not-found";
-import PublicRoute from "./public-route";
 
 export const router = createBrowserRouter([
   { path: "", element: <Navigate to={"/auth/login"} /> },
@@ -12,20 +17,16 @@ export const router = createBrowserRouter([
     path: "/auth",
     element: (
       // <PublicRoute>
-        <AuthLayout>
-          <Outlet />
-        </AuthLayout>
+      <AuthLayout>
+        <Outlet />
+      </AuthLayout>
       // </PublicRoute>
     ),
-    children: [{ path: LOGIN, element: <Login /> }],
+    children: [
+      { path: LOGIN, element: <Login /> },
+      { path: FORGOT_PASSWORD, element: <ForgotPassword /> },
+      { path: ENTER_OTP, element: <EnterOtp /> },
+      { path: SET_PASSWORD, element: <SetPassword /> },
+    ],
   },
-
-  // {
-  //   path: NOT_AUTHORIZED,
-  //   element: <NotAuthorized />,
-  // },
-  // {
-  //   path: NOT_FOUND,
-  //   element: <NotFound />,
-  // },
 ]);

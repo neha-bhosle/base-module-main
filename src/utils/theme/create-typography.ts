@@ -14,104 +14,104 @@ interface ExtendedTypographyOptions extends TypographyOptions {
 
 export const createTypography = (): ExtendedTypographyOptions => {
   return {
-    fontFamily: '"Inter"',
+    fontFamily: '"Figtree"',
     caption: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "3.5rem ",
       fontWeight: 500,
       lineHeight: "120%",
-      letterSpacing: "0%"
+      letterSpacing: "0%",
     },
     h1: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "3rem ",
       fontWeight: 500,
       lineHeight: "120%",
-      letterSpacing: "0%"
+      letterSpacing: "0%",
     },
     h2: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "2.5rem ",
       fontWeight: 500,
       lineHeight: "120%",
-      letterSpacing: "0.5%"
+      letterSpacing: "0.5%",
     },
     h3: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "2rem ",
       fontWeight: 500,
       lineHeight: "120%",
-      letterSpacing: "0.25%"
+      letterSpacing: "0.25%",
     },
     subtitle1: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "2rem ",
       fontWeight: 500,
       lineHeight: "120%",
-      letterSpacing: "0%"
+      letterSpacing: "0%",
     },
     inputTitle: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "1rem ",
       fontWeight: 500,
       lineHeight: "120%",
-      letterSpacing: "0%"
+      letterSpacing: "0%",
     },
     body1: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "1.5rem ",
       fontWeight: 400,
       lineHeight: "150%",
-      letterSpacing: "1%"
+      letterSpacing: "1%",
     },
     body2: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "1.125rem ",
       fontWeight: 400,
       lineHeight: "150%",
-      letterSpacing: "0.8%"
+      letterSpacing: "0.8%",
     },
     h4: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "1rem",
       fontWeight: 400,
       lineHeight: "150%",
-      letterSpacing: "0.5%"
+      letterSpacing: "0.5%",
     },
     h5: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "0.875rem",
       fontWeight: 400,
       lineHeight: "150%",
-      letterSpacing: "0.25%"
+      letterSpacing: "0.25%",
     },
     h6: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "0.75rem",
       fontWeight: 400,
       lineHeight: "150%",
-      letterSpacing: "0.4%"
+      letterSpacing: "0.4%",
     },
     subtitle2: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "0.625rem",
       fontWeight: 400,
       lineHeight: "150%",
-      letterSpacing: "0.2%"
+      letterSpacing: "0.2%",
     },
     button: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "1.125rem",
       fontWeight: 400,
       lineHeight: "120%",
-      letterSpacing: "0.50%"
+      letterSpacing: "0.50%",
     },
     overline: {
-      fontFamily: '"Inter"',
+      fontFamily: '"Figtree"',
       fontSize: "1rem",
       fontWeight: 400,
       lineHeight: "120%",
-      letterSpacing: "0.25%"
-    }
+      letterSpacing: "0.25%",
+    },
   };
 };
