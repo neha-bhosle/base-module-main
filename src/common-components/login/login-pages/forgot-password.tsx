@@ -1,14 +1,12 @@
-import { Grid, Box, Button, Typography } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import CustomButton from "src/common-components/custom-button/custom-button";
 import { loginConstants } from "src/constants/common-component";
 import CustomInput from "../../custom-input/customInput";
 import CustomLabel from "../../customLabel/customLabel";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { filled } from "../widgets/loginStyles";
-import { useNavigate } from "react-router-dom";
-import CustomButton from "src/common-components/custom-button/custom-button";
 import { ForgotPasswordSchema } from "./login-pages-schema/login-pages-schema";
 
 const ForgotPassword = () => {

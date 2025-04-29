@@ -7,6 +7,7 @@ import { loginConstants } from "src/constants/common-component";
 import * as yup from "yup";
 import CustomInput from "../../custom-input/customInput";
 import CustomLabel from "../../customLabel/customLabel";
+import { SetPasswordSchema } from "./login-pages-schema/login-pages-schema";
 
 const SetPassword = () => {
   const navigate = useNavigate();
@@ -16,18 +17,7 @@ const SetPassword = () => {
     handleSubmit,
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(
-      yup.object().shape({
-        newPassword: yup
-          .string()
-          .required("Please enter your new password")
-          .min(6, "Password must be at least 6 characters"),
-        confirmPassword: yup
-          .string()
-          .required("Please confirm your password")
-          .oneOf([yup.ref("newPassword")], "Passwords must match"),
-      })
-    ),
+    resolver: yupResolver(SetPasswordSchema),
   });
 
   const onSubmit = (data: any) => {
