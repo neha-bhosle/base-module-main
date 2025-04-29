@@ -18,22 +18,24 @@ function CustomLabel(props: CustomFormLabelProps) {
       <Typography
         sx={{
           color: "var(--Grey-60, var(--Grey-60, #8F8F8F)) !important",
-          fontFamily: "Inter !important",
+          fontFamily: "Figtree !important",
           fontSize: isAuth ? "14px !important" : "12px !important",
           fontStyle: "normal !important",
           fontWeight: 500,
           lineHeight: "120% !important",
-          letterSpacing: "0.024"
+          letterSpacing: "0.024",
         }}
-        className={isAuth ? classes.authLabel : classes.headerLabel}>
+        className={isAuth ? classes.authLabel : classes.headerLabel}
+      >
         {label}
         {isRequired && (
           <span
             className={classes.required}
             style={{
               color: "red",
-              marginLeft: "0.2rem"
-            }}>
+              marginLeft: "0.2rem",
+            }}
+          >
             *
           </span>
         )}
@@ -43,7 +45,7 @@ function CustomLabel(props: CustomFormLabelProps) {
 }
 
 CustomLabel.propTypes = {
-  label: PropTypes.string
+  label: PropTypes.string,
 };
 
 export default CustomLabel;

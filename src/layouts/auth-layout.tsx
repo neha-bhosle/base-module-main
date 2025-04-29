@@ -1,7 +1,9 @@
-import { Box, Grid, useMediaQuery } from "@mui/material";
-import { theme } from "../utils/theme";
-import Carousel from "../common-components/carousel/carousel";
+import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
+import { loginConstants } from "src/constants/common-component";
+import logo from "../assets/images/favicon.png";
+import Carousel from "../common-components/carousel/carousel";
+import { theme } from "../utils/theme";
 
 const AuthLayout = (props: React.PropsWithChildren) => {
   const matchesTablet = useMediaQuery(theme.breakpoints.down("lg"));
@@ -10,21 +12,55 @@ const AuthLayout = (props: React.PropsWithChildren) => {
   return (
     <Grid container height={"100vh"} padding={"0"}>
       {!matchesTablet && (
-        <Grid item xs={5.4} height={"99%"}>
+        <Grid item xs={4} height={"100%"}>
           <Carousel />
         </Grid>
       )}
-      <Grid item xs={!matchesTablet ? 6.6 : 12}>
+      <Grid item xs={!matchesTablet ? 8 : 12}>
+        <Grid ml={"520px"} mt={11}>
+          {" "}
+          <img src={logo} width={isMobile ? "163px" : "160px"} />
+        </Grid>
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             paddingX: isMobile ? "5%" : "25%",
-            height: "100%"
-          }}>
+            height: "65%",
+          }}
+        >
           {props.children}
         </Box>
+        <Grid
+          display={"flex"}
+          flexDirection={"row"}
+          gap={1.5}
+          position="absolute"
+          bottom={25}
+          ml={isMobile ? 3 : 8}
+        >
+          <Grid>
+            <Typography variant="titleSmallMini" color={"#373D41"}>
+              {loginConstants.PRACTICE_EASY}
+            </Typography>
+          </Grid>
+          <Grid sx={{ cursor: "pointer" }}>
+            <Typography variant="titleSmallMini" color={"#74797B"}>
+              {loginConstants.SUPPORT}
+            </Typography>
+          </Grid>
+          <Grid sx={{ cursor: "pointer" }}>
+            <Typography variant="titleSmallMini" color={"#74797B"}>
+              {loginConstants.PRIVACY}
+            </Typography>
+          </Grid>
+          <Grid sx={{ cursor: "pointer" }}>
+            <Typography variant="titleSmallMini" color={"#74797B"}>
+              {loginConstants.COOKIE_SETTINGS}
+            </Typography>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );

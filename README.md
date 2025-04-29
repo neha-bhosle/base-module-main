@@ -1,5 +1,3 @@
-# HealthEHR Portal (Provider and Patient Portal)
-
 ## Available Scripts
 
 In the project directory, you can run:

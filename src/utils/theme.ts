@@ -44,6 +44,13 @@ declare module "@mui/material/Typography" {
     subtitleSemiBold: true;
     inputTitleMedium: true;
     inputTitleSemiBold: true;
+    titleSmallMiniBolder: true;
+    titleSmallMedium: true;
+    titleMediumBold: true;
+    titleSmallRegular: true;
+    titleSmallMini: true;
+    titleSmallRegularBolder: true;
+    titleSmallMediumBold:true
   }
 }
 interface ExtendedTypographyOptions extends TypographyOptions {
@@ -77,6 +84,13 @@ interface ExtendedTypographyOptions extends TypographyOptions {
   subtitleSemiBold: React.CSSProperties;
   inputTitleMedium: React.CSSProperties;
   inputTitleSemiBold: React.CSSProperties;
+  titleSmallMiniBolder: React.CSSProperties;
+  titleSmallMedium: React.CSSProperties;
+  titleMediumBold: React.CSSProperties;
+  titleSmallRegular: React.CSSProperties;
+  titleSmallMini: React.CSSProperties;
+  titleSmallRegularBolder: React.CSSProperties;
+  titleSmallMediumBold:React.CSSProperties
 }
 
 // Typescript module augmentation
@@ -96,16 +110,16 @@ declare module "@mui/material/styles" {
 
 const palette = {
   primary: {
-    main: "#35599D",
-    light: "#486CB1"
+    main: "#0068FF",
+    light: "#486CB1",
   },
   secondary: {
-    main: "#fff"
+    main: "#fff",
   },
   background: {
-    default: "#DDDDDD"
+    default: "#DDDDDD",
   },
-  common: { white: "#FFF" }
+  common: { white: "#FFF" },
 };
 
 export const theme = createTheme({
@@ -118,263 +132,319 @@ export const theme = createTheme({
       lg1: 1366, // Large devices (desktops)
       xl: 1440, // Extra large devices (large desktops)
       xl1: 1536, // Large devices (desktops)
-      xxl: 1920 // Extra extra large devices (large desktops)
-    }
+      xxl: 1920, // Extra extra large devices (large desktops)
+    },
   },
   palette: {
     primary: {
       main: palette.primary.main,
-      light: palette.primary.light
+      light: palette.primary.light,
     },
     secondary: {
-      main: palette.secondary.main
+      main: palette.secondary.main,
     },
     background: {
-      default: palette.background.default
-    }
+      default: palette.background.default,
+    },
   },
   typography: {
     fontFamily: "",
     bodyRegular1: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "24px",
       fontWeight: 400,
       lineHeight: "36px",
       letterSpacing: "0.01em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodyRegular2: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "18px",
       fontWeight: 400,
       lineHeight: "27px",
       letterSpacing: "0.008em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodyRegular3: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "16px",
       fontWeight: 400,
       lineHeight: "26px",
       letterSpacing: "0.005em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodyRegular4: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "14px",
       fontWeight: 400,
       lineHeight: "21px",
       letterSpacing: "0.0025em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodyRegular5: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "12px",
       fontWeight: 400,
       lineHeight: "18px",
       letterSpacing: "0.004em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodyRegular6: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "10px",
       fontWeight: 400,
       lineHeight: "15px",
       letterSpacing: "0.004em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodyMedium1: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "24px",
       fontWeight: 500,
       lineHeight: "36px",
       letterSpacing: "0.01em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodyMedium2: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "18px",
       fontWeight: 500,
       lineHeight: "27px",
       letterSpacing: "0.008em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodyMedium3: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "16px",
       fontWeight: 500,
       lineHeight: "24px",
       letterSpacing: "0.005em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodyMedium4: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "14px",
       fontWeight: 500,
       lineHeight: "21px",
       letterSpacing: "0.0025em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodyMedium5: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "12px",
       fontWeight: 500,
       lineHeight: "18px",
       letterSpacing: "0.004em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodyMedium6: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "10px",
       fontWeight: 500,
       lineHeight: "15px",
       letterSpacing: "0.004em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodySemiBold1: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "24px",
       fontWeight: 600,
       lineHeight: "36px",
       letterSpacing: "0.01em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodySemiBold2: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "18px",
       fontWeight: 600,
       lineHeight: "27px",
       letterSpacing: "0.008em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodySemiBold3: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "16px",
       fontWeight: 600,
       lineHeight: "24px",
       letterSpacing: "0.005em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodySemiBold4: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "14px",
       fontWeight: 600,
       lineHeight: "21px",
       letterSpacing: "0.0025em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodySemiBold5: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "12px",
       fontWeight: 600,
       lineHeight: "18px",
       letterSpacing: "0.004em",
-      textAlign: "left"
+      textAlign: "left",
     },
     bodySemiBold6: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "10px",
       fontWeight: 600,
       lineHeight: "15px",
       letterSpacing: "0.004em",
-      textAlign: "left"
+      textAlign: "left",
     },
     titleMedium: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "56px",
       fontWeight: 500,
       lineHeight: "67px",
       letterSpacing: "0em",
-      textAlign: "left"
+      textAlign: "left",
     },
     titleSemiBold: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "56px",
       fontWeight: 600,
       lineHeight: "67px",
       letterSpacing: "0em",
-      textAlign: "left"
+      textAlign: "left",
     },
     h1Medium: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "48px",
       fontWeight: 500,
       lineHeight: "58px",
       letterSpacing: "0em",
-      textAlign: "left"
+      textAlign: "left",
     },
     h1SemiBold: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "48px",
       fontWeight: 600,
       lineHeight: "58px",
       letterSpacing: "0em",
-      textAlign: "left"
+      textAlign: "left",
     },
     h2Medium: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "40px",
       fontWeight: 500,
       lineHeight: "48px",
       letterSpacing: "0.005em",
-      textAlign: "left"
+      textAlign: "left",
     },
     h2SemiBold: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "40px",
       fontWeight: 600,
       lineHeight: "48px",
       letterSpacing: "0.005em",
-      textAlign: "left"
+      textAlign: "left",
     },
     h3Medium: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "32px",
       fontWeight: 500,
       lineHeight: "38px",
       letterSpacing: "0.0025em",
-      textAlign: "left"
+      textAlign: "left",
     },
     h3SemiBold: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "32px",
       fontWeight: 600,
       lineHeight: "38px",
       letterSpacing: "0.0025em",
-      textAlign: "left"
+      textAlign: "left",
     },
     subtitleMedium: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "24px",
       fontWeight: 500,
       lineHeight: "29px",
       letterSpacing: "0em",
-      textAlign: "left"
+      textAlign: "left",
     },
     subtitleSemiBold: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "24px",
       fontWeight: 600,
       lineHeight: "29px",
       letterSpacing: "0em",
-      textAlign: "left"
+      textAlign: "left",
     },
     inputTitleMedium: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "16px",
       fontWeight: 500,
       lineHeight: "19px",
       letterSpacing: "0em",
-      textAlign: "left"
+      textAlign: "left",
     },
     inputTitleSemiBold: {
-      fontFamily: "Inter",
+      fontFamily: "Figtree",
       fontSize: "16px",
       fontWeight: 600,
       lineHeight: "19px",
       letterSpacing: "0em",
-      textAlign: "left"
-    }
+      textAlign: "left",
+    },
+    titleMediumBold: {
+      fontFamily: "Figtree",
+      fontSize: "28px",
+      fontWeight: 500,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+    },
+    titleSmallRegular: {
+      fontFamily: "Figtree",
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+    },
+    titleSmallRegularBolder: {
+      fontFamily: "Figtree",
+      fontSize: "16px",
+      fontWeight: 600,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+    },
+    titleSmallMedium: {
+      fontFamily: "Figtree",
+      fontSize: "16px",
+      fontWeight: 400,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+    },
+    titleSmallMediumBold:{
+      fontFamily: "Figtree",
+      fontSize: "16px",
+      fontWeight: 500,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+    },
+    titleSmallMini: {
+      fontFamily: "Figtree",
+      fontSize: "12px",
+      fontWeight: 400,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+    },
+    titleSmallMiniBolder: {
+      fontFamily: "Figtree",
+      fontSize: "12px",
+      fontWeight: 500,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+    },
   } as ExtendedTypographyOptions,
   components: {
     MuiTypography: {
@@ -383,8 +453,8 @@ export const theme = createTheme({
           // color: "black"
           // "&.MuiTypography-body1": {
           // }
-        }
-      }
+        },
+      },
     },
     MuiButton: {
       styleOverrides: {
@@ -393,11 +463,11 @@ export const theme = createTheme({
           "&.MuiButton-containedPrimary": {
             boxShadow: "none",
             "&:hover": {
-              backgroundColor: palette.primary.light
-            }
-          }
-        }
-      }
+              backgroundColor: palette.primary.light,
+            },
+          },
+        },
+      },
     },
     MuiPaginationItem: {
       styleOverrides: {
@@ -407,30 +477,30 @@ export const theme = createTheme({
             backgroundColor: palette.primary.main,
             color: "white",
             "&:hover": {
-              backgroundColor: palette.primary.light
-            }
-          }
-        }
-      }
+              backgroundColor: palette.primary.light,
+            },
+          },
+        },
+      },
     },
     MuiPaper: {
       styleOverrides: {
         root: {
           "&.MuiMenu-paper": {
             boxShadow: "none",
-            border: ".8px solid lightgrey"
-          }
-        }
-      }
+            border: ".8px solid lightgrey",
+          },
+        },
+      },
     },
     MuiCheckbox: {
       styleOverrides: {
         root: {
           "& .MuiSvgIcon-root": {
-            fontSize: "14px"
-          }
-        }
-      }
-    }
-  }
+            fontSize: "14px",
+          },
+        },
+      },
+    },
+  },
 });
