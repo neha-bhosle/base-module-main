@@ -6,14 +6,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --mode development",
-    "build:qa": "vite build --mode qa",
-    "build:prod": "vite build --mode production",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "build": "tsc -b && vite build --mode development",
+    "build:qa": "tsc && vite build --mode qa",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "prepare": "husky install",
     "eslint:clear": "eslint --clear-cache"
-  },  "lint-staged": {
+  },
+  "lint-staged": {
     "*.{css,scss}": [
       "npx prettier --write"
     ],
