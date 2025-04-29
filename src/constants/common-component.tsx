@@ -50,8 +50,11 @@ export const loginConstants = {
   CONFIRM_LOGIN: "Confirm & Login",
   ENTER_CODE: "Enter Code",
   ENTER_NEW_PASS:"Enter New Password",
-  PRACTICEEASILY:"PracticeEasily"
+  PRACTICEEASILY:"PracticeEasily",
+  ENTER_VALID:"Please Enter a valid Email"
 };
+
+
 
 export const commonPublicRouteConstants = {
   LOGIN: "/auth/login",
