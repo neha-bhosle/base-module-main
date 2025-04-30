@@ -1,71 +1,51 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-escape */
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Grid, Typography, useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Grid, Typography } from "@mui/material";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import CustomButton from "src/common-components/custom-button/custom-button";
-import { loginConstants } from "src/constants/common-component";
-import { theme } from "src/utils/theme";
+import CustomButton from "../../../common-components/custom-button/custom-button";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginConstants } from "../../../constants/common-component";
 import { login } from "../../../redux/auth/loginReducer";
-import {
-  getDataFromLocalStorage,
-  saveToLocalStorage,
-} from "../../../utils/localStorage";
+import { theme } from "../../../utils/theme";
 import CustomInput from "../../custom-input/customInput";
 import CustomLabel from "../../customLabel/customLabel";
 import { forgotPassword } from "../widgets/loginStyles";
 import { LoginpageSchema } from "./login-pages-schema/login-pages-schema";
 
+interface LoginForm {
+  username: string;
+  password: string;
+}
+
 function Login() {
-  const isMobile = useMediaQuery("(max-width:399px)");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [rememberMe, setRememberMe] = useState(false);
-  const [loginData] = useState({
+  const [loginData] = useState<LoginForm>({
     username: "",
     password: "",
   });
-
-  useEffect(() => {
-    const creds = getDataFromLocalStorage("credential");
-    if (creds) {
-      const creds: typeof loginData = JSON.parse(
-        getDataFromLocalStorage("credential") || "{}"
-      );
-      setValue("username", creds?.username);
-      setValue("password", creds?.password);
-      setRememberMe(true);
-    }
-  }, []);
 
   const {
     control,
     formState: { errors },
     setValue,
     handleSubmit,
-    getValues,
-  } = useForm({
+  } = useForm<LoginForm>({
     defaultValues: loginData,
     resolver: yupResolver(LoginpageSchema),
   });
 
-  const onSubmit = (values: { username: string; password: string }) => {
+  const onSubmit = (values: LoginForm) => {
     dispatch(login(values) as any);
-
-    if (rememberMe) saveToLocalStorage("credential", getValues());
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3} width={"29vw"} ml={3} mb={3}>
-        <Grid
-          display={"flex"}
-          flexDirection={"column"}
-          ml={3}
-        >
+        <Grid display={"flex"} flexDirection={"column"} ml={3}>
           <Grid>
             <Typography variant="titleMediumBold">
               {loginConstants.LOG_IN_TO_ACC}
@@ -150,6 +130,7 @@ function Login() {
             label={loginConstants.CONFIRM_LOGIN}
             variant="filled"
             fullWidth
+            onClick={() => navigate("/admin/profile-tabs")}
           />
         </Grid>
       </Grid>

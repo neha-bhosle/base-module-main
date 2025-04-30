@@ -3,8 +3,8 @@ import { Grid, Typography } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import CustomButton from "src/common-components/custom-button/custom-button";
-import { loginConstants } from "src/constants/common-component";
+import CustomButton from "../../custom-button/custom-button";
+import { loginConstants } from "../../../constants/common-component";
 import CustomInput from "../../custom-input/customInput";
 import CustomLabel from "../../customLabel/customLabel";
 import { ForgotPasswordSchema } from "./login-pages-schema/login-pages-schema";
@@ -23,10 +23,6 @@ const ForgotPassword = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = () => {
-    navigate("../enter-opt");
-  };
-
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
     setValue("email", value);
@@ -35,6 +31,10 @@ const ForgotPassword = () => {
     if (value) {
       clearErrors("email");
     }
+  };
+
+  const onSubmit = () => {
+    navigate("../enter-opt");
   };
 
   return (
@@ -47,22 +47,14 @@ const ForgotPassword = () => {
         width={"29vw"}
         ml={9}
       >
-        <Grid
-          display={"flex"}
-          flexDirection={"column"}
-          mb={4}
-          width={"29vw"}
-        >
+        <Grid display={"flex"} flexDirection={"column"} mb={4} width={"29vw"}>
           <Grid mb={1}>
             <Typography variant="titleMediumBold">
               {loginConstants.FORGOT_PASSWORD}
             </Typography>
           </Grid>
           <Grid>
-            <Typography
-              variant="titleSmallRegular"
-              color={"#74797B"}
-            >
+            <Typography variant="titleSmallRegular" color={"#74797B"}>
               {loginConstants.WELCOME_BACK}
             </Typography>
           </Grid>

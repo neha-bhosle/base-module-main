@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import { customLabelStyles } from "./widgets/customLabelstyles";
-import React from "react";
 
 interface CustomFormLabelProps {
   label: string;

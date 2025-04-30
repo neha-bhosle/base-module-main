@@ -25,7 +25,9 @@ export const Roles = {
   IT_SUPPORT: "IT_SUPPORT",
   QA_COMPLIANCE: "QA_COMPLIANCE",
   RESOLUTION_SPECIALIST: "RESOLUTION_SPECIALIST",
-  MA: "MA"
+  MA: "MA",
+  SUPERADMIN: "SUPER_ADMIN",
+  SUPPORT: "SUPPORT",
 };
 
 export const RolesPortalMap: StringMap = {
@@ -49,18 +51,30 @@ export const RolesPortalMap: StringMap = {
   ACCOUNTANT: "staff",
   IT_SUPPORT: "staff",
   QA_COMPLIANCE: "staff",
-  RESOLUTION_SPECIALIST: "provider"
+  RESOLUTION_SPECIALIST: "provider",
+  SUPER_ADMIN: "superAdmin",
+  SUPPORT: "support",
 };
 
 export const RoleType = {
   STAFF: "STAFF",
   PROVIDER: "PROVIDER",
-  PATIENT: "PATIENT"
+  PATIENT: "PATIENT",
+  SUPERADMIN: "SUPER_ADMIN",
+  SUPPORT: "SUPPORT",
+};
+
+export const RoleTypeLowerCase = {
+  STAFF: "staff",
+  PROVIDER: "provider",
+  PATIENT: "patient",
+  SUPERADMIN: "superAdmin",
+  ADMIN: "admin",
 };
 
 export const RolesOfUsers = [
   { key: Roles.FRONTDESK, value: "Front desk" },
   { key: Roles.BILLER, value: "Biller" },
   { key: Roles.ENB, value: Roles.ENB },
-  { key: Roles.PROVIDER_GROUP_ADMIN, value: "Super Admin" }
+  { key: Roles.PROVIDER_GROUP_ADMIN, value: "Super Admin" },
 ];
