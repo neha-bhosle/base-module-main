@@ -5,15 +5,35 @@ import { rolesTableHeaders } from "../../../../../common-components/headers/all-
 import { rolesMockData } from "../../../../../common-components/mock-data/all-mock-data";
 
 const Roles = () => {
-  const [tableData] = useState(rolesMockData);
+  const [tableData] = useState(
+    rolesMockData.map((row) => ({
+      ...row,
+      style: {
+        "& td": {
+          padding: "9px 16px", 
+        },
+        ...(Object.keys(row).length === 1 && {
+          backgroundColor: "#F4F4F4",
+          "& td": {
+            fontWeight: 500,
+            padding: "9px 16px",
+          },
+          "& td:not(:first-of-type)": {
+            display: "none",
+          },
+        }),
+      },
+    }))
+  );
 
   return (
     <Box sx={{ width: "100%" }}>
       <CustomisedTable
         headCells={rolesTableHeaders}
         tableData={tableData}
-        setHeight="auto"
+        setHeight="75vh"
         removeRadius={false}
+        showCPTAndICDPagination
       />
     </Box>
   );

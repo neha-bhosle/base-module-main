@@ -7,7 +7,7 @@ import { tabLabel, tabSx } from "../../../../../constants/sub-tabs-widgets";
 import CustomButton from "../../../../../common-components/custom-button/custom-button";
 import DrawerBS from "../../../../../common-components/drawer-bs/custom-drawer";
 import AddClinicianDialog from "./clinician/add-clinician-dialog";
-import AddStaffDialog from "./clinician/add-staff-dialog";
+import AddStaffDialog from "./staff/add-staff-dialog";
 import {
   UserTabs as UserTabsEnum,
   UserTabRoutes,

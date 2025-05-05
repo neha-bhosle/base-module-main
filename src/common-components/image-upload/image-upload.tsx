@@ -3,6 +3,7 @@ import { Box, ButtonBase, Typography } from "@mui/material";
 import React, { ChangeEvent, useRef, useState } from "react";
 import { commonComponentConstant } from "../../constants/common-component";
 import CustomDialog from "../custom-dialog/customDialog";
+import { mainStyle, iconStyle, updateFont, fontStyle } from "./image-upload-styles";
 
 interface UploadFileProps {
   customStyle: React.CSSProperties;
@@ -123,45 +124,11 @@ const UploadImage = (props: UploadFileProps) => {
     border: `1px solid #E7E7E7`,
   };
 
-  const iconStyle = {
-    width: "65%",
-    height: "65%",
-    color: "#707070",
-  };
-
-  const fontStyle = {
-    color: "var(--Grey-09, #393939)",
-    textAlign: "center",
-    fontFamily: "Figtree",
-    fontSize: "12px",
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: "normal",
-  };
-
-  const updateFont = {
-    color: "#707070",
-    fontFamily: "Figtree",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: "111%",
-    letterSpacing: "0.056px",
-    textDecoration: "underline",
-  };
 
   const parentStyle = {
     backgroundImage: `url(${image})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "100% 100%",
-  };
-
-  const mainStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: "8px",
-    justifyContent: "center",
-    alignItems: "center",
   };
 
   return (

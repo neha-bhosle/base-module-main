@@ -25,7 +25,7 @@ const Clinician = () => {
           page={page}
           pageSize={10}
           setPage={handlePageChange}
-          // showPagination={true}
+          showCPTAndICDPagination
           handleDelete={handleAction}
           setHeight="auto"
           removeRadius={false}

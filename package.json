@@ -1,8 +1,8 @@
 {
-  "name": "health-emr",
+  "name": "bright-care",
   "private": true,
   "version": "0.0.0",
-  "author": "health-emr",
+  "author": "bright-care",
   "type": "module",
   "scripts": {
     "dev": "vite",

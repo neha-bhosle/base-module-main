@@ -25,7 +25,7 @@ export const paginationButton = {
   justifyContent: "flex-end",
 
   "& .Mui-selected": {
-    color: "#145DA0 !important",
+    color: "#145DA0 !important",  
     background: "#F6FAFF !important",
   },
   "& .Mui-selected:hover": {
@@ -36,7 +36,7 @@ export const paginationButton = {
     textTransform: "inherit",
     borderRadius: "var(--1, 8px)",
     border: "1px solid var(--Grey-02, #F4F4F4)",
-    background: "var(--Solid-White, #FFF)",
+    // background: "var(--Solid-White, #FFF)",
     boxShadow: "0px 1px 2px 0px rgba(16, 24, 40, 0.05)",
     color: "#595F63",
   },

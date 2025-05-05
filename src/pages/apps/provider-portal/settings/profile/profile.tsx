@@ -3,8 +3,53 @@ import { practiceData } from "../../../../../common-components/mock-data/all-moc
 import doctorProfileImg from "../../../../../assets/images/hospital.jpg";
 import { ProfileTypographyVariants } from "../../../../../constants/typography-variants";
 import { ProfileFieldLabels } from "../../../../../constants/formConst";
+import { useEffect, useState } from "react";
+
+interface FieldData {
+  label: string;
+  value: string;
+}
 
 const Profile = () => {
+  const [leftColumnFields, setLeftColumnFields] = useState<FieldData[]>([]);
+  const [rightColumnFields, setRightColumnFields] = useState<FieldData[]>([]);
+
+  useEffect(() => {
+    setLeftColumnFields([
+      {
+        label: ProfileFieldLabels.CLINIC_NPI_NUMBER,
+        value: practiceData.clinicNPI,
+      },
+      {
+        label: ProfileFieldLabels.TAX_TYPE,
+        value: practiceData.taxType,
+      },
+      {
+        label: ProfileFieldLabels.TAX_NUMBER,
+        value: practiceData.taxNumber,
+      },
+      {
+        label: ProfileFieldLabels.CONTACT_NUMBER,
+        value: practiceData.contactNumber,
+      },
+    ]);
+
+    setRightColumnFields([
+      {
+        label: ProfileFieldLabels.EMAIL_ID,
+        value: practiceData.emailID,
+      },
+      {
+        label: ProfileFieldLabels.TAXONOMY_CODE,
+        value: practiceData.taxonomyCode,
+      },
+      {
+        label: ProfileFieldLabels.ADDRESS,
+        value: practiceData.address,
+      },
+    ]);
+  }, []);
+
   return (
     <Paper
       sx={{
@@ -53,96 +98,34 @@ const Profile = () => {
               flexDirection={"column"}
               gap={2.5}
             >
-              <Grid display={"flex"} flexDirection={"row"} gap={5}>
-                <Grid xs={6}>
-                  <Typography
-                    variant={ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY}
-                  >
-                    {ProfileFieldLabels.CLINIC_NPI_NUMBER}
-                  </Typography>
+              {leftColumnFields.map((field, index) => (
+                <Grid
+                  key={index}
+                  display={"flex"}
+                  flexDirection={"row"}
+                  gap={5}
+                  width={"100%"}
+                >
+                  <Grid xs={6}>
+                    <Typography
+                      variant={
+                        ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY
+                      }
+                    >
+                      {field.label}
+                    </Typography>
+                  </Grid>
+                  <Grid xs={6}>
+                    <Typography
+                      variant={
+                        ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY_LIGHT
+                      }
+                    >
+                      {field.value}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid xs={6}>
-                  <Typography
-                    variant={
-                      ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY_LIGHT
-                    }
-                  >
-                    {practiceData.clinicNPI}
-                  </Typography>
-                </Grid>
-              </Grid>
-
-              <Grid
-                display={"flex"}
-                flexDirection={"row"}
-                gap={5}
-                width={"100%"}
-              >
-                <Grid xs={6}>
-                  <Typography
-                    variant={ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY}
-                  >
-                    {ProfileFieldLabels.TAX_TYPE}
-                  </Typography>
-                </Grid>
-                <Grid xs={6}>
-                  <Typography
-                    variant={
-                      ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY_LIGHT
-                    }
-                  >
-                    {practiceData.taxType}
-                  </Typography>
-                </Grid>
-              </Grid>
-
-              <Grid
-                display={"flex"}
-                flexDirection={"row"}
-                gap={5}
-                width={"100%"}
-              >
-                <Grid xs={6}>
-                  <Typography
-                    variant={ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY}
-                  >
-                    {ProfileFieldLabels.TAX_NUMBER}
-                  </Typography>
-                </Grid>
-                <Grid xs={6}>
-                  <Typography
-                    variant={
-                      ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY_LIGHT
-                    }
-                  >
-                    {practiceData.taxNumber}
-                  </Typography>
-                </Grid>
-              </Grid>
-
-              <Grid
-                display={"flex"}
-                flexDirection={"row"}
-                gap={5}
-                width={"100%"}
-              >
-                <Grid xs={6}>
-                  <Typography
-                    variant={ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY}
-                  >
-                    {ProfileFieldLabels.CONTACT_NUMBER}
-                  </Typography>
-                </Grid>
-                <Grid xs={6}>
-                  <Typography
-                    variant={
-                      ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY_LIGHT
-                    }
-                  >
-                    {practiceData.contactNumber}
-                  </Typography>
-                </Grid>
-              </Grid>
+              ))}
             </Grid>
 
             <Grid
@@ -153,62 +136,33 @@ const Profile = () => {
               mt={2}
               ml={15}
             >
-              <Grid display={"flex"} flexDirection={"row"} gap={3}>
-                <Grid xs={2}>
-                  <Typography
-                    variant={ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY}
-                  >
-                    {ProfileFieldLabels.EMAIL_ID}
-                  </Typography>
+              {rightColumnFields.map((field, index) => (
+                <Grid
+                  key={index}
+                  display={"flex"}
+                  flexDirection={"row"}
+                  gap={2}
+                >
+                  <Grid xs={2}>
+                    <Typography
+                      variant={
+                        ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY
+                      }
+                    >
+                      {field.label}
+                    </Typography>
+                  </Grid>
+                  <Grid xs={10}>
+                    <Typography
+                      variant={
+                        ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY_LIGHT
+                      }
+                    >
+                      {field.value}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid xs={10}>
-                  <Typography
-                    variant={
-                      ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY_LIGHT
-                    }
-                  >
-                    {practiceData.emailID}
-                  </Typography>
-                </Grid>
-              </Grid>
-
-              <Grid display={"flex"} flexDirection={"row"} gap={2}>
-                <Grid xs={2}>
-                  <Typography
-                    variant={ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY}
-                  >
-                    {ProfileFieldLabels.TAXONOMY_CODE}
-                  </Typography>
-                </Grid>
-                <Grid xs={10}>
-                  <Typography
-                    variant={
-                      ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY_LIGHT
-                    }
-                  >
-                    {practiceData.taxonomyCode}
-                  </Typography>
-                </Grid>
-              </Grid>
-
-              <Grid display={"flex"} flexDirection={"row"} gap={2}>
-                <Grid xs={2}>
-                  <Typography
-                    variant={ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY}
-                  >
-                    {ProfileFieldLabels.ADDRESS}
-                  </Typography>
-                </Grid>
-                <Grid xs={10}>
-                  <Typography
-                    variant={
-                      ProfileTypographyVariants.TITLE_SMALL_PROFILE_GREY_LIGHT
-                    }
-                  >
-                    {practiceData.address}
-                  </Typography>
-                </Grid>
-              </Grid>
+              ))}
             </Grid>
           </Grid>
         </Grid>

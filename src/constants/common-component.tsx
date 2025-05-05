@@ -62,7 +62,7 @@ export const commonComponentConstant = {
   NO_RECORDS_FOUND: "No Records Found",
   NEXT: "Next",
   PREV: "Previous",
-  PER_PAGE: "Per Page",
+  PER_PAGE: "Rows Per Page:",
   REMOVE: "Remove",
   UPDATE: "Update",
   UPLOAD_YOUR_PHOTO: "Upload Your Photo",

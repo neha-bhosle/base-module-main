@@ -1,5 +1,4 @@
 import { Box, Grid } from "@mui/material";
-import { useState } from "react";
 import CustomInput from "../../../../../common-components/custom-input/customInput";
 import CustomSelect from "../../../../../common-components/custom-select/customSelect";
 import CustomLabel from "../../../../../common-components/customLabel/customLabel";
@@ -8,17 +7,29 @@ import {
   ContactFormLabels,
   ContactFormPlaceholders,
 } from "../../../../../constants/formConst";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ContactsSchema } from "./contacts-schema";
 
 const AddContactsDialog = () => {
-  const [contactType, setContactType] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [faxNumber, setFaxNumber] = useState("");
-  const [emailId, setEmailId] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zipCode, setZipCode] = useState("");
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      contactType: "",
+      fullName: "",
+      contactNumber: "",
+      faxNumber: "",
+      emailId: "",
+      address: "",
+      city: "",
+      state: "",
+      zipCode: "",
+    },
+    resolver: yupResolver(ContactsSchema),
+  });
 
   const contactTypeOptions = [
     { value: "emergency", label: "Emergency" },
@@ -37,144 +48,204 @@ const AddContactsDialog = () => {
     { value: "state2", label: "State 2" },
   ];
 
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <Box>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
-          <CustomLabel label={ContactFormLabels.CONTACT_TYPE} />
-          <CustomSelect
-            placeholder={ContactFormPlaceholders.SELECT_TYPE}
-            name="contactType"
-            value={contactType}
-            items={contactTypeOptions}
-            onChange={(e) => setContactType(e.target.value)}
-          />
-        </Grid>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <CustomLabel label={ContactFormLabels.CONTACT_TYPE} isRequired />
+            <Controller
+              control={control}
+              name="contactType"
+              render={({ field }) => (
+                <CustomSelect
+                  placeholder={ContactFormPlaceholders.SELECT_TYPE}
+                  {...field}
+                  value={field.value}
+                  items={contactTypeOptions}
+                  hasError={!!errors.contactType}
+                  errorMessage={errors.contactType?.message}
+                />
+              )}
+            />
+          </Grid>
 
-        <Grid item xs={12} md={6}>
-          <CustomLabel label={ContactFormLabels.FULL_NAME} />
-          <CustomInput
-            placeholder={ContactFormPlaceholders.ENTER_FULL_NAME}
-            name="fullName"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
-        </Grid>
+          <Grid item xs={12} md={6}>
+            <CustomLabel label={ContactFormLabels.FULL_NAME} isRequired />
+            <Controller
+              control={control}
+              name="fullName"
+              render={({ field }) => (
+                <CustomInput
+                  placeholder={ContactFormPlaceholders.ENTER_FULL_NAME}
+                  {...field}
+                  hasError={!!errors.fullName}
+                  errorMessage={errors.fullName?.message}
+                />
+              )}
+            />
+          </Grid>
 
-        <Grid item xs={12} md={4}>
-          <CustomLabel label={ContactFormLabels.CONTACT_NUMBER} />
-          <CustomInput
-            placeholder={ContactFormPlaceholders.ENTER_CONTACT_NUMBER}
-            name="contactNumber"
-            value={contactNumber}
-            onChange={(e) => setContactNumber(e.target.value)}
-          />
-        </Grid>
+          <Grid item xs={12} md={4}>
+            <CustomLabel label={ContactFormLabels.CONTACT_NUMBER} isRequired />
+            <Controller
+              control={control}
+              name="contactNumber"
+              render={({ field }) => (
+                <CustomInput
+                  placeholder={ContactFormPlaceholders.ENTER_CONTACT_NUMBER}
+                  {...field}
+                  hasError={!!errors.contactNumber}
+                  errorMessage={errors.contactNumber?.message}
+                />
+              )}
+            />
+          </Grid>
 
-        <Grid item xs={12} md={4}>
-          <CustomLabel label={ContactFormLabels.FAX_NUMBER} />
-          <CustomInput
-            placeholder={ContactFormPlaceholders.ENTER_FAX_NUMBER}
-            name="faxNumber"
-            value={faxNumber}
-            onChange={(e) => setFaxNumber(e.target.value)}
-          />
-        </Grid>
+          <Grid item xs={12} md={4}>
+            <CustomLabel label={ContactFormLabels.FAX_NUMBER} />
+            <Controller
+              control={control}
+              name="faxNumber"
+              render={({ field }) => (
+                <CustomInput
+                  placeholder={ContactFormPlaceholders.ENTER_FAX_NUMBER}
+                  {...field}
+                  hasError={!!errors.faxNumber}
+                  errorMessage={errors.faxNumber?.message}
+                />
+              )}
+            />
+          </Grid>
 
-        <Grid item xs={12} md={4}>
-          <CustomLabel label={ContactFormLabels.EMAIL_ID} />
-          <CustomInput
-            placeholder={ContactFormPlaceholders.ENTER_EMAIL_ID}
-            name="emailId"
-            value={emailId}
-            onChange={(e) => setEmailId(e.target.value)}
-          />
-        </Grid>
+          <Grid item xs={12} md={4}>
+            <CustomLabel label={ContactFormLabels.EMAIL_ID} isRequired />
+            <Controller
+              control={control}
+              name="emailId"
+              render={({ field }) => (
+                <CustomInput
+                  placeholder={ContactFormPlaceholders.ENTER_EMAIL_ID}
+                  {...field}
+                  hasError={!!errors.emailId}
+                  errorMessage={errors.emailId?.message}
+                />
+              )}
+            />
+          </Grid>
 
-        <Grid item xs={12}>
-          <CustomLabel label={ContactFormLabels.ADDRESS} />
-          <CustomInput
-            placeholder={ContactFormPlaceholders.ENTER_ADDRESS}
-            name="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </Grid>
+          <Grid item xs={12}>
+            <CustomLabel label={ContactFormLabels.ADDRESS} isRequired />
+            <Controller
+              control={control}
+              name="address"
+              render={({ field }) => (
+                <CustomInput
+                  placeholder={ContactFormPlaceholders.ENTER_ADDRESS}
+                  {...field}
+                  hasError={!!errors.address}
+                  errorMessage={errors.address?.message}
+                />
+              )}
+            />
+          </Grid>
 
-        <Grid item xs={12} md={4}>
-          <CustomLabel label={ContactFormLabels.CITY} />
-          <CustomSelect
-            placeholder={ContactFormPlaceholders.SELECT_CITY}
-            name="city"
-            value={city}
-            items={cityOptions}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </Grid>
+          <Grid item xs={12} md={4}>
+            <CustomLabel label={ContactFormLabels.CITY} isRequired />
+            <Controller
+              control={control}
+              name="city"
+              render={({ field }) => (
+                <CustomSelect
+                  placeholder={ContactFormPlaceholders.SELECT_CITY}
+                  {...field}
+                  value={field.value}
+                  items={cityOptions}
+                  hasError={!!errors.city}
+                  errorMessage={errors.city?.message}
+                />
+              )}
+            />
+          </Grid>
 
-        <Grid item xs={12} md={4}>
-          <CustomLabel label={ContactFormLabels.STATE} />
-          <CustomSelect
-            placeholder={ContactFormPlaceholders.SELECT_STATE}
-            name="state"
-            value={state}
-            items={stateOptions}
-            onChange={(e) => setState(e.target.value)}
-          />
-        </Grid>
+          <Grid item xs={12} md={4}>
+            <CustomLabel label={ContactFormLabels.STATE} isRequired />
+            <Controller
+              control={control}
+              name="state"
+              render={({ field }) => (
+                <CustomSelect
+                  placeholder={ContactFormPlaceholders.SELECT_STATE}
+                  {...field}
+                  value={field.value}
+                  items={stateOptions}
+                  hasError={!!errors.state}
+                  errorMessage={errors.state?.message}
+                />
+              )}
+            />
+          </Grid>
 
-        <Grid item xs={12} md={4}>
-          <CustomLabel label={ContactFormLabels.ZIP_CODE} />
-          <CustomInput
-            placeholder={ContactFormPlaceholders.ENTER_ZIP_CODE}
-            name="zipCode"
-            value={zipCode}
-            onChange={(e) => setZipCode(e.target.value)}
-          />
+          <Grid item xs={12} md={4}>
+            <CustomLabel label={ContactFormLabels.ZIP_CODE} isRequired />
+            <Controller
+              control={control}
+              name="zipCode"
+              render={({ field }) => (
+                <CustomInput
+                  placeholder={ContactFormPlaceholders.ENTER_ZIP_CODE}
+                  {...field}
+                  hasError={!!errors.zipCode}
+                  errorMessage={errors.zipCode?.message}
+                />
+              )}
+            />
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid
-        flexDirection={"row"}
-        justifyContent={"flex-end"}
-        mt={2}
-        sx={{
-          display: "flex",
-          position: "absolute",
-          bottom: "0",
-          right: "0",
-
-          width: "100%",
-          borderTop: "1px solid #E7E7E7",
-          paddingTop: 2,
-        }}
-      >
         <Grid
-          display="flex"
           flexDirection={"row"}
-          gap={3}
-          sx={{ marginBottom: "1.5vh", marginRight: "1.5vw" }}
+          justifyContent={"flex-end"}
+          mt={2}
+          sx={{
+            display: "flex",
+            position: "absolute",
+            bottom: "0",
+            right: "0",
+            width: "100%",
+            borderTop: "1px solid #E7E7E7",
+            paddingTop: 2,
+          }}
         >
-          <Grid>
-            <CustomButton
-              variant="outline"
-              label="Cancel"
-              isSubmitButton
-              changePadding={false}
-              // onClick={() => setAddLocationDialog(false)}
-            />
-          </Grid>
-          <Grid>
-            <CustomButton
-              variant="filled"
-              label="Save"
-              changePadding={false}
-              isSubmitButton
-
-              // onClick={() => setAddLocationDialog(true)}
-            />
+          <Grid
+            display="flex"
+            flexDirection={"row"}
+            gap={3}
+            sx={{ marginBottom: "1.5vh", marginRight: "1.5vw" }}
+          >
+            <Grid>
+              <CustomButton
+                variant="outline"
+                label="Cancel"
+                isSubmitButton={false}
+                changePadding={false}
+              />
+            </Grid>
+            <Grid>
+              <CustomButton
+                variant="filled"
+                label="Save"
+                type="submit"
+                changePadding={false}
+                isSubmitButton
+              />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </form>
     </Box>
   );
 };

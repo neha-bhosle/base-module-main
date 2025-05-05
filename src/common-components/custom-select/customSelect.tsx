@@ -1,6 +1,9 @@
 import { MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import { errorStyle } from "../custom-input/widgets/customInputStyles";
-import { customSelectStyles, selectInputStyle } from "./widgets/customSelectStyles";
+import {
+  customSelectStyles,
+  selectInputStyle,
+} from "./widgets/customSelectStyles";
 
 interface CustomSelectProps {
   placeholder: string;
@@ -12,6 +15,7 @@ interface CustomSelectProps {
   errorMessage?: string;
   isDisabled?: boolean;
   bgWhite?: boolean;
+  tablepagination?: boolean;
 }
 
 function CustomSelect(props: CustomSelectProps) {
@@ -20,7 +24,8 @@ function CustomSelect(props: CustomSelectProps) {
 
   const handleValue = (e: SelectChangeEvent<string>) => {
     const selectedLabel = e.target.value;
-    const selectedKey = props.items.find((item) => item.label === selectedLabel)?.value || "";
+    const selectedKey =
+      props.items.find((item) => item.label === selectedLabel)?.value || "";
     e.target.value = selectedKey;
 
     if (onChange) onChange(e);
@@ -34,7 +39,11 @@ function CustomSelect(props: CustomSelectProps) {
     <>
       <Select
         disabled={props.isDisabled && props.isDisabled}
-        sx={{ ...selectInputStyle, backgroundColor: bgWhite === true ? "inherit" : "inherit" }}
+        sx={{
+          ...selectInputStyle,
+          backgroundColor: bgWhite === true ? "inherit" : "inherit",
+          ...(props.tablepagination && { border: "none" }),
+        }}
         displayEmpty
         name={props?.name}
         value={getLabel(props.value)}
@@ -44,20 +53,26 @@ function CustomSelect(props: CustomSelectProps) {
           <Typography
             className={classes.headerLabel}
             sx={{
-              color: selected ? "black !important" : "a19a9a !important"
-            }}>
+              color: selected ? "black !important" : "a19a9a !important",
+            }}
+          >
             {selected || props?.placeholder}
           </Typography>
-        )}>
+        )}
+      >
         {props?.items && props?.items?.length !== 0 ? (
           props?.items?.map((option) => (
             <MenuItem key={option.value} value={option.label}>
-              <Typography className={classes.menuLabel}>{option.label}</Typography>
+              <Typography className={classes.menuLabel}>
+                {option.label}
+              </Typography>
             </MenuItem>
           ))
         ) : (
           <MenuItem value="">
-            <Typography className={classes.menuLabel}>No options available</Typography>
+            <Typography className={classes.menuLabel}>
+              No options available
+            </Typography>
           </MenuItem>
         )}
       </Select>

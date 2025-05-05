@@ -4,3 +4,10 @@ export const apiStatus = {
   FAILED: "failed" as string,
   IDLE: "idle" as string,
 };
+
+export const ViewMode = {
+  EDIT: "Edit",
+  VIEW: "View",
+  DELETE: "Delete",
+  RESCHEDULE: "Reschedule",
+};

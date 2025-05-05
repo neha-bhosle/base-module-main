@@ -90,14 +90,6 @@ export const contactMockData = [
 export const rolesMockData = [
   {
     description: "Patients",
-    descriptionStyle: { fontWeight: "500" },
-    isCategory: true,
-    uuid: "cat-patients",
-    superAdmin: undefined,
-    clinician: undefined,
-    staff: undefined,
-    client: undefined,
-    recordCustodian: undefined,
   },
   {
     description: "Create Edit View Patient",
@@ -128,14 +120,6 @@ export const rolesMockData = [
   },
   {
     description: "Appointments",
-    descriptionStyle: { fontWeight: "500" },
-    isCategory: true,
-    uuid: "cat-appointments",
-    superAdmin: undefined,
-    clinician: undefined,
-    staff: undefined,
-    client: undefined,
-    recordCustodian: undefined,
   },
   {
     description: "Create Appointments",
@@ -166,14 +150,6 @@ export const rolesMockData = [
   },
   {
     description: "Availability",
-    descriptionStyle: { fontWeight: "500" },
-    isCategory: true,
-    uuid: "cat-availability",
-    superAdmin: undefined,
-    clinician: undefined,
-    staff: undefined,
-    client: undefined,
-    recordCustodian: undefined,
   },
   {
     description: "Create Availability",
@@ -215,12 +191,6 @@ export const rolesMockData = [
   },
   {
     description: "Edit Intake Documents",
-    uuid: "edit-intake-documents",
-    superAdmin: false,
-    clinician: false,
-    staff: false,
-    client: false,
-    recordCustodian: false,
   },
 ];
 

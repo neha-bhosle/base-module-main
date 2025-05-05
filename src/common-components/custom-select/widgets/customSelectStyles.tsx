@@ -31,6 +31,7 @@ export const selectInputStyle = {
   "& .MuiSelect-select": {
     display: "flex",
     alignItems: "center",
+    padding: "0px 14px !important",
   },
   "&.Mui-error": {
     border: `1px solid ${theme.palette.warning.dark}`,

@@ -31,6 +31,7 @@ const Contact = () => {
           handleDelete={handleAction}
           setHeight="auto"
           removeRadius={false}
+          showCPTAndICDPagination
         />
       </Box>
     </>

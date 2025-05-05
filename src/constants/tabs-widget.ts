@@ -28,7 +28,7 @@ export const tabLabel = {
   padding: "8 24px",
   margin: "0 4px",
   height: "32px",
-  fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+  fontFamily: "Figtree",
   letterSpacing: "0.01em",
   lineHeight: "1.5",
   "&.Mui-selected": {

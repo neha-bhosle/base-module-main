@@ -4,11 +4,9 @@
 //u can use any because data can be in any format
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
-import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
-import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import {
   Avatar,
   Box,
@@ -27,7 +25,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { commonComponentConstant } from "../../constants/common-component";
-import { ViewMode } from "../../constants/formConst";
+import { ViewMode } from "../../models/apiStatus";
 import {
   getBackgroundByType,
   getColorByType,
@@ -74,15 +72,8 @@ interface CustomisedTableProps {
   handleNavigate?: (rowData: any) => void;
   handleReschedule?: (rowData: any) => void;
   handleCancel?: (rowData: any) => void;
-  handleCheckIn?: (rowData: any) => void;
   rowClick?: boolean;
   handleOpenIntake?: (rowData: any) => void;
-  handleVirtualConsultationNavigate?: (rowData: any) => void;
-  handleNoShow?: (rowData: any) => void;
-  handleOpenInvite?: (rowData: any) => void;
-  handleOpenReviewer?: (rowData: any) => void;
-  handleSendPaymentLink?: (rowData: any) => void;
-  handleApptUpdate?: (rowData: any) => void;
   removeRadius?: boolean;
   setPageDisplaySize?: (page: number) => void;
   handleSwitch?: (val: boolean, uuid: string) => void;
@@ -195,27 +186,8 @@ function CustomisedTable(props: CustomisedTableProps) {
       handleReschedule && handleReschedule(rowData);
     } else if (selectedItem.label === ViewMode.CANCEL) {
       handleCancel && handleCancel(rowData);
-    } else if (
-      selectedItem.label === ViewMode.CONNECT_TO_VIDEO ||
-      selectedItem.label === ViewMode.VIEW_NOTE
-    ) {
-      handleCheckIn && handleCheckIn(rowData);
-    } else if (selectedItem.label === ViewMode.NO_SHOW) {
-      handleNoShow && handleNoShow(rowData);
-    } else if (
-      selectedItem.label === ViewMode.CLOSER_NOTE ||
-      selectedItem.label === ViewMode.CONSULT_NOTE
-    ) {
-      handleVirtualConsultationNavigate &&
-        handleVirtualConsultationNavigate(rowData);
-    } else if (selectedItem.label === "Edit Visit Type") {
-      handleEditAppointmentType(rowData);
-    } else if (selectedItem.label === "Edit Service") {
-      handleEditService(rowData);
-    } else if (
-      selectedItem.label === ViewMode.VIEW_CLOSER_NOTE ||
-      selectedItem.label === ViewMode.VIEW_CONSULT_NOTE
-    ) {
+    }
+    {
       handleViewClinicalNotes && handleViewClinicalNotes(rowData);
     }
   };
@@ -528,7 +500,33 @@ function CustomisedTable(props: CustomisedTableProps) {
         </Grid>
       )}
       {showCPTAndICDPagination && (
-        <Grid container justifyContent="center" alignItems="center" mt={2}>
+        <Grid
+          container
+          justifyContent="flex-end"
+          alignItems="center"
+          mt={2}
+          gap={2}
+        >
+          <Grid item>
+            <Box display="flex" alignItems="center" width="auto" ml={2} gap={1}>
+              <Grid>
+                <Typography
+                  sx={{ ...tableHeadStyles, ml: 1, whiteSpace: "nowrap" }}
+                >
+                  {commonComponentConstant.PER_PAGE}
+                </Typography>
+              </Grid>
+              <Grid>
+                <CustomSelect
+                  placeholder=""
+                  value={pageDisplaySize}
+                  items={PaginationOptions}
+                  onChange={(e) => setPageDisplaySize(e.target.value)}
+                  tablepagination
+                />
+              </Grid>
+            </Box>
+          </Grid>
           <Grid item>
             <Pagination
               count={pageSize}
@@ -542,14 +540,12 @@ function CustomisedTable(props: CustomisedTableProps) {
                   components={{
                     previous: () => (
                       <>
-                        <ArrowBackIcon sx={backArrow} />
-                        {PREV}
+                        <KeyboardArrowLeftOutlinedIcon sx={backArrow} />
                       </>
                     ),
                     next: () => (
                       <>
-                        {NEXT}
-                        <ArrowForwardIcon sx={fordwardArrow} />
+                        <KeyboardArrowRightOutlinedIcon sx={fordwardArrow} />
                       </>
                     ),
                   }}
@@ -557,21 +553,6 @@ function CustomisedTable(props: CustomisedTableProps) {
               )}
               onChange={handleChange}
             />
-          </Grid>
-          <Grid item>
-            <Box display="flex" alignItems="center" width="auto" ml={2}>
-              <CustomSelect
-                placeholder="Size"
-                value={pageDisplaySize}
-                items={PaginationOptions}
-                onChange={(e) => setPageDisplaySize(e.target.value)}
-              />
-              <Typography
-                sx={{ ...tableHeadStyles, ml: 1, whiteSpace: "nowrap" }}
-              >
-                {commonComponentConstant.PER_PAGE}
-              </Typography>
-            </Box>
           </Grid>
         </Grid>
       )}
