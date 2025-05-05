@@ -16,7 +16,7 @@ import Contact from "../pages/apps/provider-portal/settings/contacts/contact";
 import Location from "../pages/apps/provider-portal/settings/location/location";
 import Profile from "../pages/apps/provider-portal/settings/profile/profile";
 import ProfileTabs from "../pages/apps/provider-portal/settings/settings-tabs";
-import Roles from "../pages/apps/provider-portal/settings/roles/roles";
+import Roles from "../pages/apps/provider-portal/settings/roles/roles-settings";
 import Clinician from "../pages/apps/provider-portal/settings/Users/clinician/clinician";
 import Staff from "../pages/apps/provider-portal/settings/Users/staff/staff";
 import UserTabs from "../pages/apps/provider-portal/settings/Users/user-tabs";

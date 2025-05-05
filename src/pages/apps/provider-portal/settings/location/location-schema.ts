@@ -12,8 +12,8 @@ export const LocationSchema = yup.object().shape({
     .email("Please enter a valid email address"),
   groupNpiNumber: yup
     .string()
-    .required("Group NPI number is required")
-    .matches(/^\d{10}$/, "Please enter a valid 10-digit NPI number"),
+    .matches(/^\d{10}$/, "Please enter a valid 10-digit NPI number")
+    .required("Group NPI number is required"),
   status: yup.string().optional(),
   fax: yup
     .string()

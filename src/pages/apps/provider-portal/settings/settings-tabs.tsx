@@ -61,7 +61,7 @@ export default function SettingsTab() {
         ml={1}
         mb={1}
       >
-        <Grid>
+        <Grid sx={{ cursor: "pointer" }}>
           <WestOutlinedIcon />
         </Grid>
         <Grid>

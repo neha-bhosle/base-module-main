@@ -55,9 +55,7 @@ const AddClinicianDialog = () => {
     { value: "clinician2", label: "Dr. Jane Smith" },
   ];
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
+  const onSubmit = () => {};
 
   return (
     <Box>
@@ -291,19 +289,13 @@ const AddClinicianDialog = () => {
             sx={{ marginBottom: "1.5vh", marginRight: "1.5vw" }}
           >
             <Grid>
-              <CustomButton
-                variant="outline"
-                label="Cancel"
-                isSubmitButton={false}
-                changePadding={false}
-              />
+              <CustomButton variant="outline" label="Cancel" isSubmitButton />
             </Grid>
             <Grid>
               <CustomButton
                 variant="filled"
                 label="Save"
                 type="submit"
-                changePadding={false}
                 isSubmitButton
               />
             </Grid>

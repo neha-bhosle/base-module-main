@@ -18,6 +18,8 @@ export const GetNavbarStyles = () => {
       cursor: "pointer",
       textTransform: "inherit",
       borderRadius: "0",
+      transition: "font-weight 0.2s ease",
+    
     },
     redIndicator: {
       background: "#F04438",

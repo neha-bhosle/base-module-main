@@ -18,7 +18,6 @@ export type NavItem = {
 
 interface NavBarProps {
   navBarData: NavItem[];
-
 }
 
 function NavbarV1(props: NavBarProps) {
@@ -30,7 +29,20 @@ function NavbarV1(props: NavBarProps) {
   const isNavbarChange = useMediaQuery("(max-width:561px)");
 
   const handleClick = (route: string) => {
-    if (route) navigate(`./${route}`);
+    if (route) {
+      const normalizedRoute = route.replace(/^\.?\//, "/");
+      navigate(normalizedRoute);
+    }
+  };
+
+  const isSelected = (item: NavItem) => {
+    if (!item.route) return false;
+
+    const currentPath = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
+    const itemRoute = item.route.replace(/^\/|\/$/g, "").toLowerCase();
+    const normalizedCurrentPath = currentPath.replace(/^admin\//, "");
+
+    return normalizedCurrentPath === itemRoute;
   };
 
   return (
@@ -53,6 +65,7 @@ function NavbarV1(props: NavBarProps) {
               {/* {isMobile && <SideDrawer data={navBarData} />} */}
               <img
                 src={
+                  // currentUserData?.providerGroup?.logo ||
                   logo
                 }
                 height={isNavbarChange ? "21px" : "30px"}
@@ -64,20 +77,18 @@ function NavbarV1(props: NavBarProps) {
                     item.type === "text" ? (
                       <Typography
                         key={item.label}
-                        sx={themeStyles.typo}
+                        sx={{
+                          ...themeStyles.typo,
+                          ...(isSelected(item) && {
+                            borderBottom: "2px solid blue",
+                            color: "#004FD9",
+                            backgroundColor: "#e3f2fd",
+                            fontWeight: 600,
+                            borderTopLeftRadius: "4px",
+                            borderTopRightRadius: "4px",
+                          }),
+                        }}
                         onClick={() => handleClick(item.route || "")}
-                        borderBottom={
-                          location.pathname
-                            .toLowerCase()
-                            .includes(item.route || "") ||
-                          location.pathname
-                            .toLowerCase()
-                            .includes(
-                              item.label.toLowerCase().replace(/\s/g, "")
-                            )
-                            ? "2px solid white"
-                            : undefined
-                        }
                       >
                         {item.label}
                       </Typography>
@@ -109,7 +120,6 @@ function NavbarV1(props: NavBarProps) {
                 display={"flex"}
                 flexDirection={"row"}
                 mr={1}
-                mt={1}
                 alignItems={"center"}
               >
                 <Grid>
@@ -135,7 +145,7 @@ function NavbarV1(props: NavBarProps) {
                 }
               />
               <Typography variant="titleSmallRegular" color="black">
-                John Doe
+                Joh Doe
               </Typography>
             </Grid>
           </Box>

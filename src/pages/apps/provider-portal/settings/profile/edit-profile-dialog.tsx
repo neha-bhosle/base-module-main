@@ -327,8 +327,10 @@ const EditProfileDialog = () => {
                     name="state"
                     render={({ field }) => (
                       <CustomSelect
-                        placeholder={SettingsFormPlaceholders.SELECT_TAX_TYPE}
+                        placeholder={SettingsFormPlaceholders.SELECT_STATE}
                         {...field}
+                        hasError={!!errors.state}
+                        errorMessage={errors.state?.message}
                         value={field.value}
                         items={[]}
                       />
@@ -383,7 +385,6 @@ const EditProfileDialog = () => {
                 variant="outline"
                 label="Cancel"
                 isSubmitButton
-                changePadding={false}
               />
             </Grid>
             <Grid>
@@ -391,7 +392,6 @@ const EditProfileDialog = () => {
                 variant="filled"
                 label="Save"
                 type="submit"
-                changePadding={false}
                 isSubmitButton
               />
             </Grid>

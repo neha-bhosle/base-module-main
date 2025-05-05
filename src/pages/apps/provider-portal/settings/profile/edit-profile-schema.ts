@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
 export const EditProfileSchema = yup.object().shape({
-  username: yup.string().required("Clinic name is required"),
-  clinicNpiNumber: yup.string().required("Clinic NPI number is required"),
+  username: yup.string().required("Name is required"),
+  clinicNpiNumber: yup.string().required("NPI number is required"),
   contactNumber: yup
     .string()
     .required("Contact number is required")
@@ -15,7 +15,7 @@ export const EditProfileSchema = yup.object().shape({
   taxType: yup.string().optional(),
   taxNumber: yup.string().optional(),
   taxonomy: yup.string().optional(),
-
+  
   addressLine1: yup.string().required("Address line 1 is required"),
   addressLine2: yup.string().optional(),
   city: yup.string().required("City is required"),
@@ -24,5 +24,4 @@ export const EditProfileSchema = yup.object().shape({
     .string()
     .required("Zip code is required")
     .matches(/^\d{5}(-\d{4})?$/, "Please enter a valid zip code"),
-
 });

@@ -23,12 +23,10 @@ const Staff = () => {
           headCells={staffTableHeaders}
           tableData={tableData}
           page={page}
-          pageSize={10}
           setPage={handlePageChange}
           showCPTAndICDPagination
           handleDelete={handleAction}
           setHeight="auto"
-          removeRadius={false}
         />
       </Box>
     </Grid>

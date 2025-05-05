@@ -168,12 +168,7 @@ const AddStaffDialog = () => {
             sx={{ marginBottom: "1.5vh", marginRight: "1.5vw" }}
           >
             <Grid>
-              <CustomButton
-                variant="outline"
-                label="Cancel"
-                isSubmitButton={false}
-                changePadding={false}
-              />
+              <CustomButton variant="outline" label="Cancel" isSubmitButton />
             </Grid>
             <Grid>
               <CustomButton

@@ -49,10 +49,19 @@ function CustomButton(props: CustomButtonProps) {
       baseStyle = transformTextNone;
     }
 
+    if (props.label === "Save") {
+      return {
+        ...baseStyle,
+        borderRadius: "3px",
+
+        padding: "12.5px 28px",
+      };
+    }
+
     if (props.isSubmitButton) {
       return {
         ...baseStyle,
-        borderRadius: "5px",
+        borderRadius: "3px",
         padding: "12.5px 20px",
       };
     }

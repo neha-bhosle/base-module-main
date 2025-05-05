@@ -81,7 +81,9 @@ const AddLocationDialog = () => {
                   name="locationName"
                   render={({ field }) => (
                     <CustomInput
-                      placeholder={LocationFormPlaceholders.ENTER_CLINIC_NAME}
+                      placeholder={
+                        LocationFormPlaceholders.ENTER_LOCATION_NAME
+                      }
                       {...field}
                       hasError={!!errors.locationName}
                       errorMessage={errors.locationName?.message}
@@ -310,8 +312,8 @@ const AddLocationDialog = () => {
               <CustomButton
                 variant="outline"
                 label="Cancel"
-                isSubmitButton={false}
-                changePadding={false}
+                isSubmitButton
+                // changePadding={false}
               />
             </Grid>
             <Grid>

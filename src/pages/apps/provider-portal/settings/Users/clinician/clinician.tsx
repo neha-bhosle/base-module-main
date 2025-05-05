@@ -23,7 +23,6 @@ const Clinician = () => {
           headCells={clinicianTableHeaders}
           tableData={tableData}
           page={page}
-          pageSize={10}
           setPage={handlePageChange}
           showCPTAndICDPagination
           handleDelete={handleAction}

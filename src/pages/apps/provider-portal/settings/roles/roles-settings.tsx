@@ -10,7 +10,7 @@ const Roles = () => {
       ...row,
       style: {
         "& td": {
-          padding: "9px 16px", 
+          padding: "9px 16px",
         },
         ...(Object.keys(row).length === 1 && {
           backgroundColor: "#F4F4F4",
@@ -19,7 +19,8 @@ const Roles = () => {
             padding: "9px 16px",
           },
           "& td:not(:first-of-type)": {
-            display: "none",
+            visibility: "hidden",
+            backgroundColor: "blue",
           },
         }),
       },

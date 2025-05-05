@@ -209,7 +209,7 @@ export enum LocationFormLabels {
 }
 
 export enum LocationFormPlaceholders {
-  ENTER_CLINIC_NAME = "Enter Clinic Name",
+  ENTER_LOCATION_NAME = "Enter Location Name",
   ENTER_CONTACT_NUMBER = "Enter Contact Number",
   ENTER_EMAIL_ID = "Enter Email ID",
   ENTER_GROUP_NPI_NUMBER = "Enter Group NPI Number",
