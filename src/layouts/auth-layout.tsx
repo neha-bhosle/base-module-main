@@ -1,6 +1,6 @@
 import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
-import { loginConstants } from "src/constants/common-component";
+import { loginConstants } from "../constants/common-component";
 import logo from "../assets/images/favicon.png";
 import Carousel from "../common-components/carousel/carousel";
 import { theme } from "../utils/theme";

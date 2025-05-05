@@ -1,7 +1,6 @@
-export enum UnsubscribeReason {
-  CONTENT_NOT_RELEVANT = "CONTENT_NOT_RELEVANT",
-  TOO_MANY_EMAILS = "TOO_MANY_EMAILS",
-  FOUND_ALTERNATIVE_SERVICES = "FOUND_ALTERNATIVE_SERVICES",
-  NO_LONGER_INTERESTED = "NO_LONGER_INTERESTED",
-  OTHER = "OTHER"
-}
+import { UnsubscribeReason } from "../constants/formConst";
+
+export type UnsubscribePayload = {
+  reason: UnsubscribeReason;
+  otherReason?: string;
+};

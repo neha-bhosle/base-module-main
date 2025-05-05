@@ -1,5 +1,5 @@
 export const mainLayoutStyles = {
   height: "100vh",
   overflowY: "hidden",
-  backgroundColor: "#fafafa"
+  backgroundColor: "#F4F4F4",
 };

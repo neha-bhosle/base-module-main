@@ -12,7 +12,7 @@ export interface verifyLinkState {
 const initialState: verifyLinkState = {
   data: null,
   status: "idle",
-  error: null
+  error: null,
 };
 
 export const verifyLink = createAsyncThunk(
@@ -36,7 +36,7 @@ const verifyLinkSlice = createSlice({
       state.data = null;
       state.status = "idle";
       state.error = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -51,7 +51,7 @@ const verifyLinkSlice = createSlice({
         state.status = apiStatus.FAILED;
         state.error = action.error.message ?? "An error occurred";
       });
-  }
+  },
 });
 
 const verifyLinkReducer = verifyLinkSlice.reducer;

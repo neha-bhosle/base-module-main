@@ -1,7 +1,7 @@
 import { Divider, Grid, Typography } from "@mui/material";
-import LocationIcon from "src/assets/Projectsvgs/apartmenticon";
-import Callicon from "src/assets/Projectsvgs/callicon";
-import { loginConstants } from "src/constants/common-component";
+import LocationIcon from "../../assets/Projectsvgs/apartmenticon";
+import Callicon from "../../assets/Projectsvgs/callicon";
+import { loginConstants } from "../../constants/common-component";
 
 function Carousel() {
   return (

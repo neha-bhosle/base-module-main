@@ -2,12 +2,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Grid, Typography } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import CustomButton from "src/common-components/custom-button/custom-button";
-import { loginConstants } from "src/constants/common-component";
-import * as yup from "yup";
+import CustomButton from "../../custom-button/custom-button";
+import { loginConstants } from "../../../constants/common-component";
 import CustomInput from "../../custom-input/customInput";
 import CustomLabel from "../../customLabel/customLabel";
 import { SetPasswordSchema } from "./login-pages-schema/login-pages-schema";
+
+interface SetPasswordForm {
+  newPassword: string;
+  confirmPassword: string;
+}
 
 const SetPassword = () => {
   const navigate = useNavigate();
@@ -15,12 +19,12 @@ const SetPassword = () => {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm({
+  } = useForm<SetPasswordForm>({
     mode: "onChange",
     resolver: yupResolver(SetPasswordSchema),
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = () => {
     navigate("../login");
   };
 

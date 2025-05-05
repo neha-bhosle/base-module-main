@@ -1,8 +1,7 @@
-import React from "react";
 import { CircularProgress, Grid } from "@mui/material";
-import { loaderContainer, circularProgress, circularProgress1 } from "./widgets/loaderStyles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { circularProgress, circularProgress1, loaderContainer } from "./widgets/loaderStyles";
 
 function Loader() {
   const { showLoader } = useSelector((state: RootState) => state.loaderReducer);

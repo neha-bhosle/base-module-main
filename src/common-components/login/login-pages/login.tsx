@@ -1,84 +1,66 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-escape */
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Grid, Typography, useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Grid, Typography, Box } from "@mui/material";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import CustomButton from "src/common-components/custom-button/custom-button";
-import { loginConstants } from "src/constants/common-component";
-import { theme } from "src/utils/theme";
+import CustomButton from "../../../common-components/custom-button/custom-button";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginConstants } from "../../../constants/common-component";
 import { login } from "../../../redux/auth/loginReducer";
-import {
-  getDataFromLocalStorage,
-  saveToLocalStorage,
-} from "../../../utils/localStorage";
+import { theme } from "../../../utils/theme";
 import CustomInput from "../../custom-input/customInput";
 import CustomLabel from "../../customLabel/customLabel";
 import { forgotPassword } from "../widgets/loginStyles";
 import { LoginpageSchema } from "./login-pages-schema/login-pages-schema";
 
+interface LoginForm {
+  username: string;
+  password: string;
+}
+
 function Login() {
-  const isMobile = useMediaQuery("(max-width:399px)");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [rememberMe, setRememberMe] = useState(false);
-  const [loginData] = useState({
+  const [loginData] = useState<LoginForm>({
     username: "",
     password: "",
   });
 
-  useEffect(() => {
-    const creds = getDataFromLocalStorage("credential");
-    if (creds) {
-      const creds: typeof loginData = JSON.parse(
-        getDataFromLocalStorage("credential") || "{}"
-      );
-      setValue("username", creds?.username);
-      setValue("password", creds?.password);
-      setRememberMe(true);
-    }
-  }, []);
-
   const {
     control,
     formState: { errors },
-    setValue,
     handleSubmit,
-    getValues,
-  } = useForm({
+    clearErrors,
+  } = useForm<LoginForm>({
     defaultValues: loginData,
     resolver: yupResolver(LoginpageSchema),
   });
 
-  const onSubmit = (values: { username: string; password: string }) => {
+  const onSubmit = (values: LoginForm) => {
     dispatch(login(values) as any);
-
-    if (rememberMe) saveToLocalStorage("credential", getValues());
+    navigate("/admin/profile-tabs");
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3} width={"29vw"} ml={3} mb={3}>
-        <Grid
-          display={"flex"}
-          flexDirection={"column"}
-          ml={3}
-        >
-          <Grid>
-            <Typography variant="titleMediumBold">
-              {loginConstants.LOG_IN_TO_ACC}
-            </Typography>
+    <Box maxWidth="500px" width="100%" margin="0 auto">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container flexDirection="column" spacing={3} padding={2}>
+          <Grid item>
+            <Grid container flexDirection="column">
+              <Typography variant="titleMediumBold">
+                {loginConstants.LOG_IN_TO_ACC}
+              </Typography>
+              <Grid mt={1}>
+                <Typography variant="titleSmallRegular" color={"#74797B"}>
+                  {loginConstants.WELCOME_BACK}
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid>
-            <Typography variant="titleSmallRegular" color={"#74797B"}>
-              {loginConstants.WELCOME_BACK}
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid mt={1} item xs={12} justifyContent={"center"}>
-          <Grid>
+
+          <Grid item>
             <CustomLabel
               label={loginConstants.EMAIL_ID_OR_PHONE}
               isRequired={false}
@@ -96,15 +78,20 @@ function Login() {
                   errorMessage={errors.username?.message}
                   isNumeric={false}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue("username", e.target.value.trim());
+                    const value = e.target.value.trim();
+                    field.onChange(value);
+                    const emailRegex =
+                      /^\w+([\.-]?\w+)*(\+\w+)?@\w+([\.-]?\w+)*(\.\w{2,})$/;
+                    if (emailRegex.test(value.toLowerCase())) {
+                      clearErrors("username");
+                    }
                   }}
                 />
               )}
             />
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid>
+
+          <Grid item>
             <CustomLabel
               label={loginConstants.PASSWORD}
               isRequired={false}
@@ -122,18 +109,30 @@ function Login() {
                   hasError={!!errors.password}
                   errorMessage={errors.password?.message}
                   isNumeric={false}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    const value = e.target.value;
+                    field.onChange(value);
+                    // Clear password error if it meets criteria
+                    const hasUpperCase = /[A-Z]/.test(value);
+                    const hasLowerCase = /[a-z]/.test(value);
+                    const hasNumber = /\d/.test(value);
+                    const hasSpecialChar = /[@$!%*?&]/.test(value);
+                    const isLongEnough = value.length >= 8;
+
+                    if (
+                      hasUpperCase &&
+                      hasLowerCase &&
+                      hasNumber &&
+                      hasSpecialChar &&
+                      isLongEnough
+                    ) {
+                      clearErrors("password");
+                    }
+                  }}
                 />
               )}
             />
-          </Grid>
-          <Grid
-            display={"flex"}
-            alignItems={"center"}
-            gap={1}
-            mt={2.5}
-            justifyContent={"flex-end"}
-          >
-            <Grid>
+            <Grid container justifyContent="flex-end" marginTop={2}>
               <Typography
                 onClick={() => navigate("../forgot-password")}
                 sx={forgotPassword}
@@ -144,16 +143,18 @@ function Login() {
               </Typography>
             </Grid>
           </Grid>
+
+          <Grid item marginTop={2}>
+            <CustomButton
+              label={loginConstants.CONFIRM_LOGIN}
+              variant="filled"
+              fullWidth
+              type="submit"
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12} mt={1.5}>
-          <CustomButton
-            label={loginConstants.CONFIRM_LOGIN}
-            variant="filled"
-            fullWidth
-          />
-        </Grid>
-      </Grid>
-    </form>
+      </form>
+    </Box>
   );
 }
 
