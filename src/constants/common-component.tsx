@@ -1,7 +1,6 @@
 export const loginConstants = {
   ENTER_EMAIL_OR_PHONE: "Enter Your Email ID / Phone Number",
   EMAIL_ID_OR_PHONE: "Email ID / Phone Number",
-  // EMAIL_ID:"Enter",
   ENTER_PASSWORD: "Enter Password",
   PASSWORD: "Password",
   REMEMBER_ME: "Remember Me",
@@ -10,7 +9,7 @@ export const loginConstants = {
   CHECK_CODE: "Check the code in invitation email of ",
   EMAIL_DUMMY: "johndoe@example.com",
   SIGN_IN: "Sign In",
-  LOG_IN:"Log In",
+  LOG_IN: "Log In",
   SEND_VERIFICATION: "Send Verification Code",
   DOESNT_HAVE_ACCOUNT: "Doesn't have account?",
   SIGN_UP: "Sign Up",
@@ -49,12 +48,10 @@ export const loginConstants = {
   NEW_PASSWORD: "New Password",
   CONFIRM_LOGIN: "Confirm & Login",
   ENTER_CODE: "Enter Code",
-  ENTER_NEW_PASS:"Enter New Password",
-  PRACTICEEASILY:"PracticeEasily",
-  ENTER_VALID:"Please Enter a valid Email"
+  ENTER_NEW_PASS: "Enter New Password",
+  PRACTICEEASILY: "PracticeEasily",
+  ENTER_VALID: "Please Enter a valid Email",
 };
-
-
 
 export const commonPublicRouteConstants = {
   LOGIN: "/auth/login",
@@ -62,4 +59,11 @@ export const commonPublicRouteConstants = {
 
 export const commonComponentConstant = {
   BEARER: "Bearer",
+  NO_RECORDS_FOUND: "No Records Found",
+  NEXT: "Next",
+  PREV: "Previous",
+  PER_PAGE: "Per Page",
+  REMOVE: "Remove",
+  UPDATE: "Update",
+  UPLOAD_YOUR_PHOTO: "Upload Your Photo",
 };

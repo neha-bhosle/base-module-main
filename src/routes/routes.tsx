@@ -1,4 +1,3 @@
-// import { Login } from "@mui/icons-material";
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import SetPassword from "../common-components/login/login-pages//set-password";
 import EnterOtpOne from "../common-components/login/login-pages/enter-otp1";
@@ -13,8 +12,14 @@ import {
   SET_PASSWORD,
 } from "../models/routesConstant";
 import { PROFILE_TABS } from "../models/routesConstant copy";
-import ProfileTabs from "../pages/apps/provider-portal/profile-tab/profile-tabs";
-// common-components/login/login-pages/login";
+import Contact from "../pages/apps/provider-portal/settings/contacts/contact";
+import Location from "../pages/apps/provider-portal/settings/location/location";
+import Profile from "../pages/apps/provider-portal/settings/profile/profile";
+import ProfileTabs from "../pages/apps/provider-portal/settings/settings-tabs";
+import Roles from "../pages/apps/provider-portal/settings/roles/roles";
+import Clinician from "../pages/apps/provider-portal/settings/Users/clinician/clinician";
+import Staff from "../pages/apps/provider-portal/settings/Users/staff/staff";
+import UserTabs from "../pages/apps/provider-portal/settings/Users/user-tabs";
 
 export const router = createBrowserRouter([
   { path: "", element: <Navigate to={"/auth/login"} /> },
@@ -43,6 +48,29 @@ export const router = createBrowserRouter([
       </MainLayout>
       // </PrivateRoute>
     ),
-    children: [{ path: PROFILE_TABS, element: <ProfileTabs /> }],
+    children: [
+      {
+        path: PROFILE_TABS,
+        element: <ProfileTabs />,
+        children: [
+          { path: "profile", element: <Profile /> },
+          {
+            path: "location",
+            element: <Location />,
+          },
+
+          {
+            path: "user",
+            element: <UserTabs />,
+            children: [
+              { path: "staff", element: <Staff /> },
+              { path: "clinician", element: <Clinician /> },
+            ],
+          },
+          { path: "roles", element: <Roles /> },
+          { path: "contact", element: <Contact /> },
+        ],
+      },
+    ],
   },
 ]);

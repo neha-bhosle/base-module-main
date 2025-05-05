@@ -4,22 +4,22 @@ import { theme } from "../../../utils/theme";
 export const customSelectStyles = makeStyles({
   headerLabel: {
     color: "#a19a9a ",
-    fontFamily: "Inter !important",
-    fontSize: "12px !important",
-    fontStyle: "normal !important",
-    fontWeight: 400,
-    lineHeight: "120% !important",
-    letterSpacing: "0.024px"
-  },
-  menuLabel: {
-    color: "black ",
-    fontFamily: "Inter !important",
+    fontFamily: "Figtree !important",
     fontSize: "14px !important",
     fontStyle: "normal !important",
     fontWeight: 400,
     lineHeight: "120% !important",
-    letterSpacing: "0.024px"
-  }
+    letterSpacing: "0.024px",
+  },
+  menuLabel: {
+    color: "black ",
+    fontFamily: "Figtree !important",
+    fontSize: "14px !important",
+    fontStyle: "normal !important",
+    fontWeight: 400,
+    lineHeight: "120% !important",
+    letterSpacing: "0.024px",
+  },
 });
 
 export const selectInputStyle = {
@@ -30,15 +30,15 @@ export const selectInputStyle = {
   borderRadius: "4px",
   "& .MuiSelect-select": {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   "&.Mui-error": {
     border: `1px solid ${theme.palette.warning.dark}`,
-    padding: "0px!important"
+    padding: "0px!important",
   },
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "rgba(228, 219, 233, 0.25)"
-  }
+    borderColor: "rgba(228, 219, 233, 0.25)",
+  },
 };
 
 export const someStyle = {
@@ -50,29 +50,29 @@ export const someStyle = {
   ".Mui-readOnly": {
     borderRadius: "4px",
     border: `1px solid ${theme.palette.grey[400]}`,
-    padding: "10px !important"
+    padding: "10px !important",
   },
   ".css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
     display: "flex",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 };
 
 export const fontStyleMultiSelect = {
   color: "black ",
-  fontFamily: "Inter !important",
-  fontSize: "12px !important",
+  fontFamily: "Figtree !important",
+  fontSize: "14px !important",
   fontStyle: "normal !important",
   fontWeight: 400,
   lineHeight: "120% !important",
   letterSpacing: "0.024px",
   "& .MuiTypography-root": {
     color: "black ",
-    fontFamily: "Inter !important",
-    fontSize: "12px !important",
+    fontFamily: "Figtree !important",
+    fontSize: "14px !important",
     fontStyle: "normal !important",
     fontWeight: 400,
     lineHeight: "120% !important",
-    letterSpacing: "0.024px"
-  }
+    letterSpacing: "0.024px",
+  },
 };

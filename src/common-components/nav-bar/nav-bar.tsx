@@ -18,6 +18,7 @@ export type NavItem = {
 
 interface NavBarProps {
   navBarData: NavItem[];
+
 }
 
 function NavbarV1(props: NavBarProps) {
@@ -52,7 +53,6 @@ function NavbarV1(props: NavBarProps) {
               {/* {isMobile && <SideDrawer data={navBarData} />} */}
               <img
                 src={
-                  // currentUserData?.providerGroup?.logo ||
                   logo
                 }
                 height={isNavbarChange ? "21px" : "30px"}
@@ -109,6 +109,7 @@ function NavbarV1(props: NavBarProps) {
                 display={"flex"}
                 flexDirection={"row"}
                 mr={1}
+                mt={1}
                 alignItems={"center"}
               >
                 <Grid>
@@ -134,7 +135,7 @@ function NavbarV1(props: NavBarProps) {
                 }
               />
               <Typography variant="titleSmallRegular" color="black">
-                Joh Doe
+                John Doe
               </Typography>
             </Grid>
           </Box>

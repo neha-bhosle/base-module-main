@@ -16,7 +16,7 @@ function CustomLabel(props: CustomFormLabelProps) {
     <Box mb={1}>
       <Typography
         sx={{
-          color: "var(--Grey-60, var(--Grey-60, #8F8F8F)) !important",
+          color: "var(--Grey-60, var(--Grey-60, #595F63)) !important",
           fontFamily: "Figtree !important",
           fontSize: isAuth ? "14px !important" : "12px !important",
           fontStyle: "normal !important",

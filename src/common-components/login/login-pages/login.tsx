@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-escape */
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -31,8 +31,8 @@ function Login() {
   const {
     control,
     formState: { errors },
-    setValue,
     handleSubmit,
+    clearErrors,
   } = useForm<LoginForm>({
     defaultValues: loginData,
     resolver: yupResolver(LoginpageSchema),
@@ -40,25 +40,27 @@ function Login() {
 
   const onSubmit = (values: LoginForm) => {
     dispatch(login(values) as any);
+    navigate("/admin/profile-tabs");
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3} width={"29vw"} ml={3} mb={3}>
-        <Grid display={"flex"} flexDirection={"column"} ml={3}>
-          <Grid>
-            <Typography variant="titleMediumBold">
-              {loginConstants.LOG_IN_TO_ACC}
-            </Typography>
+    <Box maxWidth="500px" width="100%" margin="0 auto">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container flexDirection="column" spacing={3} padding={2}>
+          <Grid item>
+            <Grid container flexDirection="column">
+              <Typography variant="titleMediumBold">
+                {loginConstants.LOG_IN_TO_ACC}
+              </Typography>
+              <Grid mt={1}>
+                <Typography variant="titleSmallRegular" color={"#74797B"}>
+                  {loginConstants.WELCOME_BACK}
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid>
-            <Typography variant="titleSmallRegular" color={"#74797B"}>
-              {loginConstants.WELCOME_BACK}
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid mt={1} item xs={12} justifyContent={"center"}>
-          <Grid>
+
+          <Grid item>
             <CustomLabel
               label={loginConstants.EMAIL_ID_OR_PHONE}
               isRequired={false}
@@ -76,15 +78,20 @@ function Login() {
                   errorMessage={errors.username?.message}
                   isNumeric={false}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue("username", e.target.value.trim());
+                    const value = e.target.value.trim();
+                    field.onChange(value);
+                    const emailRegex =
+                      /^\w+([\.-]?\w+)*(\+\w+)?@\w+([\.-]?\w+)*(\.\w{2,})$/;
+                    if (emailRegex.test(value.toLowerCase())) {
+                      clearErrors("username");
+                    }
                   }}
                 />
               )}
             />
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid>
+
+          <Grid item>
             <CustomLabel
               label={loginConstants.PASSWORD}
               isRequired={false}
@@ -102,18 +109,30 @@ function Login() {
                   hasError={!!errors.password}
                   errorMessage={errors.password?.message}
                   isNumeric={false}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    const value = e.target.value;
+                    field.onChange(value);
+                    // Clear password error if it meets criteria
+                    const hasUpperCase = /[A-Z]/.test(value);
+                    const hasLowerCase = /[a-z]/.test(value);
+                    const hasNumber = /\d/.test(value);
+                    const hasSpecialChar = /[@$!%*?&]/.test(value);
+                    const isLongEnough = value.length >= 8;
+
+                    if (
+                      hasUpperCase &&
+                      hasLowerCase &&
+                      hasNumber &&
+                      hasSpecialChar &&
+                      isLongEnough
+                    ) {
+                      clearErrors("password");
+                    }
+                  }}
                 />
               )}
             />
-          </Grid>
-          <Grid
-            display={"flex"}
-            alignItems={"center"}
-            gap={1}
-            mt={2.5}
-            justifyContent={"flex-end"}
-          >
-            <Grid>
+            <Grid container justifyContent="flex-end" marginTop={2}>
               <Typography
                 onClick={() => navigate("../forgot-password")}
                 sx={forgotPassword}
@@ -124,17 +143,18 @@ function Login() {
               </Typography>
             </Grid>
           </Grid>
+
+          <Grid item marginTop={2}>
+            <CustomButton
+              label={loginConstants.CONFIRM_LOGIN}
+              variant="filled"
+              fullWidth
+              type="submit"
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12} mt={1.5}>
-          <CustomButton
-            label={loginConstants.CONFIRM_LOGIN}
-            variant="filled"
-            fullWidth
-            onClick={() => navigate("/admin/profile-tabs")}
-          />
-        </Grid>
-      </Grid>
-    </form>
+      </form>
+    </Box>
   );
 }
 

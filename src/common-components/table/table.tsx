@@ -4,7 +4,11 @@
 //u can use any because data can be in any format
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import {
   Avatar,
   Box,
@@ -22,15 +26,15 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { ViewMode } from "src/models/apiStatus";
-// import {
-//   getBackgroundByType,
-//   getColorByType,
-//   statusLabels,
-// } from "src/models/chip";
-// import { PaginationOptions } from "src/models/pagination-options";
-import { AppointmentSettingType } from "src/models/providerGroup";
 import { commonComponentConstant } from "../../constants/common-component";
+import { ViewMode } from "../../constants/formConst";
+import {
+  getBackgroundByType,
+  getColorByType,
+  statusLabels,
+} from "../../models/chip";
+import { PaginationOptions } from "../../models/pagination-options";
+import { AppointmentSettingType } from "../../models/providerGroup";
 import ActionButton from "../action-button/action-button";
 import Chip from "../chip/chip";
 import { chipStyle } from "../chip/widgets/chipStyles";
@@ -43,7 +47,6 @@ import {
   tableBorder,
   tableHeadStyles,
 } from "./widgets/tablestyles";
-import { PaginationOptions } from "src/models/pagination-options";
 
 interface EnhancedTableProps {
   rowCount: number;
@@ -259,13 +262,14 @@ function CustomisedTable(props: CustomisedTableProps) {
                     sx={{
                       opacity: row.archive ? "50%" : "100%",
                       background: "white",
+                      ...(row.style || {}),
                     }}
                   >
                     {headCells.map((cell: unknown, index: number) =>
                       cell.type === "action" ? (
                         <TableCell
                           sx={tableBodyStyles}
-                          align="right"
+                          align="center"
                           key={index}
                         >
                           <ActionButton
@@ -277,13 +281,49 @@ function CustomisedTable(props: CustomisedTableProps) {
                         </TableCell>
                       ) : cell.type === "radio" ? (
                         <TableCell sx={tableBodyStyles} key={index}>
-                          <Switch
-                            checked={row[cell.id]}
-                            onChange={() =>
-                              handleSwitchChange(row[cell.id], row?.uuid)
-                            }
-                            inputProps={{ "aria-label": "controlled" }}
-                          />
+                          <Box
+                            display="flex"
+                            alignItems="center"
+                            bgcolor={"#F4F4F4"}
+                            borderRadius={"30px"}
+                            padding="2px 12px 2px 2px"
+                            width="fit-content"
+                            height={"28px"}
+                          >
+                            <Switch
+                              checked={row[cell.id]}
+                              onChange={() =>
+                                handleSwitchChange(row[cell.id], row?.uuid)
+                              }
+                              inputProps={{ "aria-label": "controlled" }}
+                              sx={{
+                                "& .MuiSwitch-switchBase": {
+                                  "&.Mui-checked": {
+                                    color: "black",
+                                    "& + .MuiSwitch-track": {
+                                      backgroundColor: "#7EEB83",
+                                      opacity: 1,
+                                    },
+                                  },
+                                },
+                                "& .MuiSwitch-thumb": {
+                                  backgroundColor: "#049B22",
+                                },
+                                "& .MuiSwitch-track": {
+                                  borderRadius: 22 / 2,
+                                  backgroundColor: "#7EEB83",
+                                },
+                              }}
+                            />
+                            {row[cell.id] && (
+                              <Typography
+                                variant="switchSmallBlack"
+                                // sx={{ color: "#049B22" }}
+                              >
+                                Active
+                              </Typography>
+                            )}
+                          </Box>
                         </TableCell>
                       ) : cell.type === "chip" ? (
                         <TableCell sx={tableBodyStyles} key={index}>
@@ -335,31 +375,33 @@ function CustomisedTable(props: CustomisedTableProps) {
                         </TableCell>
                       ) : cell.type === "checkbox" ? (
                         <TableCell sx={tableBodyStyles} key={index}>
-                          <Box display="flex" alignItems="center" gap={1}>
-                            <Checkbox
-                              checked={selectedCheckBoxVal?.includes(
-                                row["uuid"]
-                              )}
-                              onClick={() =>
-                                handleCheckBoxSelect(row["uuid"] || "")
-                              }
-                              sx={{
-                                "& .MuiSvgIcon-root": { fontSize: 20 },
-                                padding: "0px",
-                              }}
-                            />
-                            <Typography
-                              sx={{
-                                ...tableBodyStyles,
-                                color: "rgb(72, 108, 177)",
-                                cursor: "pointer",
-                                padding: "8px 0px",
-                              }}
-                              onClick={() => handleView(row)}
-                            >
-                              {row[cell.id]}
-                            </Typography>
-                          </Box>
+                          {row[cell.id] === null ? null : (
+                            <Box display="flex" alignItems="center" gap={1}>
+                              <Checkbox
+                                checked={selectedCheckBoxVal?.includes(
+                                  row["uuid"]
+                                )}
+                                onClick={() =>
+                                  handleCheckBoxSelect(row["uuid"] || "")
+                                }
+                                sx={{
+                                  "& .MuiSvgIcon-root": { fontSize: 20 },
+                                  padding: "0px",
+                                }}
+                              />
+                              <Typography
+                                sx={{
+                                  ...tableBodyStyles,
+                                  color: "rgb(72, 108, 177)",
+                                  cursor: "pointer",
+                                  padding: "8px 0px",
+                                }}
+                                onClick={() => handleView(row)}
+                              >
+                                {row[cell.id]}
+                              </Typography>
+                            </Box>
+                          )}
                         </TableCell>
                       ) : cell.id === "hospitalName" &&
                         row[cell.id]?.length > 9 ? (
@@ -434,7 +476,13 @@ function CustomisedTable(props: CustomisedTableProps) {
                           align="left"
                           key={index}
                         >
-                          {row[cell.id] || "-"}
+                          {cell.id === "description" && row.descriptionStyle ? (
+                            <Typography sx={{ ...row.descriptionStyle }}>
+                              {row[cell.id] || "-"}
+                            </Typography>
+                          ) : (
+                            row[cell.id] || "-"
+                          )}
                         </TableCell>
                       )
                     )}
@@ -464,14 +512,12 @@ function CustomisedTable(props: CustomisedTableProps) {
                 components={{
                   previous: () => (
                     <>
-                      <ArrowBackIcon sx={backArrow} />
-                      {PREV}
+                      <KeyboardArrowLeftOutlinedIcon sx={backArrow} />
                     </>
                   ),
                   next: () => (
                     <>
-                      {NEXT}
-                      <ArrowForwardIcon sx={fordwardArrow} />
+                      <KeyboardArrowRightOutlinedIcon sx={fordwardArrow} />
                     </>
                   ),
                 }}

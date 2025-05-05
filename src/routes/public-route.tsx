@@ -8,13 +8,11 @@ interface PublicRouteProps {
 }
 
 const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
-  const { portal, token, isSetter } = useAuthority();
+  const { portal, token } = useAuthority();
   const isLoggedIn = !!token;
 
   return !isLoggedIn ? (
     <>{children}</>
-  ) : isSetter ? (
-    <Navigate to={"/staff/payment-link"} />
   ) : (
     <Navigate to={PortalStartingRoute[portal]} />
   );

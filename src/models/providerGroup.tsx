@@ -186,40 +186,6 @@ export type UserProfilePhotoPayload = {
   xTenant?: string;
 };
 
-export namespace UserRole {
-  export enum role {
-    PROVIDER_GROUP_ADMIN = "PROVIDER_GROUP_ADMIN",
-    FRONTDESK = "FRONTDESK",
-    BILLER = "BILLER",
-    ENB = "ENB",
-    PSYCHIATRIST = "PSYCHIATRIST",
-    THERAPIST = "THERAPIST",
-    NURSE = "NURSE",
-    PATIENT = "PATIENT",
-    ANONYMOUS = "ANONYMOUS",
-    DOCTOR = "DOCTOR",
-    NURSE_PRACTITIONERS = "NURSE_PRACTITIONERS",
-    CRNA = "CRNA",
-    PHARMACIST = "PHARMACIST",
-    LAB_SPECIALIST = "LAB_SPECIALIST",
-    REMOTE_CLINICIAN = "REMOTE_CLINICIAN",
-    ADMISSIONS_COORDINATOR = "ADMISSIONS_COORDINATOR",
-    PATIENT_EDUCATOR = "PATIENT_EDUCATOR",
-    SETTER = "SETTER",
-    ACCOUNTANT = "ACCOUNTANT",
-    IT_SUPPORT = "IT_SUPPORT",
-    QA_COMPLIANCE = "QA_COMPLIANCE",
-    SUPERADMIN = "SUPER_ADMIN",
-    SUPPORT = "SUPPORT"
-  }
-
-  export enum roleType {
-    PROVIDER = "PROVIDER",
-    STAFF = "STAFF",
-    PATIENT = "PATIENT"
-  }
-}
-
 export type ProfilePhotoProvider = {
   newAvatar: string;
   uuid: string;

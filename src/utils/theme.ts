@@ -50,7 +50,11 @@ declare module "@mui/material/Typography" {
     titleSmallRegular: true;
     titleSmallMini: true;
     titleSmallRegularBolder: true;
-    titleSmallMediumBold:true
+    titleSmallMediumBold: true;
+    titleMediumProfileBold: true;
+    titleSmallProfileGrey: true;
+    titleSmallProfileGreyLight: true;
+    switchSmallBlack: true;
   }
 }
 interface ExtendedTypographyOptions extends TypographyOptions {
@@ -90,7 +94,11 @@ interface ExtendedTypographyOptions extends TypographyOptions {
   titleSmallRegular: React.CSSProperties;
   titleSmallMini: React.CSSProperties;
   titleSmallRegularBolder: React.CSSProperties;
-  titleSmallMediumBold:React.CSSProperties
+  titleSmallMediumBold: React.CSSProperties;
+  titleMediumProfileBold: React.CSSProperties;
+  titleSmallProfileGrey: React.CSSProperties;
+  titleSmallProfileGreyLight: React.CSSProperties;
+  switchSmallBlack: React.CSSProperties;
 }
 
 // Typescript module augmentation
@@ -421,7 +429,7 @@ export const theme = createTheme({
       letterSpacing: "0em",
       textAlign: "left",
     },
-    titleSmallMediumBold:{
+    titleSmallMediumBold: {
       fontFamily: "Figtree",
       fontSize: "16px",
       fontWeight: 500,
@@ -444,6 +452,41 @@ export const theme = createTheme({
       lineHeight: "19px",
       letterSpacing: "0em",
       textAlign: "left",
+    },
+    titleMediumProfileBold: {
+      fontFamily: "Figtree",
+      fontSize: "20px",
+      fontWeight: 500,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+    },
+    titleSmallProfileGrey: {
+      fontFamily: "Figtree",
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+      color: "#74797B",
+    },
+    titleSmallProfileGreyLight: {
+      fontFamily: "Figtree",
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+      color: "#21262B",
+    },
+    switchSmallBlack: {
+      fontFamily: "Figtree",
+      fontSize: "12px",
+      fontWeight: 500,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+      color: "#21262B",
     },
   } as ExtendedTypographyOptions,
   components: {

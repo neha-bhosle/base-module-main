@@ -1,7 +1,14 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { paddingZero, filled, outlined, warning, disableButton, transformTextNone } from "./widgets/custom-button-styles";
-
+import {
+  paddingZero,
+  filled,
+  outlined,
+  warning,
+  disableButton,
+  transformTextNone,
+  editProfile,
+} from "./widgets/custom-button-styles";
 
 interface CustomButtonProps {
   onClick?: (index?: number, e?: React.MouseEvent) => void;
@@ -13,6 +20,7 @@ interface CustomButtonProps {
   disabled?: any;
   fullWidth?: boolean;
   changePadding?: boolean;
+  isSubmitButton?: boolean;
 }
 
 function CustomButton(props: CustomButtonProps) {
@@ -22,22 +30,40 @@ function CustomButton(props: CustomButtonProps) {
     }
   };
 
+  const getButtonStyle = () => {
+    let baseStyle;
+
+    if (props.changePadding === true) {
+      baseStyle = paddingZero;
+    } else if (props.variant === "filled") {
+      baseStyle = filled;
+    } else if (props.variant === "outline") {
+      baseStyle = outlined;
+    } else if (props.variant === "warning") {
+      baseStyle = warning;
+    } else if (props.variant === "editButton") {
+      baseStyle = editProfile;
+    } else if (props.disabled === true) {
+      baseStyle = disableButton;
+    } else {
+      baseStyle = transformTextNone;
+    }
+
+    if (props.isSubmitButton) {
+      return {
+        ...baseStyle,
+        borderRadius: "5px",
+        padding: "12.5px 20px",
+      };
+    }
+
+    return baseStyle;
+  };
+
   return (
     <Button
       disabled={props.disabled}
-      sx={
-        props.changePadding === true
-          ? paddingZero
-          : props.variant === "filled"
-            ? filled
-            : props.variant === "outline"
-              ? outlined
-              : props.variant === "warning"
-                ? warning
-                : props.disabled === true
-                  ? disableButton
-                  : transformTextNone
-      }
+      sx={getButtonStyle()}
       onClick={handleClick}
       type={props.type || "button"}
       startIcon={props.startIcon}

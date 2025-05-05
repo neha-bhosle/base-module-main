@@ -13,10 +13,6 @@ type AuthorityInfo = {
   isBiller: boolean;
   isEnb: boolean;
   isStaff: boolean;
-  isCloser: boolean;
-  isStaffWoSuperAdmin: boolean;
-  isPsychiatrist: boolean;
-  isTherapist: boolean;
   isProvider: boolean;
   isProviderButNotCloser: boolean;
   isPatient: boolean;
@@ -25,8 +21,6 @@ type AuthorityInfo = {
   isProviderPortal: boolean;
   isPatientPortal: boolean;
   isProviderGroupAdmin: boolean;
-  isSetter: boolean;
-  isAdmissionsCoordinator: boolean;
 };
 
 const useAuthority = () => {
@@ -50,24 +44,15 @@ const useAuthority = () => {
   const isSuperAdmin = roleString === Roles.PROVIDER_GROUP_ADMIN;
   const isFrontDesk = roleString === Roles.FRONTDESK;
   const isBiller = roleString === Roles.BILLER;
-  const isSetter = roleString === Roles.SETTER;
   const isEnb = roleString === Roles.ENB;
-  const isCloser = roleString === Roles.RESOLUTION_SPECIALIST;
   const isStaff =
     roleString === Roles.PROVIDER_GROUP_ADMIN ||
     roleString === Roles.FRONTDESK ||
     roleString === Roles.BILLER ||
-    roleString === Roles.ADMISSIONS_COORDINATOR ||
-    roleString === Roles.SETTER ||
-    roleString === Roles.PATIENT_EDUCATOR ||
-    roleString === Roles.ACCOUNTANT ||
-    roleString === Roles.IT_SUPPORT ||
-    roleString === Roles.QA_COMPLIANCE ||
     roleString === Roles.ADMISSIONS_COORDINATOR;
-  const isStaffWoSuperAdmin =
-    roleString === Roles.FRONTDESK || roleString === Roles.BILLER || roleString === Roles.ENB;
-  const isPsychiatrist = roleString === Roles.PSYCHIATRIST;
-  const isTherapist = roleString === Roles.THERAPIST;
+    roleString === Roles.FRONTDESK ||
+    roleString === Roles.BILLER ||
+    roleString === Roles.ENB;
   const isProviderGroupAdmin = roleString === Roles.PROVIDER_GROUP_ADMIN;
   const isProvider =
     roleString === Roles.PSYCHIATRIST ||
@@ -75,12 +60,6 @@ const useAuthority = () => {
     roleString === Roles.NURSE ||
     roleString === Roles.DOCTOR ||
     roleString === Roles.ENB ||
-    roleString === Roles.NURSE_PRACTITIONERS ||
-    roleString === Roles.CRNA ||
-    roleString === Roles.PHARMACIST ||
-    roleString === Roles.LAB_SPECIALIST ||
-    roleString === Roles.REMOTE_CLINICIAN ||
-    roleString === Roles.RESOLUTION_SPECIALIST ||
     roleString === Roles.MA;
   const isProviderButNotCloser =
     roleString === Roles.PSYCHIATRIST ||
@@ -89,14 +68,11 @@ const useAuthority = () => {
     roleString === Roles.DOCTOR ||
     roleString === Roles.ENB ||
     roleString === Roles.NURSE_PRACTITIONERS ||
-    roleString === Roles.CRNA ||
-    roleString === Roles.PHARMACIST ||
-    roleString === Roles.LAB_SPECIALIST ||
     roleString === Roles.REMOTE_CLINICIAN;
 
   const isPatient = roleString === Roles.PATIENT;
-  const isPatientDomain = window.location.hostname === import.meta.env.VITE_PATIENT_DOMAIN;
-  const isAdmissionsCoordinator = roleString === Roles.ADMISSIONS_COORDINATOR;
+  const isPatientDomain =
+    window.location.hostname === import.meta.env.VITE_PATIENT_DOMAIN;
 
   const authorityInfo: AuthorityInfo = {
     hasRouteAuthority: pathPrefix === portal,
@@ -107,11 +83,7 @@ const useAuthority = () => {
     isFrontDesk,
     isBiller,
     isEnb,
-    isCloser,
     isStaff,
-    isStaffWoSuperAdmin,
-    isPsychiatrist,
-    isTherapist,
     isProvider,
     isProviderButNotCloser,
     isPatient,
@@ -120,8 +92,6 @@ const useAuthority = () => {
     isProviderPortal,
     isPatientPortal,
     isProviderGroupAdmin,
-    isSetter,
-    isAdmissionsCoordinator
   };
 
   return authorityInfo;

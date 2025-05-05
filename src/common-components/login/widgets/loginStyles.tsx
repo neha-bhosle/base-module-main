@@ -1,5 +1,5 @@
 export const rememberMeStyles = {
-  color: "#8F8F8F",
+  color: "#595F63",
   fontFamily: "Figtree",
   fontSize: "14px",
   fontStyle: "normal",

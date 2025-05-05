@@ -1,6 +1,4 @@
-
 export const GetNavbarStyles = () => {
-
   return {
     container: {
       background: "#FFFFFF",

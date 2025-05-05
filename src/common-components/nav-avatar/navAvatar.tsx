@@ -2,7 +2,7 @@ import { Avatar, Box } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import React, { useState } from "react";
-import { UserProfile } from "src/models/userModel";
+import { UserProfile } from "../../models/userModel";
 import { navAvatarStyles, navLogOut } from "./widgets/navAvatarStyles";
 
 interface NavAvatarProps {
