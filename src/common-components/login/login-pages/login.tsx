@@ -40,7 +40,7 @@ function Login() {
 
   const onSubmit = (values: LoginForm) => {
     dispatch(login(values) as any);
-    navigate("/admin/profile-tabs");
+    navigate("/admin/settings-tabs/profile-tabs");
   };
 
   return (

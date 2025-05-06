@@ -11,7 +11,11 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { StaffSchema } from "./staff-schema";
 
-const AddStaffDialog = () => {
+interface AddStaffDialogProps {
+  handleClose: () => void;
+}
+
+const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
   const {
     control,
     formState: { errors },
@@ -39,9 +43,7 @@ const AddStaffDialog = () => {
     { value: "receptionist", label: "Receptionist" },
   ];
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
+  const onSubmit = () => {};
 
   return (
     <Box>
@@ -168,7 +170,12 @@ const AddStaffDialog = () => {
             sx={{ marginBottom: "1.5vh", marginRight: "1.5vw" }}
           >
             <Grid>
-              <CustomButton variant="outline" label="Cancel" isSubmitButton />
+              <CustomButton
+                variant="outline"
+                label="Cancel"
+                isSubmitButton
+                onClick={handleClose}
+              />
             </Grid>
             <Grid>
               <CustomButton

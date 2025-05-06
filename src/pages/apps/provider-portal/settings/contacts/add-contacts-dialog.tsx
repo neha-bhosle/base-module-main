@@ -11,7 +11,11 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ContactsSchema } from "./contacts-schema";
 
-const AddContactsDialog = () => {
+interface AddContactsDialogProps {
+  handleClose: () => void;
+}
+
+const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
   const {
     control,
     formState: { errors },
@@ -227,7 +231,12 @@ const AddContactsDialog = () => {
             sx={{ marginBottom: "1.5vh", marginRight: "1.5vw" }}
           >
             <Grid>
-              <CustomButton variant="outline" label="Cancel" isSubmitButton />
+              <CustomButton
+                variant="outline"
+                label="Cancel"
+                isSubmitButton
+                onClick={handleClose}
+              />
             </Grid>
             <Grid>
               <CustomButton

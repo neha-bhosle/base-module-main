@@ -16,23 +16,24 @@ interface CustomSelectProps {
   isDisabled?: boolean;
   bgWhite?: boolean;
   tablepagination?: boolean;
+  backgroundColor?: string;
 }
 
 function CustomSelect(props: CustomSelectProps) {
   const classes = customSelectStyles();
-  const { items, bgWhite, onChange } = props;
+  const { items, bgWhite, onChange, backgroundColor } = props;
 
   const handleValue = (e: SelectChangeEvent<string>) => {
     const selectedLabel = e.target.value;
     const selectedKey =
-      props.items.find((item) => item.label === selectedLabel)?.value || "";
+      props?.items?.find((item) => item.label === selectedLabel)?.value || "";
     e.target.value = selectedKey;
 
     if (onChange) onChange(e);
   };
 
   const getLabel = (value: string) => {
-    return items.find((item) => item.value === value)?.label || "";
+    return items?.find((item) => item.value === value)?.label || "";
   };
 
   return (
@@ -41,7 +42,8 @@ function CustomSelect(props: CustomSelectProps) {
         disabled={props.isDisabled && props.isDisabled}
         sx={{
           ...selectInputStyle,
-          backgroundColor: bgWhite === true ? "inherit" : "inherit",
+          backgroundColor:
+            backgroundColor || (bgWhite === true ? "inherit" : "inherit"),
           ...(props.tablepagination && { border: "none" }),
         }}
         displayEmpty

@@ -11,7 +11,11 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LocationSchema } from "./location-schema";
 
-const AddLocationDialog = () => {
+interface AddLocationDialogProps {
+  handleClose: () => void;
+}
+
+const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
   const {
     control,
     formState: { errors },
@@ -81,9 +85,7 @@ const AddLocationDialog = () => {
                   name="locationName"
                   render={({ field }) => (
                     <CustomInput
-                      placeholder={
-                        LocationFormPlaceholders.ENTER_LOCATION_NAME
-                      }
+                      placeholder={LocationFormPlaceholders.ENTER_LOCATION_NAME}
                       {...field}
                       hasError={!!errors.locationName}
                       errorMessage={errors.locationName?.message}
@@ -150,7 +152,7 @@ const AddLocationDialog = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <CustomLabel label={LocationFormLabels.STATUS} />
                 <Controller
                   control={control}
@@ -168,7 +170,7 @@ const AddLocationDialog = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <CustomLabel label={LocationFormLabels.FAX} />
                 <Controller
                   control={control}
@@ -313,7 +315,7 @@ const AddLocationDialog = () => {
                 variant="outline"
                 label="Cancel"
                 isSubmitButton
-                // changePadding={false}
+                onClick={handleClose}
               />
             </Grid>
             <Grid>

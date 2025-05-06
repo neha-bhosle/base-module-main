@@ -14,7 +14,11 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { EditProfileSchema } from "../profile/edit-profile-schema";
 
-const EditProfileDialog = () => {
+interface EditProfileDialogProps {
+  handleClose: () => void;
+}
+
+const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
   const {
     control,
     formState: { errors },
@@ -385,6 +389,7 @@ const EditProfileDialog = () => {
                 variant="outline"
                 label="Cancel"
                 isSubmitButton
+                onClick={handleClose}
               />
             </Grid>
             <Grid>

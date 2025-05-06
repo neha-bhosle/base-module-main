@@ -105,7 +105,7 @@ export default function UserTabs() {
         anchor={"right"}
         drawerWidth="32vw"
       >
-        <AddStaffDialog />
+        <AddStaffDialog handleClose={() => setAddStaffDialog(false)} />
       </DrawerBS>
       <DrawerBS
         title={"Add New Clinician"}
@@ -114,7 +114,7 @@ export default function UserTabs() {
         anchor={"right"}
         drawerWidth="52vw"
       >
-        <AddClinicianDialog />
+        <AddClinicianDialog handleClose={() => setAddClinicianDialog(false)} />
       </DrawerBS>
     </Box>
   );

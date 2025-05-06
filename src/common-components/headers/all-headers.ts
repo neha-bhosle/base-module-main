@@ -57,3 +57,10 @@ export const practiceData = {
   address: "205 Champion Way Suite 11 Georgetown, KY 40324",
   contactNumber: "502-603-0020",
 };
+
+export const feeScheduleTableHeaders = [
+  { id: "procedureCode", label: "Procedure Code", type: "text" },
+  { id: "rate", label: "Rate", type: "text" },
+  { id: "codeType", label: "Code Type", type: "text" },
+  { id: "action", label: "Action", type: "action" },
+];

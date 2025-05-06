@@ -133,14 +133,19 @@ const palette = {
 export const theme = createTheme({
   breakpoints: {
     values: {
+      xxs: 360, // Extra extra small devices
       xs: 0, // Extra small devices (portrait phones)
+      xs1: 390, // Extra small devices plus
       sm: 600, // Small devices (landscape phones)
+      sm1: 834, // Small devices plus
       md: 960, // Medium devices (tablets)
+      md1: 1133, // Medium devices plus
       lg: 1280, // Large devices (desktops)
-      lg1: 1366, // Large devices (desktops)
-      xl: 1440, // Extra large devices (large desktops)
-      xl1: 1536, // Large devices (desktops)
-      xxl: 1920, // Extra extra large devices (large desktops)
+      lg1: 1366, // Large devices plus
+      xl: 1440, // Extra large devices
+      xl1: 1536, // Extra large devices plus
+      xl2: 1650, // Extra large devices plus plus
+      xxl: 1920, // Extra extra large devices
     },
   },
   palette: {
@@ -156,7 +161,7 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "",
+    fontFamily: "Figtree",
     bodyRegular1: {
       fontFamily: "Figtree",
       fontSize: "24px",
@@ -541,6 +546,15 @@ export const theme = createTheme({
         root: {
           "& .MuiSvgIcon-root": {
             fontSize: "14px",
+          },
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          "& input::placeholder": {
+            fontFamily: "Figtree !important",
           },
         },
       },

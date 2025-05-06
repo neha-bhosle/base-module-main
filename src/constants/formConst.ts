@@ -89,7 +89,7 @@ export enum SettingsFormLabels {
   // Section Titles
   PRACTICE_INFORMATION = "Practice Information",
   BILLING_ADDRESS = "Billing Address",
-
+  PRACTICE="Practice",
   // Practice Information Fields
   CLINIC_NAME = "Clinic Name",
   CLINIC_NPI_NUMBER = "Clinic NPI Number",
@@ -116,6 +116,8 @@ export enum SettingsFormPlaceholders {
   ENTER_CONTACT_NUMBER = "Enter Contact Number",
   ENTER_EMAIL_ID = "Enter Email ID",
   ENTER_TAXONOMY = "Enter Taxonomy",
+  OTHER_SETTINGS = "Other Settings",
+  PRACTICE="Practice",
 
   // Billing Address Fields
   ENTER_ADDRESS_LINE_1 = "Enter address line 1",
@@ -230,6 +232,15 @@ export enum PracticeSettingsTabs {
   ROLES = "Roles",
   CONTACT = "Contact",
 }
+export enum OtherSettingsTabs {
+  AVAILABILITY = "Availability",
+  FEE_SCHEDULE = "Fee-Schedule",
+  PROFILE = "Profile",
+  FORMS = "Forms",
+  GROUP_SETTINGS = "Group Settings",
+  AGREEMENTS = "Agreements",
+  AUDIT_LOG = "Audit Logs",
+}
 
 export enum PracticeSettingsRoutes {
   PROFILE = "profile",
@@ -306,4 +317,21 @@ export enum SettingsFormConstants {
   EDIT_PROFILE = "Edit Profile",
   ADD_NEW_LOCATION = "Add New Location",
   ADD_NEW_CONTACT = "Add New Contact",
+  ADD_NEW_FEE_SCHEDULE = "Add New Fee Schedule",
+  ADD_FEE_SCHEDULE = "Add Fee Schedule",
+  OTHER_SETTINGS = "Other Settings",
+  SAVE = "Save",
+  CANCEL = "Cancel",
+}
+
+export enum FeeScheduleFormLabels {
+  PROCEDURE_CODE = "Procedure Code",
+  RATE = "Rate",
+  CODE_TYPE = "Code Type",
+}
+
+export enum FeeScheduleFormPlaceholders {
+  SELECT_PROCEDURE_CODE = "Select Procedure Code",
+  ENTER_RATE = "Enter Rate",
+  SELECT_CODE_TYPE = "Select Code Type",
 }

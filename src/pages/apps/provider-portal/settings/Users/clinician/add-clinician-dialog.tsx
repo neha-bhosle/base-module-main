@@ -13,7 +13,11 @@ import {
 import { ClinicianDialogTypographyVariants } from "../../../../../../constants/typography-variants";
 import { ClinicianSchema } from "./clinician-schema";
 
-const AddClinicianDialog = () => {
+interface AddClinicianDialogProps {
+  handleClose: () => void;
+}
+
+const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
   const {
     control,
     formState: { errors },
@@ -289,7 +293,12 @@ const AddClinicianDialog = () => {
             sx={{ marginBottom: "1.5vh", marginRight: "1.5vw" }}
           >
             <Grid>
-              <CustomButton variant="outline" label="Cancel" isSubmitButton />
+              <CustomButton
+                variant="outline"
+                label="Cancel"
+                isSubmitButton
+                onClick={handleClose}
+              />
             </Grid>
             <Grid>
               <CustomButton

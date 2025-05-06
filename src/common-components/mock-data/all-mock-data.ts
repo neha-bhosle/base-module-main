@@ -5,7 +5,10 @@ export const staffMockData = [
     contact: "+1 555-123-4567",
     role: "Administrator",
     status: "Active",
-    action: ["edit", "delete"],
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
   },
   {
     name: "Sarah Johnson",
@@ -13,7 +16,10 @@ export const staffMockData = [
     contact: "+1 555-987-6543",
     role: "Nurse",
     status: "Active",
-    action: ["edit", "delete"],
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
   },
   {
     name: "Michael Davis",
@@ -21,7 +27,10 @@ export const staffMockData = [
     contact: "+1 555-456-7890",
     role: "Doctor",
     status: "Inactive",
-    action: ["edit", "delete"],
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
   },
 ];
 
@@ -33,7 +42,10 @@ export const clinicianMockData = [
     npinumber: "1234567890",
     worklocation: "Main Hospital",
     status: "Active",
-    action: ["edit", "delete"],
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
   },
   {
     name: "Robert Chen",
@@ -42,7 +54,10 @@ export const clinicianMockData = [
     npinumber: "2345678901",
     worklocation: "West Wing Clinic",
     status: "Active",
-    action: ["edit", "delete"],
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
   },
   {
     name: "Amara Patel",
@@ -51,7 +66,10 @@ export const clinicianMockData = [
     npinumber: "3456789012",
     worklocation: "East Side Medical Center",
     status: "Inactive",
-    action: ["edit", "delete"],
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
   },
   {
     name: "Thomas Rodriguez",
@@ -60,7 +78,10 @@ export const clinicianMockData = [
     npinumber: "4567890123",
     worklocation: "South Branch Office",
     status: "Active",
-    action: ["edit", "delete"],
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
   },
 ];
 
@@ -73,7 +94,10 @@ export const contactMockData = [
     fax: "+1 555-222-3333",
     address: "123 Main St, City, State 12345",
     contacttype: "Primary",
-    action: ["edit", "delete"],
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
   },
   {
     uuid: "2",
@@ -83,7 +107,10 @@ export const contactMockData = [
     fax: "+1 555-666-7777",
     address: "456 Oak Ave, City, State 12345",
     contacttype: "Secondary",
-    action: ["edit", "delete"],
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
   },
 ];
 
@@ -388,3 +415,51 @@ export const practiceData = {
   address: "205 Champion Way Suite 11 Georgetown, KY 40324",
   contactNumber: "502-603-0020",
 };
+
+export const feeScheduleMockData = [
+  {
+    procedureCode: "Reschedule Appointment",
+    rate: "$10",
+    codeType: "-",
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
+  },
+  {
+    procedureCode: "No Show",
+    rate: "$20",
+    codeType: "-",
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
+  },
+  {
+    procedureCode: "Cancel Appointment",
+    rate: "$30",
+    codeType: "-",
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
+  },
+  {
+    procedureCode: "99088",
+    rate: "$80",
+    codeType: "CPT",
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
+  },
+  {
+    procedureCode: "99077",
+    rate: "$60",
+    codeType: "Self Pay",
+    action: [
+      { label: "Edit", route: "edit" },
+      { label: "Delete", route: "delete" },
+    ],
+  },
+];

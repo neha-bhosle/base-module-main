@@ -32,7 +32,7 @@ export const providerNavbar = [
   {
     label: "Settings",
     type: "text",
-    route: "profile-tabs/profile",
+    route: "settings-tabs",
   },
   {
     label: "Review Notes",
@@ -40,7 +40,6 @@ export const providerNavbar = [
     // route: "reviewnotes",
   },
 ];
-
 
 export const staffNavbar = [
   {
@@ -100,8 +99,6 @@ export const patientNavbar = [
     route: "provider",
   },
 ];
-
-
 
 export const superAdminNavbar = [
   {
