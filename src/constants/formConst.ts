@@ -365,6 +365,10 @@ export enum PatientFormLabels {
   RELATIONSHIP = "Relationship with Patient",
   PRIMARY_CLINICIAN = "Primary Clinician",
   SECONDARY_CLINICIAN = "Secondary Clinician",
+  RESPONSIBLE_PARTY = "Responsible Party",
+  SAME_AS_EMERGENCY_CONTACT = "Same as Emergency Contact",
+  PHONE_APPOINTMENT_REMINDERS = "Phone Appointment Reminders",
+  EMAIL_APPOINTMENT_REMINDERS = "Email Appointment Reminders",
 }
 
 export enum PatientFormPlaceholders {

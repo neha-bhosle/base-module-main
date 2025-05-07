@@ -9,6 +9,17 @@ import CustomSelect from "../../../../common-components/custom-select/customSele
 import CustomLabel from "../../../../common-components/customLabel/customLabel";
 import ImageUpload from "../../../../common-components/image-upload/image-upload";
 import CustomDatePicker from "../../../../common-components/custom-date-picker/custom-date-picker";
+import {
+  PatientFormLabels,
+  PatientFormPlaceholders,
+  PatientFormSectionTitles,
+  PatientFormButtons,
+  PatientGenderOptions,
+  PatientEthnicityOptions,
+  PatientLanguageOptions,
+  PatientRelationshipWithPatientOptions,
+  ValidationMessages,
+} from "../../../../constants/formConst";
 
 interface FormData {
   profileImage?: File | null;
@@ -49,7 +60,15 @@ const schema = yup.object().shape({
   legalSex: yup.string().optional(),
   genderIdentity: yup.string().optional(),
   phoneNumber: yup.string().required("Phone number is required"),
-  emailId: yup.string().email("Invalid email").required("Email is required"),
+  emailId: yup
+    .string()
+    .required(ValidationMessages.EmailRequired)
+    .transform((value) => value?.toLowerCase())
+    .matches(/^\w+([\.-]?\w+)*(\+\w+)?@\w+([\.-]?\w+)*(\.\w{2,})$/, {
+      message: ValidationMessages.ValidEmailRequired,
+    })
+    .required(ValidationMessages.ValidEmailRequired)
+    .max(255, ValidationMessages.EmailMaxLength),
   ethnicity: yup.string().optional(),
   race: yup.string().optional(),
   preferredLanguage: yup.string().optional(),
@@ -119,7 +138,9 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
         mb={2}
       >
         <Grid>
-          <Typography variant="bodyMedium4">Patient Information</Typography>
+          <Typography variant="bodyMedium4">
+            {PatientFormSectionTitles.PATIENT_INFORMATION}
+          </Typography>
         </Grid>
         <Grid mr={2}>
           <KeyboardArrowUpOutlinedIcon />
@@ -144,13 +165,16 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
             <Grid item xs={12} md={10.5} pl={2}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="First Name" isRequired />
+                  <CustomLabel
+                    label={PatientFormLabels.FIRST_NAME}
+                    isRequired
+                  />
                   <Controller
                     control={control}
                     name="firstName"
                     render={({ field }) => (
                       <CustomInput
-                        placeholder="Enter First Name"
+                        placeholder={PatientFormPlaceholders.ENTER_FIRST_NAME}
                         {...field}
                         hasError={!!errors.firstName}
                         errorMessage={errors.firstName?.message}
@@ -160,24 +184,27 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 </Grid>
 
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="Middle Name" />
+                  <CustomLabel label={PatientFormLabels.MIDDLE_NAME} />
                   <Controller
                     control={control}
                     name="middleName"
                     render={({ field }) => (
-                      <CustomInput placeholder="Enter Middle Name" {...field} />
+                      <CustomInput
+                        placeholder={PatientFormPlaceholders.ENTER_MIDDLE_NAME}
+                        {...field}
+                      />
                     )}
                   />
                 </Grid>
 
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="Last Name" isRequired />
+                  <CustomLabel label={PatientFormLabels.LAST_NAME} isRequired />
                   <Controller
                     control={control}
                     name="lastName"
                     render={({ field }) => (
                       <CustomInput
-                        placeholder="Enter Last Name"
+                        placeholder={PatientFormPlaceholders.ENTER_LAST_NAME}
                         {...field}
                         hasError={!!errors.lastName}
                         errorMessage={errors.lastName?.message}
@@ -187,13 +214,15 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 </Grid>
 
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="Preferred Name" />
+                  <CustomLabel label={PatientFormLabels.PREFERRED_NAME} />
                   <Controller
                     control={control}
                     name="preferredName"
                     render={({ field }) => (
                       <CustomInput
-                        placeholder="Enter Preferred Name"
+                        placeholder={
+                          PatientFormPlaceholders.ENTER_PREFERRED_NAME
+                        }
                         {...field}
                       />
                     )}
@@ -201,13 +230,16 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 </Grid>
 
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="Date of Birth" isRequired />
+                  <CustomLabel
+                    label={PatientFormLabels.DATE_OF_BIRTH}
+                    isRequired
+                  />
                   <Controller
                     control={control}
                     name="dateOfBirth"
                     render={({ field }) => (
                       <CustomDatePicker
-                        placeholder="Select Date"
+                        placeholder={PatientFormPlaceholders.SELECT_DATE}
                         value={field.value}
                         handleDateChange={field.onChange}
                         hasError={!!errors.dateOfBirth}
@@ -218,54 +250,57 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 </Grid>
 
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="Legal Sex" />
+                  <CustomLabel label={PatientFormLabels.LEGAL_SEX} />
                   <Controller
                     control={control}
                     name="legalSex"
                     render={({ field }) => (
                       <CustomSelect
-                        placeholder="Select Legal Sex"
+                        placeholder={PatientFormPlaceholders.SELECT_LEGAL_SEX}
                         {...field}
                         value={field.value || ""}
-                        items={[
-                          { value: "male", label: "Male" },
-                          { value: "female", label: "Female" },
-                          { value: "other", label: "Other" },
-                        ]}
+                        items={Object.entries(PatientGenderOptions).map(
+                          ([value, label]) => ({
+                            value: value.toLowerCase(),
+                            label,
+                          })
+                        )}
                       />
                     )}
                   />
                 </Grid>
 
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="Gender Identity" />
+                  <CustomLabel label={PatientFormLabels.GENDER_IDENTITY} />
                   <Controller
                     control={control}
                     name="genderIdentity"
                     render={({ field }) => (
                       <CustomSelect
-                        placeholder="Select Gender Identity"
+                        placeholder={
+                          PatientFormPlaceholders.SELECT_GENDER_IDENTITY
+                        }
                         {...field}
                         value={field.value || ""}
-                        items={[
-                          { value: "male", label: "Male" },
-                          { value: "female", label: "Female" },
-                          { value: "non_binary", label: "Non-binary" },
-                          { value: "other", label: "Other" },
-                        ]}
+                        items={Object.entries(PatientGenderOptions).map(
+                          ([value, label]) => ({
+                            value: value.toLowerCase(),
+                            label,
+                          })
+                        )}
                       />
                     )}
                   />
                 </Grid>
 
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="Email ID" isRequired />
+                  <CustomLabel label={PatientFormLabels.EMAIL_ID} isRequired />
                   <Controller
                     control={control}
                     name="emailId"
                     render={({ field }) => (
                       <CustomInput
-                        placeholder="Enter Email ID"
+                        placeholder={PatientFormPlaceholders.ENTER_EMAIL_ID}
                         {...field}
                         hasError={!!errors.emailId}
                         errorMessage={errors.emailId?.message}
@@ -275,14 +310,18 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 </Grid>
 
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="Phone Number" isRequired />
+                  <CustomLabel
+                    label={PatientFormLabels.PHONE_NUMBER}
+                    isRequired
+                  />
                   <Controller
                     control={control}
                     name="phoneNumber"
                     render={({ field }) => (
                       <CustomInput
-                        placeholder="Enter Phone Number"
+                        placeholder={PatientFormPlaceholders.ENTER_PHONE_NUMBER}
                         {...field}
+                        isNumeric
                         hasError={!!errors.phoneNumber}
                         errorMessage={errors.phoneNumber?.message}
                       />
@@ -291,54 +330,63 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 </Grid>
 
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="Ethnicity" />
+                  <CustomLabel label={PatientFormLabels.ETHNICITY} />
                   <Controller
                     control={control}
                     name="ethnicity"
                     render={({ field }) => (
                       <CustomSelect
-                        placeholder="Select Ethnicity"
+                        placeholder={PatientFormPlaceholders.SELECT_ETHNICITY}
                         {...field}
                         value={field.value || ""}
-                        items={[
-                          { value: "hispanic", label: "Hispanic" },
-                          { value: "non_hispanic", label: "Non-Hispanic" },
-                        ]}
+                        items={Object.entries(PatientEthnicityOptions).map(
+                          ([value, label]) => ({
+                            value: value.toLowerCase(),
+                            label,
+                          })
+                        )}
                       />
                     )}
                   />
                 </Grid>
 
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="Race" />
+                  <CustomLabel label={PatientFormLabels.RACE} />
                   <Controller
                     control={control}
                     name="race"
                     render={({ field }) => (
-                      <CustomInput placeholder="Enter Race" {...field} />
+                      <CustomInput
+                        placeholder={PatientFormPlaceholders.ENTER_RACE}
+                        {...field}
+                      />
                     )}
                   />
                 </Grid>
 
                 <Grid item xs={12} md={3}>
-                  <CustomLabel label="Preferred Language" />
+                  <CustomLabel label={PatientFormLabels.PREFERRED_LANGUAGE} />
                   <Controller
                     control={control}
                     name="preferredLanguage"
                     render={({ field }) => (
                       <CustomSelect
-                        placeholder="Select Preferred Language"
+                        placeholder={
+                          PatientFormPlaceholders.SELECT_PREFERRED_LANGUAGE
+                        }
                         {...field}
                         value={field.value || ""}
-                        items={[
-                          { value: "english", label: "English" },
-                          { value: "spanish", label: "Spanish" },
-                          { value: "french", label: "French" },
-                        ]}
+                        items={Object.entries(PatientLanguageOptions).map(
+                          ([value, label]) => ({
+                            value: value.toLowerCase(),
+                            label,
+                          })
+                        )}
                       />
                     )}
                   />
                 </Grid>
+
                 <Grid
                   item
                   xs={12}
@@ -348,13 +396,18 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                   flexDirection={"row"}
                 >
                   <Grid item xs={12} md={6}>
-                    <CustomLabel label="Address Line 1" isRequired />
+                    <CustomLabel
+                      label={PatientFormLabels.ADDRESS_LINE_1}
+                      isRequired
+                    />
                     <Controller
                       control={control}
                       name="addressLine1"
                       render={({ field }) => (
                         <CustomInput
-                          placeholder="Enter Address Line 1"
+                          placeholder={
+                            PatientFormPlaceholders.ENTER_ADDRESS_LINE_1
+                          }
                           {...field}
                           hasError={!!errors.addressLine1}
                           errorMessage={errors.addressLine1?.message}
@@ -364,13 +417,15 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                   </Grid>
 
                   <Grid item xs={12} md={6}>
-                    <CustomLabel label="Address Line 2" />
+                    <CustomLabel label={PatientFormLabels.ADDRESS_LINE_2} />
                     <Controller
                       control={control}
                       name="addressLine2"
                       render={({ field }) => (
                         <CustomInput
-                          placeholder="Enter Address Line 2"
+                          placeholder={
+                            PatientFormPlaceholders.ENTER_ADDRESS_LINE_2
+                          }
                           {...field}
                         />
                       )}
@@ -379,13 +434,13 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 </Grid>
 
                 <Grid item xs={12} md={4}>
-                  <CustomLabel label="City" isRequired />
+                  <CustomLabel label={PatientFormLabels.CITY} isRequired />
                   <Controller
                     control={control}
                     name="city"
                     render={({ field }) => (
                       <CustomInput
-                        placeholder="Enter City"
+                        placeholder={PatientFormPlaceholders.ENTER_CITY}
                         {...field}
                         hasError={!!errors.city}
                         errorMessage={errors.city?.message}
@@ -395,13 +450,13 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 </Grid>
 
                 <Grid item xs={12} md={4}>
-                  <CustomLabel label="State" isRequired />
+                  <CustomLabel label={PatientFormLabels.STATE} isRequired />
                   <Controller
                     control={control}
                     name="state"
                     render={({ field }) => (
                       <CustomSelect
-                        placeholder="Select State"
+                        placeholder={PatientFormPlaceholders.SELECT_STATE}
                         {...field}
                         value={field.value || ""}
                         items={[
@@ -416,13 +471,13 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 </Grid>
 
                 <Grid item xs={12} md={4}>
-                  <CustomLabel label="Zipcode" isRequired />
+                  <CustomLabel label={PatientFormLabels.ZIPCODE} isRequired />
                   <Controller
                     control={control}
                     name="zipcode"
                     render={({ field }) => (
                       <CustomInput
-                        placeholder="Enter Zipcode"
+                        placeholder={PatientFormPlaceholders.ENTER_ZIPCODE}
                         {...field}
                         hasError={!!errors.zipcode}
                         errorMessage={errors.zipcode?.message}
@@ -448,7 +503,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
         >
           <Grid>
             <Typography variant="bodyMedium4">
-              Emergency Contact Information
+              {PatientFormSectionTitles.EMERGENCY_CONTACT}
             </Typography>
           </Grid>
           <Grid mr={2}>
@@ -459,23 +514,29 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
         <Grid border="1px solid #E0E0E0" p={2} borderRadius={2}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={3}>
-              <CustomLabel label="Name" />
+              <CustomLabel label={PatientFormLabels.EMERGENCY_NAME} />
               <Controller
                 control={control}
                 name="emergencyName"
                 render={({ field }) => (
-                  <CustomInput placeholder="Enter Name" {...field} />
+                  <CustomInput
+                    placeholder={PatientFormPlaceholders.ENTER_NAME}
+                    {...field}
+                  />
                 )}
               />
             </Grid>
 
             <Grid item xs={12} md={3}>
-              <CustomLabel label="Phone Number" />
+              <CustomLabel label={PatientFormLabels.EMERGENCY_PHONE} />
               <Controller
                 control={control}
                 name="emergencyPhone"
                 render={({ field }) => (
-                  <CustomInput placeholder="Enter Phone Number" {...field} />
+                  <CustomInput
+                    placeholder={PatientFormPlaceholders.ENTER_PHONE_NUMBER}
+                    {...field}
+                  />
                 )}
               />
             </Grid>
@@ -483,21 +544,23 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
             <Grid item xs={12} md={3}>
               <Grid container alignItems="flex-start" spacing={2}>
                 <Grid item xs={9}>
-                  <CustomLabel label="Relationship with Patient" />
+                  <CustomLabel label={PatientFormLabels.RELATIONSHIP} />
                   <Controller
                     control={control}
                     name="relationship"
                     render={({ field }) => (
                       <CustomSelect
-                        placeholder="Select Relationship"
+                        placeholder={
+                          PatientFormPlaceholders.SELECT_RELATIONSHIP
+                        }
                         {...field}
                         value={field.value || ""}
-                        items={[
-                          { value: "spouse", label: "Spouse" },
-                          { value: "parent", label: "Parent" },
-                          { value: "child", label: "Child" },
-                          { value: "other", label: "Other" },
-                        ]}
+                        items={Object.entries(
+                          PatientRelationshipWithPatientOptions
+                        ).map(([value, label]) => ({
+                          value: value.toLowerCase(),
+                          label,
+                        }))}
                       />
                     )}
                   />
@@ -519,7 +582,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                         )}
                       />
                     }
-                    label="Responsible Party"
+                    label={PatientFormLabels.RESPONSIBLE_PARTY}
                     sx={{
                       whiteSpace: "nowrap",
                       mt: 3,
@@ -546,7 +609,9 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
           mt={2}
         >
           <Grid>
-            <Typography variant="bodyMedium4">Guardian Information</Typography>
+            <Typography variant="bodyMedium4">
+              {PatientFormSectionTitles.GUARDIAN_INFORMATION}
+            </Typography>
           </Grid>
           <Grid mr={2} display={"flex"} flexDirection={"row"} gap={2}>
             <Grid display={"flex"} flexDirection={"row"} gap={2}>
@@ -561,7 +626,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                       )}
                     />
                   }
-                  label="Same as Emergency Contact"
+                  label={PatientFormLabels.SAME_AS_EMERGENCY_CONTACT}
                 />
               </Grid>
             </Grid>
@@ -574,23 +639,29 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
         <Grid border="1px solid #E0E0E0" p={2} borderRadius={2}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={3}>
-              <CustomLabel label="Name" />
+              <CustomLabel label={PatientFormLabels.EMERGENCY_NAME} />
               <Controller
                 control={control}
                 name="emergencyName"
                 render={({ field }) => (
-                  <CustomInput placeholder="Enter Name" {...field} />
+                  <CustomInput
+                    placeholder={PatientFormPlaceholders.ENTER_NAME}
+                    {...field}
+                  />
                 )}
               />
             </Grid>
 
             <Grid item xs={12} md={3}>
-              <CustomLabel label="Phone Number" />
+              <CustomLabel label={PatientFormLabels.EMERGENCY_PHONE} />
               <Controller
                 control={control}
                 name="emergencyPhone"
                 render={({ field }) => (
-                  <CustomInput placeholder="Enter Phone Number" {...field} />
+                  <CustomInput
+                    placeholder={PatientFormPlaceholders.ENTER_PHONE_NUMBER}
+                    {...field}
+                  />
                 )}
               />
             </Grid>
@@ -598,21 +669,23 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
             <Grid item xs={12} md={3}>
               <Grid container alignItems="flex-start" spacing={2}>
                 <Grid item xs={9}>
-                  <CustomLabel label="Relationship with Patient" />
+                  <CustomLabel label={PatientFormLabels.RELATIONSHIP} />
                   <Controller
                     control={control}
                     name="relationship"
                     render={({ field }) => (
                       <CustomSelect
-                        placeholder="Select Relationship"
+                        placeholder={
+                          PatientFormPlaceholders.SELECT_RELATIONSHIP
+                        }
                         {...field}
                         value={field.value || ""}
-                        items={[
-                          { value: "spouse", label: "Spouse" },
-                          { value: "parent", label: "Parent" },
-                          { value: "child", label: "Child" },
-                          { value: "other", label: "Other" },
-                        ]}
+                        items={Object.entries(
+                          PatientRelationshipWithPatientOptions
+                        ).map(([value, label]) => ({
+                          value: value.toLowerCase(),
+                          label,
+                        }))}
                       />
                     )}
                   />
@@ -628,7 +701,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                         )}
                       />
                     }
-                    label="Responsible Party"
+                    label={PatientFormLabels.RESPONSIBLE_PARTY}
                     sx={{
                       whiteSpace: "nowrap",
                       mt: 3,
@@ -655,7 +728,9 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
           mt={2}
         >
           <Grid>
-            <Typography variant="bodyMedium4">Clinician Information</Typography>
+            <Typography variant="bodyMedium4">
+              {PatientFormSectionTitles.CLINICIAN_INFORMATION}
+            </Typography>
           </Grid>
           <Grid mr={2}>
             <KeyboardArrowUpOutlinedIcon />
@@ -664,14 +739,16 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
         <Grid border="1px solid #E0E0E0" p={2} borderRadius={2}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={3}>
-              <CustomLabel label="Primary Clinician" />
+              <CustomLabel label={PatientFormLabels.PRIMARY_CLINICIAN} />
               <Controller
                 control={control}
                 name="emergencyName"
                 render={({ field }) => (
                   <CustomSelect
                     items={[]}
-                    placeholder="Select Primary Clinician"
+                    placeholder={
+                      PatientFormPlaceholders.SELECT_PRIMARY_CLINICIAN
+                    }
                     {...field}
                     value={field.value || ""}
                   />
@@ -680,14 +757,16 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
             </Grid>
 
             <Grid item xs={12} md={3}>
-              <CustomLabel label="Secondary Clinician" />
+              <CustomLabel label={PatientFormLabels.SECONDARY_CLINICIAN} />
               <Controller
                 control={control}
                 name="emergencyPhone"
                 render={({ field }) => (
                   <CustomSelect
                     items={[]}
-                    placeholder="Select Secondary Clinician"
+                    placeholder={
+                      PatientFormPlaceholders.SELECT_SECONDARY_CLINICIAN
+                    }
                     {...field}
                     value={field.value || ""}
                   />
@@ -709,7 +788,9 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
           mt={2}
         >
           <Grid>
-            <Typography variant="bodyMedium4">Privacy Consent</Typography>
+            <Typography variant="bodyMedium4">
+              {PatientFormSectionTitles.PRIVACY_CONSENT}
+            </Typography>
           </Grid>
           <Grid mr={2}>
             <KeyboardArrowUpOutlinedIcon />
@@ -735,10 +816,9 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                       )}
                     />
                   }
-                  label="Phone Appointment Reminders"
+                  label={PatientFormLabels.PHONE_APPOINTMENT_REMINDERS}
                   sx={{
                     whiteSpace: "nowrap",
-
                     "& .MuiFormControlLabel-label": {
                       whiteSpace: "nowrap",
                     },
@@ -765,10 +845,9 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                       )}
                     />
                   }
-                  label="Email Appointment Reminders"
+                  label={PatientFormLabels.EMAIL_APPOINTMENT_REMINDERS}
                   sx={{
                     whiteSpace: "nowrap",
-
                     "& .MuiFormControlLabel-label": {
                       whiteSpace: "nowrap",
                     },
@@ -795,10 +874,14 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
             boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.05)",
           }}
         >
-          <CustomButton variant="outline" label="Cancel" isSubmitButton />
+          <CustomButton
+            variant="outline"
+            label={PatientFormButtons.CANCEL}
+            isSubmitButton
+          />
           <CustomButton
             variant="filled"
-            label="Save & Next"
+            label={PatientFormButtons.SAVE_AND_NEXT}
             type="submit"
             changePadding={false}
           />
