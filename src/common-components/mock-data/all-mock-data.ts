@@ -463,3 +463,128 @@ export const feeScheduleMockData = [
     ],
   },
 ];
+
+export interface PatientData {
+  mrn: string;
+  patientName: string;
+  dob: string;
+  emailId: string;
+  contactNumber: string;
+  clinician: string;
+  memberSince: string;
+  paymentMethod: string;
+  status: "NEW" | "ACTIVE" | "DISCHARGED";
+}
+
+export const PATIENT_MOCK_DATA: PatientData[] = [
+  {
+    mrn: "AS2456",
+    patientName: "Robert Fox",
+    dob: "1/31/14",
+    emailId: "tg03@example.com",
+    contactNumber: "(603) 555-0123",
+    clinician: "Theresa Webb (Psychiatrist)",
+    memberSince: "6/21/19",
+    paymentMethod: "Self Pay",
+    status: "NEW",
+  },
+  {
+    mrn: "SF5132",
+    patientName: "Eleanor Pena",
+    dob: "8/2/19",
+    emailId: "js02@example.com",
+    contactNumber: "(217) 555-0113",
+    clinician: "Kathryn Murphy (Custodian)",
+    memberSince: "1/31/14",
+    paymentMethod: "United Healthcare",
+    status: "ACTIVE",
+  },
+  {
+    mrn: "DF5686",
+    patientName: "Marvin McKinney",
+    dob: "1/28/17",
+    emailId: "js02@example.com",
+    contactNumber: "(208) 555-0112",
+    clinician: "Jacob Jones (Supervisor)",
+    memberSince: "9/4/12",
+    paymentMethod: "United Healthcare",
+    status: "DISCHARGED",
+  },
+  {
+    mrn: "RT4521",
+    patientName: "Arlene McCoy",
+    dob: "8/16/13",
+    emailId: "sf08@example.com",
+    contactNumber: "(239) 555-0108",
+    clinician: "Eleanor Pena(Psychiatrist)",
+    memberSince: "7/11/19",
+    paymentMethod: "Self Pay",
+    status: "ACTIVE",
+  },
+  {
+    mrn: "HJ4586",
+    patientName: "Ralph Edwards",
+    dob: "7/11/19",
+    emailId: "tg03@example.com",
+    contactNumber: "(629) 555-0129",
+    clinician: "Marvin McKinney (Custodian)",
+    memberSince: "7/27/13",
+    paymentMethod: "United Healthcare",
+    status: "DISCHARGED",
+  },
+  {
+    mrn: "WK7823",
+    patientName: "Cameron Wilson",
+    dob: "3/15/15",
+    emailId: "cw15@example.com",
+    contactNumber: "(445) 555-0178",
+    clinician: "Sarah Johnson (Therapist)",
+    memberSince: "4/30/20",
+    paymentMethod: "Blue Cross",
+    status: "ACTIVE",
+  },
+  {
+    mrn: "LM9234",
+    patientName: "Diana Martinez",
+    dob: "11/22/16",
+    emailId: "dm22@example.com",
+    contactNumber: "(556) 555-0192",
+    clinician: "Michael Davis (Psychiatrist)",
+    memberSince: "8/15/21",
+    paymentMethod: "Aetna",
+    status: "NEW",
+  },
+  {
+    mrn: "PQ4567",
+    patientName: "Thomas Anderson",
+    dob: "5/7/18",
+    emailId: "ta07@example.com",
+    contactNumber: "(667) 555-0145",
+    clinician: "Jessica Williams (Supervisor)",
+    memberSince: "2/28/22",
+    paymentMethod: "Self Pay",
+    status: "ACTIVE",
+  },
+  {
+    mrn: "BC8912",
+    patientName: "Sophia Chen",
+    dob: "9/30/12",
+    emailId: "sc30@example.com",
+    contactNumber: "(778) 555-0167",
+    clinician: "Robert Chen (Therapist)",
+    memberSince: "10/15/20",
+    paymentMethod: "Cigna",
+    status: "DISCHARGED",
+  },
+  {
+    mrn: "XY3456",
+    patientName: "James Taylor",
+    dob: "6/25/17",
+    emailId: "jt25@example.com",
+    contactNumber: "(889) 555-0134",
+    clinician: "Amara Patel (Psychiatrist)",
+    memberSince: "3/10/21",
+    paymentMethod: "Medicare",
+    status: "ACTIVE",
+  },
+];

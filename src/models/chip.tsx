@@ -60,7 +60,8 @@ export type StatusEnum =
   | "DISCHARGED"
   | "DISMISSED"
   | "SIGNED_OFF"
-  | "NOT_AVAILABLE";
+  | "NOT_AVAILABLE"
+  | "NEW";
 
 export const statusLabels = {
   DUPLICATE: "Duplicate",
@@ -118,6 +119,7 @@ export const statusLabels = {
   DISMISSED: "Dismissed",
   SIGNED_OFF: "Signed Off",
   NOT_AVAILABLE: "Not Available",
+  NEW: "New",
 };
 
 export const statusLabelsUppercase = {
@@ -176,6 +178,7 @@ export const statusLabelsUppercase = {
   DISMISSED: "DISMISSED",
   SIGNED_OFF: "SIGNED OFF",
   NOT_AVAILABLE: "NOT AVAILABLE",
+  NEW: "NEW",
 };
 
 const typeColorMap = {
@@ -188,32 +191,32 @@ const typeColorMap = {
   FAILED: "#B42318",
   REJECTED: "#B42318",
   HIGH: "#B42318",
-  UPCOMING: "#1B5984",
-  STANDARD: "#1B5984",
+  UPCOMING: "#0068FF",
+  STANDARD: "#0068FF",
   PENDING: "#B54708",
   IN_PROGRESS: "#B54708",
   ARCHIVE: "#B54708",
   HOLD: "#B54708",
   RESCHEDULE: "#B54708",
   CHECKED_OUT: "#B54708",
-  COMPLETE: "#027A48",
-  PAID: "#027A48",
-  ABLE_TO_CHECK_IN: "#027A48",
-  SUCCESS: "#027A48",
-  VERIFIED: "#027A48",
-  SUBMITTED: "#027A48",
-  RECEIVED: "#027A48",
+  COMPLETE: "#049B22",
+  PAID: "#049B22",
+  ABLE_TO_CHECK_IN: "#049B22",
+  SUCCESS: "#049B22",
+  VERIFIED: "#049B22",
+  SUBMITTED: "#049B22",
+  RECEIVED: "#049B22",
   CLOSE: "#565656",
   NO_SHOW_FROM_PROVIDER: "#565656",
   NO_SHOW_FROM_PATIENT: "#565656",
-  CHECKED_IN: "#027A48",
-  NORMAL: "027A48",
+  CHECKED_IN: "#049B22",
+  NORMAL: "#049B22",
   BELOW_NORMAL: "#B54708",
   OVERWEIGHT: "#B42318",
-  ACTIVE: "#027A48",
+  ACTIVE: "#049B22",
   IN_ACTIVE: "#B42318",
   IN_EXAM: "#B54708",
-  CONFIRMED: "#027A48",
+  CONFIRMED: "#049B22",
   CANCELLED: "#B42318",
   NOT_VERIFIED: "#B42318",
   UNPAID: "#B42318",
@@ -222,7 +225,7 @@ const typeColorMap = {
   CHARGEBACK: "#B54708",
   EXPIRED: "#565656",
   APPROVED_WITH_CONDITION: "#B54708",
-  APPROVED: "#027A48",
+  APPROVED: "#049B22",
   PENDING_FROM_PROVIDER: "#B54708",
   PENDING_FROM_PATIENT: "#B54708",
   CONSENT_PENDING: "#B54708",
@@ -230,6 +233,8 @@ const typeColorMap = {
   NO_SHOW: "#B54708",
   COMPLETED: "#B54708",
   SCREENERS_PENDING: "#B54708",
+  DISCHARGED: "#B42318",
+  NEW: "#0068FF",
 };
 
 const typeBackgroundMap = {
@@ -243,8 +248,8 @@ const typeBackgroundMap = {
   REJECTED: "#FEF3F2",
   NOT_VERIFIED: "#FEF3F2",
   HIGH: "#FEF3F2",
-  UPCOMING: "#EBF4FA",
-  STANDARD: "#EBF4FA",
+  UPCOMING: "#EEF7FE",
+  STANDARD: "#EEF7FE",
   PENDING: "#FFFAEB",
   IN_PROGRESS: "#FFFAEB",
   ARCHIVE: "#FFFAEB",
@@ -284,6 +289,8 @@ const typeBackgroundMap = {
   NO_SHOW: "#FFFAEB",
   COMPLETED: "#FFFAEB",
   SCREENERS_PENDING: "#FFFAEB",
+  DISCHARGED: "#FEF3F2",
+  NEW: "#EEF7FE",
 };
 
 export const getColorByType = (type: StatusEnum) => {

@@ -64,3 +64,70 @@ export const feeScheduleTableHeaders = [
   { id: "codeType", label: "Code Type", type: "text" },
   { id: "action", label: "Action", type: "action" },
 ];
+
+export const patientTableHeaders = [
+  { id: "mrn", label: "MRN", type: "text" },
+  { id: "patientName", label: "Patient Name", type: "patientName" },
+  { id: "dob", label: "DOB", type: "text" },
+  { id: "emailId", label: "Email ID", type: "text" },
+  { id: "contactNumber", label: "Contact Number", type: "text" },
+  { id: "clinician", label: "Clinician", type: "text" },
+  { id: "memberSince", label: "Member Since", type: "text" },
+  { id: "paymentMethod", label: "Payment Method", type: "text" },
+  { id: "status", label: "Status", type: "chip" },
+  { id: "action", label: "Action", type: "action" },
+];
+
+export const PATIENT_TABLE_HEADERS = [
+  {
+    id: "mrn",
+    label: "MRN",
+    type: "text",
+  },
+  {
+    id: "patientName",
+    label: "Patient Name",
+    type: "text",
+  },
+  {
+    id: "dob",
+    label: "DOB",
+    type: "text",
+  },
+  {
+    id: "emailId",
+    label: "Email ID",
+    type: "text",
+  },
+  {
+    id: "contactNumber",
+    label: "Contact Number",
+    type: "text",
+  },
+  {
+    id: "clinician",
+    label: "Clinician",
+    type: "text",
+  },
+  {
+    id: "memberSince",
+    label: "Member Since",
+    type: "text",
+  },
+  {
+    id: "paymentMethod",
+    label: "Payment Method",
+    type: "text",
+  },
+  {
+    id: "status",
+    label: "Status",
+    type: "chip",
+  },
+  {
+    id: "action",
+    label: "Action",
+    sortable: false,
+    type: "action",
+  },
+];

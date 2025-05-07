@@ -44,6 +44,7 @@ import {
   tableBodyStyles,
   tableBorder,
   tableHeadStyles,
+  patientNameStyles,
 } from "./widgets/tablestyles";
 
 interface EnhancedTableProps {
@@ -81,6 +82,7 @@ interface CustomisedTableProps {
   handleEditService?: (rowData: any) => void;
   setHeight?: string;
   pageDisplaySize?: number | string;
+  patientName?: string;
 }
 
 const EnhancedTableHead = (props: EnhancedTableProps) => {
@@ -146,6 +148,7 @@ function CustomisedTable(props: CustomisedTableProps) {
     setHeight,
     pageDisplaySize,
     page,
+    patientName,
   } = props;
   const { NO_RECORDS_FOUND, NEXT, PREV } = commonComponentConstant;
 
@@ -241,7 +244,7 @@ function CustomisedTable(props: CustomisedTableProps) {
                       cell.type === "action" ? (
                         <TableCell
                           sx={tableBodyStyles}
-                          align="center"
+                          align="start"
                           key={index}
                         >
                           <ActionButton
@@ -374,6 +377,16 @@ function CustomisedTable(props: CustomisedTableProps) {
                               </Typography>
                             </Box>
                           )}
+                        </TableCell>
+                      ) : cell.type === "patientName" ||
+                        cell.id === patientName ? (
+                        <TableCell
+                          sx={patientNameStyles}
+                          align="left"
+                          key={index}
+                          onClick={() => handleView && handleView(row)}
+                        >
+                          {row[cell.id] || "-"}
                         </TableCell>
                       ) : cell.id === "hospitalName" &&
                         row[cell.id]?.length > 9 ? (
@@ -516,13 +529,20 @@ function CustomisedTable(props: CustomisedTableProps) {
                   {commonComponentConstant.PER_PAGE}
                 </Typography>
               </Grid>
-              <Grid>
+              <Grid sx={{ minWidth: "60px" }}>
                 <CustomSelect
                   placeholder=""
                   value={pageDisplaySize}
                   items={PaginationOptions}
                   onChange={(e) => setPageDisplaySize(e.target.value)}
                   tablepagination
+                  sx={{
+                    "& .MuiSelect-select": {
+                      minWidth: "150px",
+                      width: "100%",
+                      height: "22px",
+                    },
+                  }}
                 />
               </Grid>
             </Box>

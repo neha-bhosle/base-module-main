@@ -97,7 +97,7 @@ const OtherSettingsMasterTabs = () => {
               </Grid>
               <Grid>
                 <CustomButton
-                  variant="editButton"
+                  variant="filled"
                   label={SettingsFormConstants.ADD_NEW_FEE_SCHEDULE}
                   startIcon={<AddIcon />}
                   onClick={() => setAddFeeScheduleDialog(true)}

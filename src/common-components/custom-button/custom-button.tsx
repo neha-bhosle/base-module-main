@@ -50,7 +50,7 @@ function CustomButton(props: CustomButtonProps) {
       baseStyle = transformTextNone;
     }
 
-    if (props.label === "Save") {
+    if (props.label === "Save" || props.label === "Save & Next") {
       return {
         ...baseStyle,
         borderRadius: "3px",
@@ -71,7 +71,7 @@ function CustomButton(props: CustomButtonProps) {
       return {
         ...baseStyle,
         borderRadius: "4px",
-        padding: "9px 8px",
+        padding: "9px 17px",
       };
     }
 

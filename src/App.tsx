@@ -6,11 +6,11 @@ import Draggable from "react-draggable";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import "./App.css";
-import SnackbarAlert from "./common-components/alert/alert";
+import CustomSnackbar from "./common-components/alert/alert";
 import Loader from "./common-components/loader/loader";
 import store from "./redux/store";
-import { router } from "./routes/routes";
 import { removeDataFromLocalStorage } from "./utils/localStorage";
+import { router } from "./routes/routes";
 
 function App() {
   const queryClient = new QueryClient({
@@ -112,7 +112,7 @@ function App() {
         <Provider store={store}>
           <RouterProvider router={router} />
           <Loader />
-          <SnackbarAlert />
+          <CustomSnackbar />
         </Provider>
       </QueryClientProvider>
     </Box>

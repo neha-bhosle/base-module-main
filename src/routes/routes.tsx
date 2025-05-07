@@ -23,6 +23,8 @@ import Roles from "../pages/apps/provider-portal/settings/roles/roles-settings";
 import Clinician from "../pages/apps/provider-portal/settings/Users/clinician/clinician";
 import Staff from "../pages/apps/provider-portal/settings/Users/staff/staff";
 import UserTabs from "../pages/apps/provider-portal/settings/Users/user-tabs";
+import Patients from "../pages/apps/provider-portal/patients/patients";
+import AddPatients from "../pages/apps/provider-portal/patients/add-patients";
 export const router = createBrowserRouter([
   { path: "", element: <Navigate to={"/auth/login"} /> },
   {
@@ -51,6 +53,14 @@ export const router = createBrowserRouter([
       // </PrivateRoute>
     ),
     children: [
+      {
+        path: "patients",
+        element: <Patients />,
+      },
+      {
+        path: "add-patient",
+        element: <AddPatients />,
+      },
       {
         path: "settings-tabs",
         element: <Outlet />,

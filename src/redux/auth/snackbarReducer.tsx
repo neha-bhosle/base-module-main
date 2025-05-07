@@ -1,32 +1,39 @@
 import { AlertColor } from "@mui/material";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type SnackbarState = {
   isSnackbarOpen: boolean;
-  severity?: AlertColor;
-  message?: string;
+  severity: AlertColor;
+  message: string;
+  messageTwo: string;
 };
 
 const initialState: SnackbarState = {
   isSnackbarOpen: false,
-  message: ""
+  severity: "success",
+  message: "",
+  messageTwo: "",
 };
 
 const snackbarSlice = createSlice({
   name: "snackbar",
   initialState,
   reducers: {
-    showSnackbarAction: (state, action) => {
-      state.isSnackbarOpen = action.payload.isSnackbarOpen;
-      state.message = action.payload.message;
-      state.severity = action.payload.severity;
+    showSnackbarAction: (
+      state,
+      action: PayloadAction<Partial<SnackbarState>>
+    ) => {
+      state.isSnackbarOpen = true;
+      if (action.payload.message) state.message = action.payload.message;
+      if (action.payload.messageTwo)
+        state.messageTwo = action.payload.messageTwo;
+      if (action.payload.severity) state.severity = action.payload.severity;
     },
     hideSnackbarAction: (state) => {
       state.isSnackbarOpen = false;
-    }
-  }
+    },
+  },
 });
 
-const snackbarReducer = snackbarSlice.reducer;
-export default snackbarReducer;
 export const snackbarAction = snackbarSlice.actions;
+export default snackbarSlice.reducer;

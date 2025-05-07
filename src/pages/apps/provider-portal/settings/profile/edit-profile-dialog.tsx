@@ -40,12 +40,14 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
     },
     resolver: yupResolver(EditProfileSchema),
   });
-  const [profileImage, setProfileImage] = useState<string | ArrayBuffer | null>(
-    null
-  );
+  const [profileImage, setProfileImage] = useState<string | null>(null);
 
-  const handleSetImage = (image: string | ArrayBuffer | null) => {
-    setProfileImage(image);
+  const handleSetImage = (file: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfileImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
   };
 
   const onSubmit = () => {};
@@ -80,14 +82,9 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                   }}
                 >
                   <UploadImage
-                    customStyle={{
-                      width: "210px",
-                      height: "210px",
-                      marginBottom: "5px",
-                    }}
-                    imageUrl={profileImage as string}
-                    handleSetImage={handleSetImage}
-                    showRemove={true}
+                    size={210}
+                    initialImage={profileImage as string}
+                    onImageChange={handleSetImage}
                   />
                   <Typography
                     variant="bodyRegular6"

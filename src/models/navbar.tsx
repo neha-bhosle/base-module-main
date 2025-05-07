@@ -7,7 +7,7 @@ export const providerNavbar = [
   {
     label: "Patient",
     type: "text",
-    // route: "patients",
+    route: "patients",
   },
   {
     label: "Calendar",

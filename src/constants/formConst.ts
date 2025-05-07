@@ -89,7 +89,7 @@ export enum SettingsFormLabels {
   // Section Titles
   PRACTICE_INFORMATION = "Practice Information",
   BILLING_ADDRESS = "Billing Address",
-  PRACTICE="Practice",
+  PRACTICE = "Practice",
   // Practice Information Fields
   CLINIC_NAME = "Clinic Name",
   CLINIC_NPI_NUMBER = "Clinic NPI Number",
@@ -117,7 +117,7 @@ export enum SettingsFormPlaceholders {
   ENTER_EMAIL_ID = "Enter Email ID",
   ENTER_TAXONOMY = "Enter Taxonomy",
   OTHER_SETTINGS = "Other Settings",
-  PRACTICE="Practice",
+  PRACTICE = "Practice",
 
   // Billing Address Fields
   ENTER_ADDRESS_LINE_1 = "Enter address line 1",
@@ -322,6 +322,7 @@ export enum SettingsFormConstants {
   OTHER_SETTINGS = "Other Settings",
   SAVE = "Save",
   CANCEL = "Cancel",
+  ADD_NEW_PATIENT = "Add New Patient",
 }
 
 export enum FeeScheduleFormLabels {
@@ -334,4 +335,141 @@ export enum FeeScheduleFormPlaceholders {
   SELECT_PROCEDURE_CODE = "Select Procedure Code",
   ENTER_RATE = "Enter Rate",
   SELECT_CODE_TYPE = "Select Code Type",
+}
+
+export enum PatientFormLabels {
+  PATIENT_INFORMATION = "Patient Information",
+  INSURANCE_NAME = "Insurance Name",
+  MEMBER_ID = "Member ID",
+  GROUP_ID = "Group ID",
+  PATIENT_RELATIONSHIP = "Patient Relationship with Subscriber",
+  FIRST_NAME = "First Name",
+  MIDDLE_NAME = "Middle Name",
+  LAST_NAME = "Last Name",
+  PREFERRED_NAME = "Preferred Name",
+  DATE_OF_BIRTH = "Date of Birth",
+  LEGAL_SEX = "Legal Sex",
+  GENDER_IDENTITY = "Gender Identity",
+  EMAIL_ID = "Email ID",
+  PHONE_NUMBER = "Phone Number",
+  ETHNICITY = "Ethnicity",
+  RACE = "Race",
+  PREFERRED_LANGUAGE = "Preferred Language",
+  ADDRESS_LINE_1 = "Address Line 1",
+  ADDRESS_LINE_2 = "Address Line 2",
+  CITY = "City",
+  STATE = "State",
+  ZIPCODE = "Zipcode",
+  EMERGENCY_NAME = "Name",
+  EMERGENCY_PHONE = "Phone Number",
+  RELATIONSHIP = "Relationship with Patient",
+  PRIMARY_CLINICIAN = "Primary Clinician",
+  SECONDARY_CLINICIAN = "Secondary Clinician",
+}
+
+export enum PatientFormPlaceholders {
+  SELECT_INSURANCE_NAME = "Select Insurance Name",
+  ENTER_MEMBER_ID = "Enter Member ID",
+  ENTER_GROUP_ID = "Enter Group ID",
+  ENTER_FIRST_NAME = "Enter First Name",
+  ENTER_MIDDLE_NAME = "Enter Middle Name",
+  ENTER_LAST_NAME = "Enter Last Name",
+  ENTER_PREFERRED_NAME = "Enter Preferred Name",
+  SELECT_DATE = "Select Date",
+  SELECT_LEGAL_SEX = "Select Legal Sex",
+  SELECT_GENDER_IDENTITY = "Select Gender Identity",
+  ENTER_EMAIL_ID = "Enter Email ID",
+  ENTER_PHONE_NUMBER = "Enter Phone Number",
+  SELECT_ETHNICITY = "Select Ethnicity",
+  ENTER_RACE = "Enter Race",
+  SELECT_PREFERRED_LANGUAGE = "Select Preferred Language",
+  ENTER_ADDRESS_LINE_1 = "Enter Address Line 1",
+  ENTER_ADDRESS_LINE_2 = "Enter Address Line 2",
+  ENTER_CITY = "Enter City",
+  SELECT_STATE = "Select State",
+  ENTER_ZIPCODE = "Enter Zipcode",
+  ENTER_NAME = "Enter Name",
+  SELECT_RELATIONSHIP = "Select Relationship",
+  SELECT_PRIMARY_CLINICIAN = "Select Primary Clinician",
+  SELECT_SECONDARY_CLINICIAN = "Select Secondary Clinician",
+}
+
+export enum PatientFormSectionTitles {
+  PATIENT_INFORMATION = "Patient Information",
+  SUBSCRIBER_DETAILS = "Subscriber Details",
+  UPLOAD_INSURANCE_CARD = "Upload Insurance Card",
+  EMERGENCY_CONTACT = "Emergency Contact Information",
+  GUARDIAN_INFORMATION = "Guardian Information",
+  CLINICIAN_INFORMATION = "Clinician Information",
+  PRIVACY_CONSENT = "Privacy Consent",
+}
+
+export enum PatientFormButtons {
+  SAVE = "Save",
+  CANCEL = "Cancel",
+  SAVE_AND_NEXT = "Save & Next",
+  IMPORT_CLIENTS = "Import Clients",
+}
+
+export enum PatientFormCheckboxLabels {
+  RESPONSIBLE_PARTY = "Responsible Party",
+  SAME_AS_EMERGENCY = "Same as Emergency Contact",
+  PHONE_REMINDERS = "Phone Appointment Reminders",
+  EMAIL_REMINDERS = "Email Appointment Reminders",
+}
+
+export enum PatientRelationshipOptions {
+  SELF = "Self",
+  SPOUSE = "Spouse",
+  CHILD = "Child",
+  DEPENDENT = "Dependent",
+}
+
+export enum PatientGenderOptions {
+  MALE = "Male",
+  FEMALE = "Female",
+  NON_BINARY = "Non-binary",
+  OTHER = "Other",
+}
+
+export enum PatientEthnicityOptions {
+  HISPANIC = "Hispanic",
+  NON_HISPANIC = "Non-Hispanic",
+}
+
+export enum PatientLanguageOptions {
+  ENGLISH = "English",
+  SPANISH = "Spanish",
+  FRENCH = "French",
+}
+
+export enum PatientRelationshipWithPatientOptions {
+  SPOUSE = "Spouse",
+  PARENT = "Parent",
+  CHILD = "Child",
+  OTHER = "Other",
+}
+
+export enum PatientInsuranceOptions {
+  AETNA = "Aetna",
+  BLUE_CROSS = "Blue Cross",
+  CIGNA = "Cigna",
+  UNITED = "United Healthcare",
+}
+
+export enum PatientTableLabels {
+  NAME = "Name",
+  SEARCH = "Search",
+}
+
+export enum PatientTemplateActions {
+  DOWNLOAD_TEMPLATE = "Download Template",
+  TEMPLATE_SUCCESS_MESSAGE = "The CSV file has been successfully imported, containing records for 180 patients.",
+  TEMPLATE = "Template Downloaded Successfully",
+}
+
+export enum FileUploadActions {
+  DROP_FILES = "Drop the files here ...Only pdf, png or jpeg.",
+  CLICK_TO_UPLOAD = "Click here to upload",
+  OR_DRAG_AND_DROP = "or drag and drop",
 }

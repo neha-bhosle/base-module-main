@@ -62,7 +62,7 @@ export default function SettingsTab() {
         mb={1}
       >
         <Grid sx={{ cursor: "pointer" }}>
-          <WestOutlinedIcon />
+          <WestOutlinedIcon onClick={() => navigate("/admin/settings-tabs")} />
         </Grid>
         <Grid>
           {" "}
