@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
 import CustomButton from "../../../../common-components/custom-button/custom-button";
-import { InsuranceForm } from "./insurance-form";
 import { PatientFormButtons } from "../../../../constants/formConst";
+import { AddPatientInsuranceSchema } from "./add-patients-schema";
+import { InsuranceForm } from "./insurance-form";
 
 export interface FormData {
   paymentMethod: string;
@@ -25,38 +25,6 @@ export interface FormData {
   lastName?: string;
   dateOfBirth?: string;
 }
-
-const schema = yup.object().shape({
-  paymentMethod: yup.string().required("Payment method is required"),
-  insuranceName: yup.string().when("paymentMethod", {
-    is: "insurance",
-    then: (schema) => schema.required("Insurance name is required"),
-  }),
-  memberId: yup.string().when("paymentMethod", {
-    is: "insurance",
-    then: (schema) => schema.required("Member ID is required"),
-  }),
-  groupId: yup.string().when("paymentMethod", {
-    is: "insurance",
-    then: (schema) => schema.required("Group ID is required"),
-  }),
-  patientRelationship: yup.string().when("paymentMethod", {
-    is: "insurance",
-    then: (schema) => schema.required("Patient relationship is required"),
-  }),
-  firstName: yup.string().when("paymentMethod", {
-    is: "insurance",
-    then: (schema) => schema.required("First name is required"),
-  }),
-  lastName: yup.string().when("paymentMethod", {
-    is: "insurance",
-    then: (schema) => schema.required("Last name is required"),
-  }),
-  dateOfBirth: yup.string().when("paymentMethod", {
-    is: "insurance",
-    then: (schema) => schema.required("Date of birth is required"),
-  }),
-});
 
 const InsuranceTab = () => {
   const [showSecondaryInsurance, setShowSecondaryInsurance] = useState(false);
@@ -77,7 +45,7 @@ const InsuranceTab = () => {
       lastName: "",
       dateOfBirth: "",
     } as FormData,
-    resolver: yupResolver<FormData>(schema),
+    resolver: yupResolver<FormData>(AddPatientInsuranceSchema),
   });
 
   const paymentMethod = watch("paymentMethod");

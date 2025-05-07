@@ -2,24 +2,23 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import { Checkbox, FormControlLabel, Grid, Typography } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
 import CustomButton from "../../../../common-components/custom-button/custom-button";
+import CustomDatePicker from "../../../../common-components/custom-date-picker/custom-date-picker";
 import CustomInput from "../../../../common-components/custom-input/customInput";
 import CustomSelect from "../../../../common-components/custom-select/customSelect";
 import CustomLabel from "../../../../common-components/customLabel/customLabel";
 import ImageUpload from "../../../../common-components/image-upload/image-upload";
-import CustomDatePicker from "../../../../common-components/custom-date-picker/custom-date-picker";
 import {
+  PatientEthnicityOptions,
+  PatientFormButtons,
   PatientFormLabels,
   PatientFormPlaceholders,
   PatientFormSectionTitles,
-  PatientFormButtons,
   PatientGenderOptions,
-  PatientEthnicityOptions,
   PatientLanguageOptions,
   PatientRelationshipWithPatientOptions,
-  ValidationMessages,
 } from "../../../../constants/formConst";
+import { AddPatientSchema } from "./add-patients-schema";
 
 interface FormData {
   profileImage?: File | null;
@@ -49,39 +48,6 @@ interface FormData {
 interface DemographicTabProps {
   onNext: () => void;
 }
-
-const schema = yup.object().shape({
-  profileImage: yup.mixed().nullable().optional(),
-  firstName: yup.string().required("First name is required"),
-  middleName: yup.string().optional(),
-  lastName: yup.string().required("Last name is required"),
-  preferredName: yup.string().optional(),
-  dateOfBirth: yup.string().required("Date of birth is required"),
-  legalSex: yup.string().optional(),
-  genderIdentity: yup.string().optional(),
-  phoneNumber: yup.string().required("Phone number is required"),
-  emailId: yup
-    .string()
-    .required(ValidationMessages.EmailRequired)
-    .transform((value) => value?.toLowerCase())
-    .matches(/^\w+([\.-]?\w+)*(\+\w+)?@\w+([\.-]?\w+)*(\.\w{2,})$/, {
-      message: ValidationMessages.ValidEmailRequired,
-    })
-    .required(ValidationMessages.ValidEmailRequired)
-    .max(255, ValidationMessages.EmailMaxLength),
-  ethnicity: yup.string().optional(),
-  race: yup.string().optional(),
-  preferredLanguage: yup.string().optional(),
-  addressLine1: yup.string().required("Address Line 1 is required"),
-  addressLine2: yup.string().optional(),
-  city: yup.string().required("City is required"),
-  state: yup.string().required("State is required"),
-  zipcode: yup.string().required("Zipcode is required"),
-  emergencyName: yup.string().optional(),
-  emergencyPhone: yup.string().optional(),
-  relationship: yup.string().optional(),
-  isResponsibleParty: yup.boolean().optional(),
-}) as yup.ObjectSchema<FormData>;
 
 const DemographicTab = ({ onNext }: DemographicTabProps) => {
   const {
@@ -114,7 +80,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
       relationship: "",
       isResponsibleParty: false,
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(AddPatientSchema),
   });
 
   const handleImageChange = (file: File) => {
@@ -321,7 +287,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                       <CustomInput
                         placeholder={PatientFormPlaceholders.ENTER_PHONE_NUMBER}
                         {...field}
-                        isNumeric
+                        isNumeric={true}
                         hasError={!!errors.phoneNumber}
                         errorMessage={errors.phoneNumber?.message}
                       />
@@ -481,6 +447,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                         {...field}
                         hasError={!!errors.zipcode}
                         errorMessage={errors.zipcode?.message}
+                        isNumeric={true}
                       />
                     )}
                   />

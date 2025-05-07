@@ -105,6 +105,8 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
                   {...field}
                   hasError={!!errors.contactNumber}
                   errorMessage={errors.contactNumber?.message}
+                  isNumeric={true}
+
                 />
               )}
             />
@@ -121,6 +123,8 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
                   {...field}
                   hasError={!!errors.faxNumber}
                   errorMessage={errors.faxNumber?.message}
+                  isNumeric={true}
+
                 />
               )}
             />
@@ -205,6 +209,8 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
                   {...field}
                   hasError={!!errors.zipCode}
                   errorMessage={errors.zipCode?.message}
+                  isNumeric={true}
+
                 />
               )}
             />

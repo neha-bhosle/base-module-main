@@ -108,6 +108,8 @@ const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
                   {...field}
                   hasError={!!errors.contactNumber}
                   errorMessage={errors.contactNumber?.message}
+                  isNumeric={true}
+
                 />
               )}
             />

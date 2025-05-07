@@ -151,6 +151,8 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
                   {...field}
                   hasError={!!errors.contactNumber}
                   errorMessage={errors.contactNumber?.message}
+                  isNumeric={true}
+
                 />
               )}
             />
@@ -167,6 +169,8 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
                   {...field}
                   hasError={!!errors.npiNumber}
                   errorMessage={errors.npiNumber?.message}
+                  isNumeric={true}
+
                 />
               )}
             />

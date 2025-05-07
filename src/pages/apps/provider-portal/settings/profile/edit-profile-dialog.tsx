@@ -141,7 +141,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                           {...field}
                           hasError={!!errors.clinicNpiNumber}
                           errorMessage={errors.clinicNpiNumber?.message}
-                          isNumeric={false}
+                          isNumeric={true}
                         />
                       )}
                     />
@@ -176,7 +176,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                           {...field}
                           hasError={!!errors.taxNumber}
                           errorMessage={errors.taxNumber?.message}
-                          isNumeric={false}
+                          isNumeric={true}
                         />
                       )}
                     />
@@ -198,7 +198,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                           {...field}
                           hasError={!!errors.contactNumber}
                           errorMessage={errors.contactNumber?.message}
-                          isNumeric={false}
+                          isNumeric={true}
                         />
                       )}
                     />
@@ -350,8 +350,8 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                         {...field}
                         hasError={!!errors.zipCode}
                         errorMessage={errors.zipCode?.message}
-                        isNumeric={false}
-                      />
+                        isNumeric={true}
+                        />
                     )}
                   />
                 </Grid>

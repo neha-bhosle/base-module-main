@@ -110,6 +110,8 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                       {...field}
                       hasError={!!errors.contactNumber}
                       errorMessage={errors.contactNumber?.message}
+                      isNumeric={true}
+
                     />
                   )}
                 />
@@ -147,6 +149,8 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                       {...field}
                       hasError={!!errors.groupNpiNumber}
                       errorMessage={errors.groupNpiNumber?.message}
+                      isNumeric={true}
+
                     />
                   )}
                 />
@@ -181,6 +185,8 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                       {...field}
                       hasError={!!errors.fax}
                       errorMessage={errors.fax?.message}
+                      isNumeric={true}
+
                     />
                   )}
                 />
@@ -283,6 +289,8 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                       {...field}
                       hasError={!!errors.zipCode}
                       errorMessage={errors.zipCode?.message}
+                      isNumeric={true}
+
                     />
                   )}
                 />
