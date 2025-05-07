@@ -61,7 +61,7 @@ const AddPatients = () => {
   };
 
   const handleBackClick = () => {
-    navigate(-1);
+    navigate("/admin/patients");
   };
 
   const tabsData: TabData[] = [
