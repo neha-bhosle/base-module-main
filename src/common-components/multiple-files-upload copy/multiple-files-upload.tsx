@@ -64,7 +64,7 @@ const MultipleFilesUpload = (props: MultipleFilesUploadProps) => {
       <div
         {...getRootProps()}
         style={{
-          border: `1.5px solid #E0E0E0`,
+          border: `1.5px dashed #E0E0E0`,
           width: "100%",
           padding: "3rem",
           display: "flex",
@@ -80,12 +80,12 @@ const MultipleFilesUpload = (props: MultipleFilesUploadProps) => {
           <Grid width={"100%"} container justifyContent={"center"}>
             <FileUploadOutlinedIcon
               style={{
-                width: "60px",
-                height: "60px",
-                color: theme.palette.grey[500],
-                backgroundColor: "#EBF5FF",
-                padding: "10px 20px",
-                borderRadius: "25px",
+                width: "40px",
+                height: "40px",
+                color: "black",
+                backgroundColor: "#DDF0FF",
+                padding: "7px 12px",
+                borderRadius: "20px",
               }}
             />
           </Grid>

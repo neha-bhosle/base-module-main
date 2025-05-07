@@ -409,6 +409,7 @@ export enum PatientFormButtons {
   CANCEL = "Cancel",
   SAVE_AND_NEXT = "Save & Next",
   IMPORT_CLIENTS = "Import Clients",
+  IMPORT_PATIENTS = "Import Patients",
 }
 
 export enum PatientFormCheckboxLabels {

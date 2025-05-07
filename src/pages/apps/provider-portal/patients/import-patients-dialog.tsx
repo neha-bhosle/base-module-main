@@ -28,6 +28,7 @@ const ImportPatientsDialog = ({
   const dispatch = useDispatch();
 
   const handleDownloadTemplate = () => {
+    handleClose()
     dispatch(
       snackbarAction.showSnackbarAction({
         severity: AlertSeverity.SUCCESS,
@@ -59,7 +60,7 @@ const ImportPatientsDialog = ({
         >
           <Grid item>
             <Typography variant="bodyMedium2">
-              {PatientFormButtons.IMPORT_CLIENTS}
+              {PatientFormButtons.IMPORT_PATIENTS}
             </Typography>
           </Grid>
           <Grid item>
