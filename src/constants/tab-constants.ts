@@ -6,3 +6,8 @@ export const masterTabConst = {
   CONTACTS: "Contacts",
   PRINT_CONFIGURATION: "Print Configuration",
 };
+
+export const CALENDAR = "Calendar";
+export type StringMap2 = {
+  [key: string]: string | boolean | number;
+};

@@ -11,16 +11,20 @@ import {
   LOGIN,
   SET_PASSWORD,
 } from "../models/routesConstant";
-import { PROFILE_TABS } from "../models/routesConstant copy";
+import Availability from "../pages/apps/provider-portal/availability/availability";
+import FeeSchedule from "../pages/apps/provider-portal/other-setting/fee-schedule/fee-schedule";
+import OtherSettingsMasterTabs from "../pages/apps/provider-portal/other-setting/other-settings-master-tabs";
+import AllSettingsPage from "../pages/apps/provider-portal/settings/all-settings-page";
 import Contact from "../pages/apps/provider-portal/settings/contacts/contact";
 import Location from "../pages/apps/provider-portal/settings/location/location";
+import ProfileTabs from "../pages/apps/provider-portal/settings/profile-settings-tabs";
 import Profile from "../pages/apps/provider-portal/settings/profile/profile";
-import ProfileTabs from "../pages/apps/provider-portal/settings/settings-tabs";
 import Roles from "../pages/apps/provider-portal/settings/roles/roles-settings";
 import Clinician from "../pages/apps/provider-portal/settings/Users/clinician/clinician";
 import Staff from "../pages/apps/provider-portal/settings/Users/staff/staff";
 import UserTabs from "../pages/apps/provider-portal/settings/Users/user-tabs";
-
+import Patients from "../pages/apps/provider-portal/patients/patients";
+import AddPatients from "../pages/apps/provider-portal/patients/add-patients";
 export const router = createBrowserRouter([
   { path: "", element: <Navigate to={"/auth/login"} /> },
   {
@@ -50,25 +54,45 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: PROFILE_TABS,
-        element: <ProfileTabs />,
+        path: "patients",
+        element: <Patients />,
+      },
+      {
+        path: "add-patient",
+        element: <AddPatients />,
+      },
+      {
+        path: "settings-tabs",
+        element: <Outlet />,
         children: [
-          { path: "profile", element: <Profile /> },
+          { path: "", element: <AllSettingsPage /> },
           {
-            path: "location",
-            element: <Location />,
-          },
-
-          {
-            path: "user",
-            element: <UserTabs />,
+            path: "other-settings",
+            element: <OtherSettingsMasterTabs />,
             children: [
-              { path: "staff", element: <Staff /> },
-              { path: "clinician", element: <Clinician /> },
+              { path: "availability", element: <Availability /> },
+              { path: "fee-schedule", element: <FeeSchedule /> },
             ],
           },
-          { path: "roles", element: <Roles /> },
-          { path: "contact", element: <Contact /> },
+          {
+            path: "profile-tabs",
+            element: <ProfileTabs />,
+            children: [
+              { path: "", element: <Profile /> },
+              { path: "profile", element: <Profile /> },
+              { path: "location", element: <Location /> },
+              {
+                path: "user",
+                element: <UserTabs />,
+                children: [
+                  { path: "staff", element: <Staff /> },
+                  { path: "clinician", element: <Clinician /> },
+                ],
+              },
+              { path: "roles", element: <Roles /> },
+              { path: "contact", element: <Contact /> },
+            ],
+          },
         ],
       },
     ],

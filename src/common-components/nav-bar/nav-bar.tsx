@@ -42,7 +42,7 @@ function NavbarV1(props: NavBarProps) {
     const itemRoute = item.route.replace(/^\/|\/$/g, "").toLowerCase();
     const normalizedCurrentPath = currentPath.replace(/^admin\//, "");
 
-    return normalizedCurrentPath === itemRoute;
+    return normalizedCurrentPath.startsWith(itemRoute);
   };
 
   return (

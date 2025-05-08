@@ -62,7 +62,7 @@ export default function SettingsTab() {
         mb={1}
       >
         <Grid sx={{ cursor: "pointer" }}>
-          <WestOutlinedIcon />
+          <WestOutlinedIcon onClick={() => navigate("/admin/settings-tabs")} />
         </Grid>
         <Grid>
           {" "}
@@ -137,7 +137,7 @@ export default function SettingsTab() {
         anchor={"right"}
         drawerWidth="62vw"
       >
-        <EditProfileDialog />
+        <EditProfileDialog handleClose={() => setEditProfileDialog(false)} />
       </DrawerBS>
       <DrawerBS
         title={SettingsFormConstants.ADD_NEW_LOCATION}
@@ -146,7 +146,7 @@ export default function SettingsTab() {
         anchor={"right"}
         drawerWidth="62vw"
       >
-        <AddLocationDialog />
+        <AddLocationDialog handleClose={() => setAddLocationDialog(false)} />
       </DrawerBS>
       <DrawerBS
         title={SettingsFormConstants.ADD_NEW_CONTACT}
@@ -155,7 +155,7 @@ export default function SettingsTab() {
         anchor={"right"}
         drawerWidth="50vw"
       >
-        <AddContactsDialog />
+        <AddContactsDialog handleClose={() => setAddContactDialog(false)} />
       </DrawerBS>
     </Box>
   );

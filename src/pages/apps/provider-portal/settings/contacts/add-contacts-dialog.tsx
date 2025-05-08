@@ -11,7 +11,11 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ContactsSchema } from "./contacts-schema";
 
-const AddContactsDialog = () => {
+interface AddContactsDialogProps {
+  handleClose: () => void;
+}
+
+const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
   const {
     control,
     formState: { errors },
@@ -101,6 +105,8 @@ const AddContactsDialog = () => {
                   {...field}
                   hasError={!!errors.contactNumber}
                   errorMessage={errors.contactNumber?.message}
+                  isNumeric={true}
+
                 />
               )}
             />
@@ -117,6 +123,8 @@ const AddContactsDialog = () => {
                   {...field}
                   hasError={!!errors.faxNumber}
                   errorMessage={errors.faxNumber?.message}
+                  isNumeric={true}
+
                 />
               )}
             />
@@ -201,6 +209,8 @@ const AddContactsDialog = () => {
                   {...field}
                   hasError={!!errors.zipCode}
                   errorMessage={errors.zipCode?.message}
+                  isNumeric={true}
+
                 />
               )}
             />
@@ -227,7 +237,12 @@ const AddContactsDialog = () => {
             sx={{ marginBottom: "1.5vh", marginRight: "1.5vw" }}
           >
             <Grid>
-              <CustomButton variant="outline" label="Cancel" isSubmitButton />
+              <CustomButton
+                variant="outline"
+                label="Cancel"
+                isSubmitButton
+                onClick={handleClose}
+              />
             </Grid>
             <Grid>
               <CustomButton

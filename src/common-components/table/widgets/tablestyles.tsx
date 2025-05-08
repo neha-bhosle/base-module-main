@@ -19,13 +19,19 @@ export const tableBodyStyles = {
   padding: "4px 18px",
 };
 
+export const patientNameStyles = {
+  ...tableBodyStyles,
+  color: "#145DA0",
+  cursor: "pointer",
+};
+
 export const paginationButton = {
   width: "100%",
   display: "flex",
   justifyContent: "flex-end",
 
   "& .Mui-selected": {
-    color: "#145DA0 !important",  
+    color: "#145DA0 !important",
     background: "#F6FAFF !important",
   },
   "& .Mui-selected:hover": {
@@ -34,11 +40,17 @@ export const paginationButton = {
   },
   "& button": {
     textTransform: "inherit",
-    borderRadius: "var(--1, 8px)",
+    borderRadius: "50%",
+    width: "32px",
+    height: "32px",
+    minWidth: "32px",
+    padding: 0,
     border: "1px solid var(--Grey-02, #F4F4F4)",
-    // background: "var(--Solid-White, #FFF)",
     boxShadow: "0px 1px 2px 0px rgba(16, 24, 40, 0.05)",
     color: "#595F63",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   "& li:first-of-type": {
     color: "#565656",

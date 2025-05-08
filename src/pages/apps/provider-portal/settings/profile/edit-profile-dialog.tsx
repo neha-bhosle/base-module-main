@@ -14,7 +14,11 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { EditProfileSchema } from "../profile/edit-profile-schema";
 
-const EditProfileDialog = () => {
+interface EditProfileDialogProps {
+  handleClose: () => void;
+}
+
+const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
   const {
     control,
     formState: { errors },
@@ -36,12 +40,14 @@ const EditProfileDialog = () => {
     },
     resolver: yupResolver(EditProfileSchema),
   });
-  const [profileImage, setProfileImage] = useState<string | ArrayBuffer | null>(
-    null
-  );
+  const [profileImage, setProfileImage] = useState<string | null>(null);
 
-  const handleSetImage = (image: string | ArrayBuffer | null) => {
-    setProfileImage(image);
+  const handleSetImage = (file: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfileImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
   };
 
   const onSubmit = () => {};
@@ -76,14 +82,9 @@ const EditProfileDialog = () => {
                   }}
                 >
                   <UploadImage
-                    customStyle={{
-                      width: "210px",
-                      height: "210px",
-                      marginBottom: "5px",
-                    }}
-                    imageUrl={profileImage as string}
-                    handleSetImage={handleSetImage}
-                    showRemove={true}
+                    size={210}
+                    initialImage={profileImage as string}
+                    onImageChange={handleSetImage}
                   />
                   <Typography
                     variant="bodyRegular6"
@@ -140,7 +141,7 @@ const EditProfileDialog = () => {
                           {...field}
                           hasError={!!errors.clinicNpiNumber}
                           errorMessage={errors.clinicNpiNumber?.message}
-                          isNumeric={false}
+                          isNumeric={true}
                         />
                       )}
                     />
@@ -175,7 +176,7 @@ const EditProfileDialog = () => {
                           {...field}
                           hasError={!!errors.taxNumber}
                           errorMessage={errors.taxNumber?.message}
-                          isNumeric={false}
+                          isNumeric={true}
                         />
                       )}
                     />
@@ -197,7 +198,7 @@ const EditProfileDialog = () => {
                           {...field}
                           hasError={!!errors.contactNumber}
                           errorMessage={errors.contactNumber?.message}
-                          isNumeric={false}
+                          isNumeric={true}
                         />
                       )}
                     />
@@ -349,8 +350,8 @@ const EditProfileDialog = () => {
                         {...field}
                         hasError={!!errors.zipCode}
                         errorMessage={errors.zipCode?.message}
-                        isNumeric={false}
-                      />
+                        isNumeric={true}
+                        />
                     )}
                   />
                 </Grid>
@@ -385,6 +386,7 @@ const EditProfileDialog = () => {
                 variant="outline"
                 label="Cancel"
                 isSubmitButton
+                onClick={handleClose}
               />
             </Grid>
             <Grid>

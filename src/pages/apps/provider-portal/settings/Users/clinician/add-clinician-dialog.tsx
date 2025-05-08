@@ -13,7 +13,11 @@ import {
 import { ClinicianDialogTypographyVariants } from "../../../../../../constants/typography-variants";
 import { ClinicianSchema } from "./clinician-schema";
 
-const AddClinicianDialog = () => {
+interface AddClinicianDialogProps {
+  handleClose: () => void;
+}
+
+const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
   const {
     control,
     formState: { errors },
@@ -147,6 +151,8 @@ const AddClinicianDialog = () => {
                   {...field}
                   hasError={!!errors.contactNumber}
                   errorMessage={errors.contactNumber?.message}
+                  isNumeric={true}
+
                 />
               )}
             />
@@ -163,6 +169,8 @@ const AddClinicianDialog = () => {
                   {...field}
                   hasError={!!errors.npiNumber}
                   errorMessage={errors.npiNumber?.message}
+                  isNumeric={true}
+
                 />
               )}
             />
@@ -289,7 +297,12 @@ const AddClinicianDialog = () => {
             sx={{ marginBottom: "1.5vh", marginRight: "1.5vw" }}
           >
             <Grid>
-              <CustomButton variant="outline" label="Cancel" isSubmitButton />
+              <CustomButton
+                variant="outline"
+                label="Cancel"
+                isSubmitButton
+                onClick={handleClose}
+              />
             </Grid>
             <Grid>
               <CustomButton

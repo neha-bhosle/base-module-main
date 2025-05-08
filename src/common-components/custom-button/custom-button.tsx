@@ -21,6 +21,7 @@ interface CustomButtonProps {
   fullWidth?: boolean;
   changePadding?: boolean;
   isSubmitButton?: boolean;
+  isSubmitButtonTwo?: boolean;
 }
 
 function CustomButton(props: CustomButtonProps) {
@@ -49,7 +50,7 @@ function CustomButton(props: CustomButtonProps) {
       baseStyle = transformTextNone;
     }
 
-    if (props.label === "Save") {
+    if (props.label === "Save" || props.label === "Save & Next") {
       return {
         ...baseStyle,
         borderRadius: "3px",
@@ -63,6 +64,14 @@ function CustomButton(props: CustomButtonProps) {
         ...baseStyle,
         borderRadius: "3px",
         padding: "12.5px 20px",
+      };
+    }
+
+    if (props.isSubmitButtonTwo) {
+      return {
+        ...baseStyle,
+        borderRadius: "4px",
+        padding: "9px 17px",
       };
     }
 
