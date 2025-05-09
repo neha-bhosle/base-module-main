@@ -24,9 +24,8 @@ const Patients = () => {
     PATIENT_MOCK_DATA.map((patient) => ({
       ...patient,
       action: [
-        { label: "View", route: "view" },
-        { label: "Edit", route: "edit" },
-        { label: "Delete", route: "delete" },
+        { label: "Merge Duplicate Clients", route: "Merge Duplicate" },
+       
       ],
     }))
   );
@@ -43,7 +42,7 @@ const Patients = () => {
     <Grid container flexDirection="column" gap={2}>
       <Grid flexDirection="row" display="flex">
         <Grid display="flex" alignItems="center">
-          <Typography variant="bodySemiBold2">Patients</Typography>
+          <Typography variant="bodySemiBold2">Clients</Typography>
         </Grid>
         <Grid
           flexDirection="row"
@@ -62,7 +61,7 @@ const Patients = () => {
             />
           </Grid>
           <Grid>
-            <CustomInput showIcon={<SearchIcon />} bgWhite />
+            <CustomInput showIcon={<SearchIcon />} bgWhite placeholder="Search" />
           </Grid>
           <Grid
             flexDirection="row"
@@ -109,7 +108,7 @@ const Patients = () => {
       </Grid>
 
       <Dialog
-        title="Import Patients"
+        title="Import Clients"
         open={importDialogOpen}
         onClose={() => setImportDialogOpen(false)}
       >

@@ -53,7 +53,7 @@ export const practiceData = {
   emailID: "abc@example.com",
   taxType: "TIN",
   taxonomyCode: "1234567890",
-  taxNumber: "123456",
+  taxNumber: "123456 (TIN)",
   address: "205 Champion Way Suite 11 Georgetown, KY 40324",
   contactNumber: "502-603-0020",
 };
@@ -67,7 +67,7 @@ export const feeScheduleTableHeaders = [
 
 export const patientTableHeaders = [
   { id: "mrn", label: "MRN", type: "text" },
-  { id: "patientName", label: "Patient Name", type: "patientName" },
+  { id: "patientName", label: "Client Name", type: "patientName" },
   { id: "dob", label: "DOB", type: "text" },
   { id: "emailId", label: "Email ID", type: "text" },
   { id: "contactNumber", label: "Contact Number", type: "text" },
@@ -131,3 +131,17 @@ export const PATIENT_TABLE_HEADERS = [
     type: "action",
   },
 ];
+
+export const appointmentTableHeaders = [
+  { id: "clientName", label: "Client Name", type: "text" },
+  { id: "apptMode", label: "Appt Mode", type: "text" },
+  { id: "time", label: "Time", type: "text" },
+  { id: "apptType", label: "Appt Type", type: "text" },
+  { id: "intakeForm", label: "Intake Form", type: "intakeForm" },
+  { id: "dob", label: "DOB", type: "text" },
+  { id: "contactNo", label: "Contact No", type: "text" },
+  { id: "clinician", label: "Clinician", type: "text" },
+  { id: "status", label: "Status", type: "chip" },
+  { id: "action", label: "Action", type: "action" },
+  ];
+  

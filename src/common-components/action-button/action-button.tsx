@@ -56,7 +56,7 @@ export default function ActionButton(props: ActionButtonProps) {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch"
+            width: "25ch"
           }
         }}>
         {list?.map((option: { label: string; route: string; disabled?: boolean }, index) => (

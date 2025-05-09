@@ -11,11 +11,18 @@ interface DatePickerProps {
   hasError?: boolean;
   errorMessage?: string;
   placeholder?: string;
+  disableFuture?: boolean;
 }
 
 function CustomDatePicker(props: DatePickerProps) {
-  const { handleDateChange, value, hasError, errorMessage, placeholder } =
-    props;
+  const {
+    handleDateChange,
+    value,
+    hasError,
+    errorMessage,
+    placeholder,
+    disableFuture,
+  } = props;
 
   const handleChange = (newValue: any) => {
     const formattedValue = dayjs(newValue).format("YYYY-MM-DD");
@@ -29,6 +36,7 @@ function CustomDatePicker(props: DatePickerProps) {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           value={value ? dayjs(value) : null}
+          disableFuture={disableFuture}
           format="MM/DD/YYYY"
           enableAccessibleFieldDOMStructure={false}
           slotProps={{

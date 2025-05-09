@@ -25,6 +25,7 @@ import Staff from "../pages/apps/provider-portal/settings/Users/staff/staff";
 import UserTabs from "../pages/apps/provider-portal/settings/Users/user-tabs";
 import Patients from "../pages/apps/provider-portal/patients/patients";
 import AddPatients from "../pages/apps/provider-portal/patients/add-patients";
+import ViewAppointments from "../pages/apps/provider-portal/calendar/view-appointments";
 export const router = createBrowserRouter([
   { path: "", element: <Navigate to={"/auth/login"} /> },
   {
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
       {
         path: "patients",
         element: <Patients />,
+      },
+      {
+        path: "calendar",
+        element: <ViewAppointments />,
       },
       {
         path: "add-patient",

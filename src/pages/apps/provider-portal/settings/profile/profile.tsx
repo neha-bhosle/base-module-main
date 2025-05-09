@@ -1,6 +1,6 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import { practiceData } from "../../../../../common-components/mock-data/all-mock-data";
-import doctorProfileImg from "../../../../../assets/images/hospital.jpg";
+import doctorProfileImg from "../../../../../assets/images/Practice Easily Logo.svg";
 import { ProfileTypographyVariants } from "../../../../../constants/typography-variants";
 import { ProfileFieldLabels } from "../../../../../constants/formConst";
 import { useEffect, useState } from "react";
@@ -20,10 +20,7 @@ const Profile = () => {
         label: ProfileFieldLabels.CLINIC_NPI_NUMBER,
         value: practiceData.clinicNPI,
       },
-      {
-        label: ProfileFieldLabels.TAX_TYPE,
-        value: practiceData.taxType,
-      },
+
       {
         label: ProfileFieldLabels.TAX_NUMBER,
         value: practiceData.taxNumber,
@@ -96,7 +93,7 @@ const Profile = () => {
               mt={2}
               display={"flex"}
               flexDirection={"column"}
-              gap={2.5}
+              gap={3.5}
             >
               {leftColumnFields.map((field, index) => (
                 <Grid

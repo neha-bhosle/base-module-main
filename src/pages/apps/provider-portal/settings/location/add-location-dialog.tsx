@@ -59,15 +59,8 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
   return (
     <Box>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={1.5} padding={2}>
-          <Grid
-            item
-            xs={12}
-            border="1px solid #E7E7E7"
-            p={2}
-            borderRadius={2}
-            mb={2}
-          >
+        <Grid container spacing={1.5} >
+          <Grid item xs={12} borderRadius={2} mb={2}>
             <Grid mb={2}>
               <Typography variant="bodyMedium3">
                 {LocationFormLabels.LOCATION_INFORMATION}
@@ -111,7 +104,6 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                       hasError={!!errors.contactNumber}
                       errorMessage={errors.contactNumber?.message}
                       isNumeric={true}
-
                     />
                   )}
                 />
@@ -150,7 +142,6 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                       hasError={!!errors.groupNpiNumber}
                       errorMessage={errors.groupNpiNumber?.message}
                       isNumeric={true}
-
                     />
                   )}
                 />
@@ -186,7 +177,6 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                       hasError={!!errors.fax}
                       errorMessage={errors.fax?.message}
                       isNumeric={true}
-
                     />
                   )}
                 />
@@ -195,7 +185,7 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
           </Grid>
 
           {/* Physical Address Section */}
-          <Grid item xs={12} border="1px solid #E7E7E7" p={2} borderRadius={2}>
+          <Grid item xs={12} borderRadius={2}>
             <Grid mb={2}>
               <Typography variant="bodyMedium3">
                 {LocationFormLabels.PHYSICAL_ADDRESS}
@@ -290,7 +280,6 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                       hasError={!!errors.zipCode}
                       errorMessage={errors.zipCode?.message}
                       isNumeric={true}
-
                     />
                   )}
                 />

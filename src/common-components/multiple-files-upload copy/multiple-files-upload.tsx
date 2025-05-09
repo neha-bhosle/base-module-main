@@ -16,10 +16,11 @@ export type FilesMetaData = {
 
 type MultipleFilesUploadProps = {
   onUpload: (filesMetaData: FilesMetaData[]) => void;
+  placeholder?: string;
 };
 
 const MultipleFilesUpload = (props: MultipleFilesUploadProps) => {
-  const { onUpload } = props;
+  const { onUpload, placeholder } = props;
   const [uploadedFiles, setUploadedFiles] = useState<FilesMetaData[]>([]);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
@@ -98,20 +99,11 @@ const MultipleFilesUpload = (props: MultipleFilesUploadProps) => {
               <Grid display={"flex"} flexDirection={"row"} gap={1}>
                 <Grid>
                   <Typography
-                    variant="bodyMedium4"
-                    textAlign={"center"}
-                    color={theme.palette.common.black}
-                  >
-                    {FileUploadActions.CLICK_TO_UPLOAD}
-                  </Typography>
-                </Grid>
-                <Grid>
-                  <Typography
                     variant="bodyRegular4"
                     textAlign={"center"}
                     color={"#74797B"}
                   >
-                    {FileUploadActions.OR_DRAG_AND_DROP}
+                    {placeholder}
                   </Typography>
                 </Grid>
               </Grid>

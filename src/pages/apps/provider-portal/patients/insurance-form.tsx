@@ -21,6 +21,7 @@ import {
   PatientFormSectionTitles,
   PatientRelationshipOptions,
   PatientInsuranceOptions,
+  UploadFileComponentConstants,
 } from "../../../../constants/formConst";
 
 type Props = {
@@ -32,10 +33,10 @@ export const InsuranceForm = (props: Props) => {
   const { control, errors } = props;
   const [, setUploadedFrontFiles] = useState<FilesMetaData[]>([]);
   return (
-    <Grid bgcolor={"#FFFFFF"} borderRadius={2}>
-      <Grid container border="1px solid #E0E0E0" borderRadius={2} p={2}>
+    <Grid bgcolor={"#FFFFFF"} borderRadius={2} sx={{ width: "100%" }}>
+      <Grid container p={1} sx={{ width: "100%" }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={2}>
             <CustomLabel label={PatientFormLabels.INSURANCE_NAME} isRequired />
             <Controller
               control={control}
@@ -64,7 +65,7 @@ export const InsuranceForm = (props: Props) => {
             />
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={2}>
             <CustomLabel label={PatientFormLabels.MEMBER_ID} isRequired />
             <Controller
               control={control}
@@ -75,13 +76,12 @@ export const InsuranceForm = (props: Props) => {
                   {...field}
                   hasError={!!errors.memberId}
                   errorMessage={errors.memberId?.message}
-                  
                 />
               )}
             />
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={2}>
             <CustomLabel label={PatientFormLabels.GROUP_ID} isRequired />
             <Controller
               control={control}
@@ -98,10 +98,7 @@ export const InsuranceForm = (props: Props) => {
           </Grid>
 
           <Grid item xs={12}>
-            <CustomLabel
-              label={PatientFormLabels.PATIENT_RELATIONSHIP}
-              isRequired
-            />
+            <CustomLabel label={PatientFormLabels.PATIENT_RELATIONSHIP} />
             <Controller
               control={control}
               name="patientRelationship"
@@ -132,13 +129,27 @@ export const InsuranceForm = (props: Props) => {
             />
           </Grid>
 
-          <Grid item xs={12}>
-            <Typography variant="subtitle1" sx={{ mb: 2 }}>
-              {PatientFormSectionTitles.SUBSCRIBER_DETAILS}
-            </Typography>
+          <Grid
+            display={"flex"}
+            flexDirection={"row"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+            bgcolor={"#F5F5F5"}
+            p={0.5}
+            borderRadius={2}
+            mt={1}
+            mr={3}
+            xs={12}
+            ml={1}
+          >
+            <Grid ml={1} mr={2}>
+              <Typography variant="bodyMedium4">
+                {PatientFormSectionTitles.SUBSCRIBER_DETAILS}
+              </Typography>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={2}>
             <CustomLabel label={PatientFormLabels.FIRST_NAME} isRequired />
             <Controller
               control={control}
@@ -154,7 +165,7 @@ export const InsuranceForm = (props: Props) => {
             />
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={2}>
             <CustomLabel label={PatientFormLabels.LAST_NAME} isRequired />
             <Controller
               control={control}
@@ -170,7 +181,7 @@ export const InsuranceForm = (props: Props) => {
             />
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={2}>
             <CustomLabel label={PatientFormLabels.DATE_OF_BIRTH} isRequired />
             <Controller
               control={control}
@@ -187,17 +198,33 @@ export const InsuranceForm = (props: Props) => {
             />
           </Grid>
 
-          <Grid item xs={12}>
-            <Typography variant="subtitle1" sx={{ mb: 2, mt: 2 }}>
-              {PatientFormSectionTitles.UPLOAD_INSURANCE_CARD}
-            </Typography>
+          <Grid
+            display={"flex"}
+            flexDirection={"row"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+            bgcolor={"#F5F5F5"}
+            p={0.5}
+            borderRadius={2}
+            mt={2}
+            mb={2}
+            mr={3}
+            xs={12}
+            ml={1}
+          >
+            <Grid ml={1} mr={2}>
+              <Typography variant="bodyMedium4">
+                {PatientFormSectionTitles.UPLOAD_INSURANCE_CARD}
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid container spacing={2} width={"50%"} ml={0.5}>
+          <Grid container spacing={2} width={"50%"} ml={0.1} >
             <Grid item xs={12} md={6}>
               <MultipleFilesUpload
                 onUpload={(filesMetaData: FilesMetaData[]) => {
                   setUploadedFrontFiles(filesMetaData);
                 }}
+                placeholder={UploadFileComponentConstants.FRONT_OF_CARD}
               />
             </Grid>
 
@@ -206,6 +233,7 @@ export const InsuranceForm = (props: Props) => {
                 onUpload={(filesMetaData: FilesMetaData[]) => {
                   setUploadedFrontFiles(filesMetaData);
                 }}
+                placeholder={UploadFileComponentConstants.BACK_OF_CARD}
               />
             </Grid>
           </Grid>

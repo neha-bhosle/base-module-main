@@ -36,20 +36,13 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
   });
 
   const contactTypeOptions = [
-    { value: "emergency", label: "Emergency" },
-    { value: "primary", label: "Primary" },
-    { value: "secondary", label: "Secondary" },
-    { value: "referral", label: "Referral" },
+    { value: "emergency", label: "Referral" },
+    { value: "primary", label: "Lab" },
+   
   ];
-
-  const cityOptions = [
-    { value: "city1", label: "City 1" },
-    { value: "city2", label: "City 2" },
-  ];
-
   const stateOptions = [
-    { value: "state1", label: "State 1" },
-    { value: "state2", label: "State 2" },
+    { value: "state1", label: "Oklahoma" },
+    { value: "state2", label: "Kansas" },
   ];
 
   const onSubmit = (data: any) => {
@@ -168,11 +161,10 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
               control={control}
               name="city"
               render={({ field }) => (
-                <CustomSelect
+                <CustomInput
                   placeholder={ContactFormPlaceholders.SELECT_CITY}
                   {...field}
-                  value={field.value}
-                  items={cityOptions}
+              
                   hasError={!!errors.city}
                   errorMessage={errors.city?.message}
                 />
