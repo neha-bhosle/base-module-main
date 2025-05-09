@@ -43,6 +43,12 @@ interface FormData {
   emergencyPhone?: string;
   relationship?: string;
   isResponsibleParty?: boolean;
+  phoneAppointmentReminders?: boolean;
+  emailAppointmentReminders?: boolean;
+  primaryClinician?: string;
+  secondaryClinician?: string;
+  sameAsEmergencyContact?: boolean;
+  isResponsiblePartyClinician?: boolean;
 }
 
 interface DemographicTabProps {
@@ -79,6 +85,12 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
       emergencyPhone: "",
       relationship: "",
       isResponsibleParty: false,
+      phoneAppointmentReminders: false,
+      emailAppointmentReminders: false,
+      primaryClinician: "",
+      secondaryClinician: "",
+      sameAsEmergencyContact: false,
+      isResponsiblePartyClinician: false,
     },
     resolver: yupResolver(AddPatientSchema),
   });
@@ -210,6 +222,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                         handleDateChange={field.onChange}
                         hasError={!!errors.dateOfBirth}
                         errorMessage={errors.dateOfBirth?.message}
+                        disableFuture 
                       />
                     )}
                   />
@@ -586,7 +599,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 <FormControlLabel
                   control={
                     <Controller
-                      name="isResponsibleParty"
+                      name="sameAsEmergencyContact"
                       control={control}
                       render={({ field }) => (
                         <Checkbox {...field} checked={field.value} />
@@ -661,7 +674,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                   <FormControlLabel
                     control={
                       <Controller
-                        name="isResponsibleParty"
+                        name="isResponsiblePartyClinician"
                         control={control}
                         render={({ field }) => (
                           <Checkbox {...field} checked={field.value} />
@@ -709,7 +722,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
               <CustomLabel label={PatientFormLabels.PRIMARY_CLINICIAN} />
               <Controller
                 control={control}
-                name="emergencyName"
+                name="primaryClinician"
                 render={({ field }) => (
                   <CustomSelect
                     items={[]}
@@ -727,7 +740,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
               <CustomLabel label={PatientFormLabels.SECONDARY_CLINICIAN} />
               <Controller
                 control={control}
-                name="emergencyPhone"
+                name="secondaryClinician"
                 render={({ field }) => (
                   <CustomSelect
                     items={[]}
@@ -776,7 +789,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 <FormControlLabel
                   control={
                     <Controller
-                      name="isResponsibleParty"
+                      name="phoneAppointmentReminders"
                       control={control}
                       render={({ field }) => (
                         <Checkbox {...field} checked={field.value} />
@@ -805,7 +818,7 @@ const DemographicTab = ({ onNext }: DemographicTabProps) => {
                 <FormControlLabel
                   control={
                     <Controller
-                      name="isResponsibleParty"
+                      name="emailAppointmentReminders"
                       control={control}
                       render={({ field }) => (
                         <Checkbox {...field} checked={field.value} />

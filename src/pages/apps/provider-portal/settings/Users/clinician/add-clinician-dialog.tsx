@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import signatureImage from "../../../../../../assets/images/signature.png";
 import CustomButton from "../../../../../../common-components/custom-button/custom-button";
 import CustomInput from "../../../../../../common-components/custom-input/customInput";
 import CustomSelect from "../../../../../../common-components/custom-select/customSelect";
@@ -10,7 +9,6 @@ import {
   ClinicianFormLabels,
   ClinicianFormPlaceholders,
 } from "../../../../../../constants/formConst";
-import { ClinicianDialogTypographyVariants } from "../../../../../../constants/typography-variants";
 import { ClinicianSchema } from "./clinician-schema";
 
 interface AddClinicianDialogProps {
@@ -38,9 +36,10 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
   });
 
   const roleOptions = [
-    { value: "doctor", label: "Doctor" },
-    { value: "nurse", label: "Nurse" },
-    { value: "therapist", label: "Therapist" },
+    { value: "doctor", label: "Psyschotherapist" },
+    { value: "nurse", label: "Case Manager" },
+    { value: "nurse", label: "Navigator" },
+
   ];
 
   const locationOptions = [
@@ -232,7 +231,7 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
             />
           </Grid>
 
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <CustomLabel label={ClinicianFormLabels.SIGNATURE} />
             <Paper
               elevation={0}
@@ -274,7 +273,7 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
                 {ClinicianDialogTypographyVariants.DATE_TIME}
               </Typography>
             </Paper>
-          </Grid>
+          </Grid> */}
         </Grid>
         <Grid
           flexDirection={"row"}

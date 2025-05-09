@@ -21,6 +21,7 @@ import {
   PatientFormSectionTitles,
   PatientRelationshipOptions,
   PatientInsuranceOptions,
+  UploadFileComponentConstants,
 } from "../../../../constants/formConst";
 
 type Props = {
@@ -75,7 +76,6 @@ export const InsuranceForm = (props: Props) => {
                   {...field}
                   hasError={!!errors.memberId}
                   errorMessage={errors.memberId?.message}
-                  
                 />
               )}
             />
@@ -98,10 +98,7 @@ export const InsuranceForm = (props: Props) => {
           </Grid>
 
           <Grid item xs={12}>
-            <CustomLabel
-              label={PatientFormLabels.PATIENT_RELATIONSHIP}
-              isRequired
-            />
+            <CustomLabel label={PatientFormLabels.PATIENT_RELATIONSHIP} />
             <Controller
               control={control}
               name="patientRelationship"
@@ -198,6 +195,7 @@ export const InsuranceForm = (props: Props) => {
                 onUpload={(filesMetaData: FilesMetaData[]) => {
                   setUploadedFrontFiles(filesMetaData);
                 }}
+                placeholder={UploadFileComponentConstants.FRONT_OF_CARD}
               />
             </Grid>
 
@@ -206,6 +204,7 @@ export const InsuranceForm = (props: Props) => {
                 onUpload={(filesMetaData: FilesMetaData[]) => {
                   setUploadedFrontFiles(filesMetaData);
                 }}
+                placeholder={UploadFileComponentConstants.BACK_OF_CARD}
               />
             </Grid>
           </Grid>

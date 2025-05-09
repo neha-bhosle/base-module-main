@@ -32,6 +32,12 @@ export const AddPatientSchema = yup.object().shape({
   emergencyPhone: yup.string().optional(),
   relationship: yup.string().optional(),
   isResponsibleParty: yup.boolean().optional(),
+  phoneAppointmentReminders: yup.boolean().optional(),
+  emailAppointmentReminders: yup.boolean().optional(),
+  primaryClinician: yup.string().optional(),
+  secondaryClinician: yup.string().optional(),
+  sameAsEmergencyContact: yup.boolean().optional(),
+  isResponsiblePartyClinician: yup.boolean().optional(),
 });
 
 export const AddPatientInsuranceSchema = yup.object().shape({

@@ -81,7 +81,7 @@ const ImportPatientsDialog = ({
 
       <Box sx={{ p: 0.5 }} mt={2}>
         <Grid pl={2} pr={2} pb={2}>
-          <MultipleFilesUpload onUpload={() => {}} />
+          <MultipleFilesUpload onUpload={() => {}} placeholder="Click to upload or drag and drop"/>
         </Grid>
       </Box>
     </Dialog>

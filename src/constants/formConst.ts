@@ -146,7 +146,7 @@ export enum ContactFormPlaceholders {
   ENTER_FAX_NUMBER = "Enter Fax Number",
   ENTER_EMAIL_ID = "Enter Email ID",
   ENTER_ADDRESS = "Enter Address",
-  SELECT_CITY = "Select City",
+  SELECT_CITY = "Enter City",
   SELECT_STATE = "Select State",
   ENTER_ZIP_CODE = "Enter Zip Code",
 }
@@ -227,10 +227,10 @@ export enum LocationFormPlaceholders {
 
 export enum PracticeSettingsTabs {
   PROFILE = "Profile",
-  LOCATION = "Location",
-  USER = "User",
+  LOCATION = "Locations",
+  USER = "Users",
   ROLES = "Roles",
-  CONTACT = "Contact",
+  CONTACT = "Contacts",
 }
 export enum OtherSettingsTabs {
   AVAILABILITY = "Availability",
@@ -252,7 +252,7 @@ export enum PracticeSettingsRoutes {
 
 export enum UserTabs {
   STAFF = "Staff",
-  CLINICIAN = "Clinician",
+  CLINICIAN = "Clinicians",
 }
 
 export enum UserTabRoutes {
@@ -315,14 +315,15 @@ export enum ProfileValidationMessages {
 export enum SettingsFormConstants {
   PRACTICE_SETTINGS = "Practice Settings",
   EDIT_PROFILE = "Edit Profile",
-  ADD_NEW_LOCATION = "Add New Location",
-  ADD_NEW_CONTACT = "Add New Contact",
-  ADD_NEW_FEE_SCHEDULE = "Add New Fee Schedule",
+  ADD_NEW_LOCATION = "Add Location",
+  ADD_NEW_CONTACT = "Add Contact",
+  ADD_NEW_FEE_SCHEDULE = "Add Fee Schedule",
   ADD_FEE_SCHEDULE = "Add Fee Schedule",
   OTHER_SETTINGS = "Other Settings",
   SAVE = "Save",
   CANCEL = "Cancel",
-  ADD_NEW_PATIENT = "Add New Patient",
+  ADD_NEW_PATIENT = "Add Client",
+  ADD_NEW_CLIENT = "Add Client",
 }
 
 export enum FeeScheduleFormLabels {
@@ -478,3 +479,17 @@ export enum FileUploadActions {
   CLICK_TO_UPLOAD = "Click here to upload",
   OR_DRAG_AND_DROP = "or drag and drop",
 }
+
+export enum AppointmentViewOptions {
+  LIST = "List",
+  CALENDAR = "Calendar",
+}
+
+export enum UploadFileComponentConstants{
+  DROP_FILES = "Drop the files here ...Only pdf, png or jpeg.",
+  CLICK_TO_UPLOAD = "Click here to upload",
+  OR_DRAG_AND_DROP = "or drag and drop",
+  FRONT_OF_CARD = "Click here to upload or drag and drop front of card",
+  BACK_OF_CARD = "Click here to upload or drag and drop back of card",
+}
+

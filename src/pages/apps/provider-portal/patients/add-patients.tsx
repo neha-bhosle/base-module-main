@@ -7,6 +7,8 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import WestOutlinedIcon from "@mui/icons-material/WestOutlined";
 import { useNavigate } from "react-router-dom";
+import { SettingsFormConstants } from "../../../../constants/formConst";
+
 export const tabStyles = {
   "& .MuiTabs-indicator": {
     backgroundColor: "#145DA0",
@@ -115,7 +117,9 @@ const AddPatients = () => {
             />
           </Grid>
           <Grid>
-            <Typography variant="bodySemiBold2">Add Patient</Typography>
+            <Typography variant="bodySemiBold2">
+              {SettingsFormConstants.ADD_NEW_CLIENT}
+            </Typography>
           </Grid>
         </Grid>
       </Grid>

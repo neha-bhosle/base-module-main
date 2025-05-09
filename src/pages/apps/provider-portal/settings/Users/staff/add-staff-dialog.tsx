@@ -38,9 +38,9 @@ const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
   ];
 
   const roleOptions = [
-    { value: "admin", label: "Admin" },
-    { value: "staff", label: "Staff" },
-    { value: "receptionist", label: "Receptionist" },
+    { value: "admin", label: "Front Office Admin" },
+    { value: "staff", label: "Nurse" },
+    { value: "receptionist", label: "Record Custodian" },
   ];
 
   const onSubmit = () => {};
