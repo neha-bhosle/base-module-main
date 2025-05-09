@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import {
   Box,
   FormControlLabel,
@@ -10,8 +9,6 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import CustomButton from "../../../../common-components/custom-button/custom-button";
-import { PatientFormButtons } from "../../../../constants/formConst";
 import { AddPatientInsuranceSchema } from "./add-patients-schema";
 import { InsuranceForm } from "./insurance-form";
 
@@ -55,36 +52,28 @@ const InsuranceTab = () => {
   };
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        height: "100%",
-        overflow: "auto",
-        paddingBottom: "6 0px",
-      }}
-    >
+    <Box sx={{ width: "100%" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Box>
+        <Box sx={{ width: "100%" }}>
           <Grid
             display={"flex"}
             flexDirection={"row"}
             alignItems={"center"}
             justifyContent={"space-between"}
             bgcolor={"#F5F5F5"}
-            p={1}
+            p={0.5}
             borderRadius={2}
-            mb={2}
+            mb={1}
+            mr={2}
           >
-            <Grid>
+            <Grid ml={1}>
               <Typography variant="bodyMedium4">Payment Method</Typography>
             </Grid>
-            <Grid mr={2}>
-              <KeyboardArrowUpOutlinedIcon />
-            </Grid>
+            <Grid mr={2}></Grid>
           </Grid>
 
-          <Grid bgcolor={"#FFFFFF"} borderRadius={2} mb={2}>
-            <Grid container border="1px solid #E0E0E0" p={0.5} borderRadius={2}>
+          <Grid bgcolor={"#FFFFFF"} borderRadius={2} mb={1}>
+            <Grid container borderRadius={2}>
               <Controller
                 control={control}
                 name="paymentMethod"
@@ -114,17 +103,16 @@ const InsuranceTab = () => {
                 alignItems={"center"}
                 justifyContent={"space-between"}
                 bgcolor={"#F5F5F5"}
-                p={1}
+                p={0.5}
                 borderRadius={2}
-                mb={2}
+                mb={1}
+                mt={1}
+                mr={2}
               >
-                <Grid>
+                <Grid ml={1}>
                   <Typography variant="bodyMedium4">
                     Primary Insurance
                   </Typography>
-                </Grid>
-                <Grid mr={2}>
-                  <KeyboardArrowUpOutlinedIcon />
                 </Grid>
               </Grid>
 
@@ -138,6 +126,7 @@ const InsuranceTab = () => {
                   mb: 2,
                   display: "flex",
                   alignItems: "center",
+                  pl: 1,
                 }}
                 onClick={() =>
                   setShowSecondaryInsurance(!showSecondaryInsurance)
@@ -164,17 +153,16 @@ const InsuranceTab = () => {
                     alignItems={"center"}
                     justifyContent={"space-between"}
                     bgcolor={"#F5F5F5"}
-                    p={1}
+                    p={0.5}
                     borderRadius={2}
-                    mb={2}
+                    mb={1}
+                    mt={1}
+                    mr={4}
                   >
-                    <Grid>
+                    <Grid ml={1}>
                       <Typography variant="bodyMedium4">
                         Secondary Insurance
                       </Typography>
-                    </Grid>
-                    <Grid mr={2}>
-                      <KeyboardArrowUpOutlinedIcon />
                     </Grid>
                   </Grid>
 
@@ -185,7 +173,7 @@ const InsuranceTab = () => {
           )}
         </Box>
 
-        <Box
+        {/* <Box
           sx={{
             position: "fixed",
             bottom: 0,
@@ -212,7 +200,7 @@ const InsuranceTab = () => {
             type="submit"
             changePadding={false}
           />
-        </Box>
+        </Box> */}
       </form>
     </Box>
   );

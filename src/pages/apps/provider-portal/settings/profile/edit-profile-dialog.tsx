@@ -59,9 +59,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
           <Grid
             item
             xs={12}
-            border="1px solid #E7E7E7"
             ml={1}
-            p={1}
             borderRadius={2}
             mt={2}
           >
@@ -248,9 +246,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
           <Grid
             item
             xs={12}
-            border="1px solid #E7E7E7"
             ml={1}
-            p={1}
             borderRadius={2}
             mt={2}
           >

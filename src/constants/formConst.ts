@@ -407,6 +407,7 @@ export enum PatientFormSectionTitles {
   GUARDIAN_INFORMATION = "Guardian Information",
   CLINICIAN_INFORMATION = "Clinician Information",
   PRIVACY_CONSENT = "Privacy Consent",
+  INSURANCE = "Insurance",
 }
 
 export enum PatientFormButtons {
@@ -485,11 +486,10 @@ export enum AppointmentViewOptions {
   CALENDAR = "Calendar",
 }
 
-export enum UploadFileComponentConstants{
+export enum UploadFileComponentConstants {
   DROP_FILES = "Drop the files here ...Only pdf, png or jpeg.",
   CLICK_TO_UPLOAD = "Click here to upload",
   OR_DRAG_AND_DROP = "or drag and drop",
   FRONT_OF_CARD = "Click here to upload or drag and drop front of card",
   BACK_OF_CARD = "Click here to upload or drag and drop back of card",
 }
-
