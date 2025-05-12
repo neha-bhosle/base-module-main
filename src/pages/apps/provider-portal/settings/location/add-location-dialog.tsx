@@ -10,6 +10,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LocationSchema } from "./location-schema";
+import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
 
 interface AddLocationDialogProps {
   handleClose: () => void;
@@ -59,7 +60,7 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
   return (
     <Box>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={1.5} >
+        <Grid container spacing={1.5}>
           <Grid item xs={12} borderRadius={2} mb={2}>
             <Grid mb={2}>
               <Typography variant="bodyMedium3">
@@ -96,14 +97,11 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                   control={control}
                   name="contactNumber"
                   render={({ field }) => (
-                    <CustomInput
-                      placeholder={
-                        LocationFormPlaceholders.ENTER_CONTACT_NUMBER
-                      }
+            
+                    <CustomContactInput
                       {...field}
                       hasError={!!errors.contactNumber}
                       errorMessage={errors.contactNumber?.message}
-                      isNumeric={true}
                     />
                   )}
                 />

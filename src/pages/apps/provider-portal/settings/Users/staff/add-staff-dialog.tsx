@@ -10,6 +10,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { StaffSchema } from "./staff-schema";
+import CustomContactInput from "../../../../../../common-components/custom-contact-input/custom-contact-field";
 
 interface AddStaffDialogProps {
   handleClose: () => void;
@@ -103,13 +104,10 @@ const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
               control={control}
               name="contactNumber"
               render={({ field }) => (
-                <CustomInput
-                  placeholder={StaffFormPlaceholders.ENTER_CONTACT_NUMBER}
+                <CustomContactInput
                   {...field}
                   hasError={!!errors.contactNumber}
                   errorMessage={errors.contactNumber?.message}
-                  isNumeric={true}
-
                 />
               )}
             />

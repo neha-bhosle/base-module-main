@@ -263,9 +263,7 @@ function CustomisedTable(props: CustomisedTableProps) {
                           <Box
                             display="flex"
                             alignItems="center"
-                            bgcolor={"#F4F4F4"}
                             borderRadius={"30px"}
-                            padding="2px 12px 2px 2px"
                             width="fit-content"
                             height={"28px"}
                           >

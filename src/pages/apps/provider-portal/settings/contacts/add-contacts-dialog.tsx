@@ -10,7 +10,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ContactsSchema } from "./contacts-schema";
-
+import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
 interface AddContactsDialogProps {
   handleClose: () => void;
 }
@@ -38,7 +38,6 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
   const contactTypeOptions = [
     { value: "emergency", label: "Referral" },
     { value: "primary", label: "Lab" },
-   
   ];
   const stateOptions = [
     { value: "state1", label: "Oklahoma" },
@@ -93,13 +92,10 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
               control={control}
               name="contactNumber"
               render={({ field }) => (
-                <CustomInput
-                  placeholder={ContactFormPlaceholders.ENTER_CONTACT_NUMBER}
+                <CustomContactInput
                   {...field}
                   hasError={!!errors.contactNumber}
                   errorMessage={errors.contactNumber?.message}
-                  isNumeric={true}
-
                 />
               )}
             />
@@ -117,7 +113,6 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
                   hasError={!!errors.faxNumber}
                   errorMessage={errors.faxNumber?.message}
                   isNumeric={true}
-
                 />
               )}
             />
@@ -164,7 +159,6 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
                 <CustomInput
                   placeholder={ContactFormPlaceholders.SELECT_CITY}
                   {...field}
-              
                   hasError={!!errors.city}
                   errorMessage={errors.city?.message}
                 />
@@ -202,7 +196,6 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
                   hasError={!!errors.zipCode}
                   errorMessage={errors.zipCode?.message}
                   isNumeric={true}
-
                 />
               )}
             />

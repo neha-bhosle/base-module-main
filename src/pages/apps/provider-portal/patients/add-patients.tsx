@@ -13,8 +13,6 @@ export const tabStyles = {
   },
 };
 
-
-
 const AddPatients = () => {
   const navigate = useNavigate();
 
@@ -26,7 +24,7 @@ const AddPatients = () => {
     <Grid
       bgcolor={"#FFFFFF"}
       borderRadius={2}
-      height={"90vh"}
+      height={"100vh"}
       mb={1}
       sx={{
         overflowY: "auto",
@@ -59,7 +57,7 @@ const AddPatients = () => {
               </Typography>
             </Grid>
           </Grid>
-          <Grid mt={1}>
+          <Grid mt={1} pb={12}>
             <DemographicTab />
           </Grid>
         </Grid>

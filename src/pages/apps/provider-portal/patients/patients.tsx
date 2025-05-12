@@ -31,7 +31,7 @@ const Patients = () => {
   );
 
   const handleAddPatient = () => {
-    navigate("/admin/add-patient");
+    navigate("/admin/patients/add-patient");
   };
 
   const handleImportClick = () => {

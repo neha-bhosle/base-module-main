@@ -10,6 +10,7 @@ import {
   ClinicianFormPlaceholders,
 } from "../../../../../../constants/formConst";
 import { ClinicianSchema } from "./clinician-schema";
+import CustomContactInput from "../../../../../../common-components/custom-contact-input/custom-contact-field";
 
 interface AddClinicianDialogProps {
   handleClose: () => void;
@@ -39,7 +40,6 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
     { value: "doctor", label: "Psyschotherapist" },
     { value: "nurse", label: "Case Manager" },
     { value: "nurse", label: "Navigator" },
-
   ];
 
   const locationOptions = [
@@ -145,13 +145,10 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
               control={control}
               name="contactNumber"
               render={({ field }) => (
-                <CustomInput
-                  placeholder={ClinicianFormPlaceholders.ENTER_CONTACT_NUMBER}
+                <CustomContactInput
                   {...field}
                   hasError={!!errors.contactNumber}
                   errorMessage={errors.contactNumber?.message}
-                  isNumeric={true}
-
                 />
               )}
             />
@@ -169,7 +166,6 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
                   hasError={!!errors.npiNumber}
                   errorMessage={errors.npiNumber?.message}
                   isNumeric={true}
-
                 />
               )}
             />

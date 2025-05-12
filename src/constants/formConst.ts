@@ -408,6 +408,9 @@ export enum PatientFormSectionTitles {
   CLINICIAN_INFORMATION = "Clinician Information",
   PRIVACY_CONSENT = "Privacy Consent",
   INSURANCE = "Insurance",
+  PAYMENT_METHOD = "Payment Method",
+  PRIMARY_INSURANCE = "Primary Insurance",
+  SECONDARY_INSURANCE = "Secondary Insurance",
 }
 
 export enum PatientFormButtons {
