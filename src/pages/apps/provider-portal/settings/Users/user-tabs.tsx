@@ -36,7 +36,6 @@ export default function UserTabs() {
     const tab = searchParams.get("tab");
     if (tab) {
       setValue(+tab);
-      console.log("Tab changed:", +tab);
     } else {
       navigate(tabRoutes[0]);
     }
@@ -74,7 +73,7 @@ export default function UserTabs() {
             <Grid>
               <CustomButton
                 variant="filled"
-                label="Add Staff"
+                label={UserTabsEnum.ADD_STAFF}
                 startIcon={<AddIcon />}
                 changePadding={true}
                 onClick={() => setAddStaffDialog(true)}
@@ -85,7 +84,7 @@ export default function UserTabs() {
             <Grid>
               <CustomButton
                 variant="filled"
-                label="Add Clinician"
+                label={UserTabsEnum.ADD_CLINICIAN}
                 startIcon={<AddIcon />}
                 changePadding={true}
                 onClick={() => setAddClinicianDialog(true)}
@@ -99,7 +98,7 @@ export default function UserTabs() {
       </Box>
 
       <DrawerBS
-        title={"Add New Staff"}
+        title={UserTabsEnum.ADD_STAFF}
         open={addStaffDialog}
         onClose={() => setAddStaffDialog(false)}
         anchor={"right"}
@@ -108,7 +107,7 @@ export default function UserTabs() {
         <AddStaffDialog handleClose={() => setAddStaffDialog(false)} />
       </DrawerBS>
       <DrawerBS
-        title={"Add New Clinician"}
+        title={UserTabsEnum.ADD_CLINICIAN}
         open={addClinicianDialog}
         onClose={() => setAddClinicianDialog(false)}
         anchor={"right"}

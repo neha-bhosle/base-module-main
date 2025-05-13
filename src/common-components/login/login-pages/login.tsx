@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-escape */
 import { Grid, Typography, Box } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../../common-components/custom-button/custom-button";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,6 +14,10 @@ import CustomInput from "../../custom-input/customInput";
 import CustomLabel from "../../customLabel/customLabel";
 import { forgotPassword } from "../widgets/loginStyles";
 import { LoginpageSchema } from "./login-pages-schema/login-pages-schema";
+import { PatientTemplateActions } from "../../../constants/formConst";
+import { snackbarAction } from "../../../redux/auth/snackbarReducer";
+import { AlertSeverity } from "../../../common-components/snackbar-alert/snackbar-alert";
+import { AppDispatch } from "../../../redux/store";
 
 interface LoginForm {
   username: string;
@@ -22,11 +26,34 @@ interface LoginForm {
 
 function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const isLogin = useSelector((state: any) => state.loginReducer);
+  // const { LOGIN } = apiPath;
+
   const [loginData] = useState<LoginForm>({
     username: "",
     password: "",
   });
+
+  useEffect(() => {
+    if (!isLogin) return;
+    if (isLogin?.data?.access_token && isLogin?.status === "succeeded") {
+      navigate("/admin/patients");
+      dispatch(
+        snackbarAction.showSnackbarAction({
+          severity: AlertSeverity.SUCCESS,
+          message: PatientTemplateActions.LOGIN_SUCCESS,
+        })
+      );
+    } else if (isLogin?.status === "failed") {
+      dispatch(
+        snackbarAction.showSnackbarAction({
+          severity: AlertSeverity.ERROR,
+          message: isLogin?.error,
+        })
+      );
+    }
+  }, [isLogin]);
 
   const {
     control,
@@ -39,8 +66,7 @@ function Login() {
   });
 
   const onSubmit = (values: LoginForm) => {
-    dispatch(login(values) as any);
-    navigate("/admin/settings-tabs/profile-tabs");
+    dispatch(login({ email: values.username, password: values.password }));
   };
 
   return (

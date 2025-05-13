@@ -20,14 +20,13 @@ const PracticeSettingsPage = () => {
   };
 
   return (
-    <Box display="flex">
+    <Box display="flex" height={"100%"}>
       <Paper
         elevation={1}
         sx={{
           width: "280px",
           borderRadius: "8px",
           p: 2,
-          height: "38vh",
         }}
       >
         <Grid container direction="column" spacing={2}>

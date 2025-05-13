@@ -13,7 +13,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { EditProfileSchema } from "../profile/edit-profile-schema";
-
+import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
 interface EditProfileDialogProps {
   handleClose: () => void;
 }
@@ -56,15 +56,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
     <Box>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={1.5}>
-          <Grid
-            item
-            xs={12}
-            border="1px solid #E7E7E7"
-            ml={1}
-            p={1}
-            borderRadius={2}
-            mt={2}
-          >
+          <Grid item xs={12} ml={1} borderRadius={2} mt={2}>
             <Grid mb={2}>
               {" "}
               <Typography variant="bodyMedium3">
@@ -191,14 +183,10 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                       control={control}
                       name="contactNumber"
                       render={({ field }) => (
-                        <CustomInput
-                          placeholder={
-                            SettingsFormPlaceholders.ENTER_CONTACT_NUMBER
-                          }
+                        <CustomContactInput
                           {...field}
                           hasError={!!errors.contactNumber}
                           errorMessage={errors.contactNumber?.message}
-                          isNumeric={true}
                         />
                       )}
                     />
@@ -245,15 +233,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
             </Grid>
             {/* </Paper> */}
           </Grid>
-          <Grid
-            item
-            xs={12}
-            border="1px solid #E7E7E7"
-            ml={1}
-            p={1}
-            borderRadius={2}
-            mt={2}
-          >
+          <Grid item xs={12} ml={1} borderRadius={2} mt={2}>
             <Grid mb={2}>
               {" "}
               <Typography variant="bodyMedium3">
@@ -351,7 +331,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                         hasError={!!errors.zipCode}
                         errorMessage={errors.zipCode?.message}
                         isNumeric={true}
-                        />
+                      />
                     )}
                   />
                 </Grid>
@@ -384,7 +364,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
             <Grid>
               <CustomButton
                 variant="outline"
-                label="Cancel"
+                label={SettingsFormLabels.CANCEL}
                 isSubmitButton
                 onClick={handleClose}
               />
@@ -392,7 +372,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
             <Grid>
               <CustomButton
                 variant="filled"
-                label="Save"
+                label={SettingsFormLabels.SAVE}
                 type="submit"
                 isSubmitButton
               />

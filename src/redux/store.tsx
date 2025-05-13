@@ -13,11 +13,11 @@ const store = configureStore({
     loaderReducer: loaderReducer,
     verifyLinkReducer: verifyLinkReducer,
     intervalsReducer: intervalsReducer,
-
-  }
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export const useReduxDispatch = useDispatch<typeof store.dispatch>;
 export const useReduxSelector = useSelector<RootState>;

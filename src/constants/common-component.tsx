@@ -46,7 +46,7 @@ export const loginConstants = {
   VERIFY_OTP: "Verify OTP",
   SET_NEW_PASSWORD: "Set New Password",
   NEW_PASSWORD: "New Password",
-  CONFIRM_LOGIN: "Confirm & Login",
+  CONFIRM_LOGIN: "Login",
   ENTER_CODE: "Enter Code",
   ENTER_NEW_PASS: "Enter New Password",
   PRACTICEEASILY: "PracticeEasily",

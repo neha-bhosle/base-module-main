@@ -144,7 +144,7 @@ export default function SettingsTab() {
         open={addLocationDialog}
         onClose={() => setAddLocationDialog(false)}
         anchor={"right"}
-        drawerWidth="62vw"
+        drawerWidth="50vw"
       >
         <AddLocationDialog handleClose={() => setAddLocationDialog(false)} />
       </DrawerBS>

@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useLocation, useNavigate } from "react-router-dom";
-import logo from "../../assets/images/Practice Easily Logo.svg";
+import logo from "../../assets/images/New Logo.svg";
 import BasicMenu from "../menu/menu";
 import { UserProfile } from "src/models/userModel";
 import BellIcon from "../../assets/Projectsvgs/bell-icon";

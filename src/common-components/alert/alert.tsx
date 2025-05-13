@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { snackbarAction } from "../../redux/auth/snackbarReducer";
 import { RootState } from "../../redux/store";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorIcon from "@mui/icons-material/Error";
 import CloseIcon from "@mui/icons-material/Close";
 
 export type AlertColor = "success" | "info" | "warning" | "error";
@@ -17,7 +18,7 @@ export const AlertSeverity = {
 
 const CustomSnackbar = () => {
   const dispatch = useDispatch();
-  const { isSnackbarOpen, message, messageTwo } = useSelector(
+  const { isSnackbarOpen, message, messageTwo, severity } = useSelector(
     (state: RootState) => state.snackbarReducer
   );
 
@@ -29,6 +30,33 @@ const CustomSnackbar = () => {
       return;
     }
     dispatch(snackbarAction.hideSnackbarAction());
+  };
+
+  const getIcon = () => {
+    switch (severity) {
+      case AlertSeverity.ERROR:
+        return (
+          <ErrorIcon
+            sx={{
+              color: "#D32F2F",
+              fontSize: "20px",
+              flexShrink: 0,
+              mt: "2px",
+            }}
+          />
+        );
+      default:
+        return (
+          <CheckCircleIcon
+            sx={{
+              color: "#2E7D32",
+              fontSize: "20px",
+              flexShrink: 0,
+              mt: "2px",
+            }}
+          />
+        );
+    }
   };
 
   return (
@@ -54,14 +82,7 @@ const CustomSnackbar = () => {
           maxWidth: "400px",
         }}
       >
-        <CheckCircleIcon
-          sx={{
-            color: "#2E7D32",
-            fontSize: "20px",
-            flexShrink: 0,
-            mt: "2px",
-          }}
-        />
+        {getIcon()}
         <Box sx={{ flex: 1 }}>
           <Typography
             sx={{

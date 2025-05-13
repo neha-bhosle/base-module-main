@@ -14,6 +14,7 @@ import {
   SettingsFormConstants,
   PatientTableLabels,
   PatientFormButtons,
+  PatientTemplateActions,
 } from "../../../../constants/formConst";
 import ImportPatientsDialog from "./import-patients-dialog";
 
@@ -24,15 +25,14 @@ const Patients = () => {
     PATIENT_MOCK_DATA.map((patient) => ({
       ...patient,
       action: [
-        { label: "View", route: "view" },
-        { label: "Edit", route: "edit" },
-        { label: "Delete", route: "delete" },
+        { label: "Merge Duplicate Clients", route: "Merge Duplicate" },
+       
       ],
     }))
   );
 
   const handleAddPatient = () => {
-    navigate("/admin/add-patient");
+    navigate("/admin/patients/add-patient");
   };
 
   const handleImportClick = () => {
@@ -43,7 +43,7 @@ const Patients = () => {
     <Grid container flexDirection="column" gap={2}>
       <Grid flexDirection="row" display="flex">
         <Grid display="flex" alignItems="center">
-          <Typography variant="bodySemiBold2">Patients</Typography>
+          <Typography variant="bodySemiBold2">Clients</Typography>
         </Grid>
         <Grid
           flexDirection="row"
@@ -62,7 +62,7 @@ const Patients = () => {
             />
           </Grid>
           <Grid>
-            <CustomInput showIcon={<SearchIcon />} bgWhite />
+            <CustomInput showIcon={<SearchIcon />} bgWhite placeholder="Search" />
           </Grid>
           <Grid
             flexDirection="row"
@@ -109,7 +109,7 @@ const Patients = () => {
       </Grid>
 
       <Dialog
-        title="Import Patients"
+        title={PatientTemplateActions.IMPORT_CLIENTS}
         open={importDialogOpen}
         onClose={() => setImportDialogOpen(false)}
       >

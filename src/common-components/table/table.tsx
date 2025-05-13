@@ -46,6 +46,8 @@ import {
   tableHeadStyles,
   patientNameStyles,
 } from "./widgets/tablestyles";
+import IntakeForm from "../../models/intake-form";
+import { IntakeFormStatus } from "../intake-form/intake-form-icon";
 
 interface EnhancedTableProps {
   rowCount: number;
@@ -73,6 +75,7 @@ interface CustomisedTableProps {
   handleNavigate?: (rowData: any) => void;
   handleReschedule?: (rowData: any) => void;
   handleCancel?: (rowData: any) => void;
+  handleAppointmentAction?: (rowData: any, action: string) => void;
   rowClick?: boolean;
   handleOpenIntake?: (rowData: any) => void;
   removeRadius?: boolean;
@@ -149,6 +152,7 @@ function CustomisedTable(props: CustomisedTableProps) {
     pageDisplaySize,
     page,
     patientName,
+    handleAppointmentAction,
   } = props;
   const { NO_RECORDS_FOUND, NEXT, PREV } = commonComponentConstant;
 
@@ -259,9 +263,7 @@ function CustomisedTable(props: CustomisedTableProps) {
                           <Box
                             display="flex"
                             alignItems="center"
-                            bgcolor={"#F4F4F4"}
                             borderRadius={"30px"}
-                            padding="2px 12px 2px 2px"
                             width="fit-content"
                             height={"28px"}
                           >
@@ -320,6 +322,16 @@ function CustomisedTable(props: CustomisedTableProps) {
                           ) : (
                             <Chip type={row[cell.id]} />
                           )}
+                        </TableCell>
+                      ) : cell.type === "intakeForm" ? (
+                        <TableCell sx={tableBodyStyles} key={index}>
+                          <IntakeForm
+                            status={
+                              (row[cell.id] && typeof row[cell.id] === "string"
+                                ? row[cell.id].toUpperCase()
+                                : "PENDING") as IntakeFormStatus
+                            }
+                          />
                         </TableCell>
                       ) : cell.type === "avatar" ? (
                         <TableCell sx={tableBodyStyles} key={index}>

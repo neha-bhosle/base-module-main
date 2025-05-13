@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import signatureImage from "../../../../../../assets/images/signature.png";
 import CustomButton from "../../../../../../common-components/custom-button/custom-button";
 import CustomInput from "../../../../../../common-components/custom-input/customInput";
 import CustomSelect from "../../../../../../common-components/custom-select/customSelect";
@@ -10,8 +9,8 @@ import {
   ClinicianFormLabels,
   ClinicianFormPlaceholders,
 } from "../../../../../../constants/formConst";
-import { ClinicianDialogTypographyVariants } from "../../../../../../constants/typography-variants";
 import { ClinicianSchema } from "./clinician-schema";
+import CustomContactInput from "../../../../../../common-components/custom-contact-input/custom-contact-field";
 
 interface AddClinicianDialogProps {
   handleClose: () => void;
@@ -38,9 +37,9 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
   });
 
   const roleOptions = [
-    { value: "doctor", label: "Doctor" },
-    { value: "nurse", label: "Nurse" },
-    { value: "therapist", label: "Therapist" },
+    { value: "doctor", label: "Psyschotherapist" },
+    { value: "nurse", label: "Case Manager" },
+    { value: "nurse", label: "Navigator" },
   ];
 
   const locationOptions = [
@@ -146,13 +145,10 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
               control={control}
               name="contactNumber"
               render={({ field }) => (
-                <CustomInput
-                  placeholder={ClinicianFormPlaceholders.ENTER_CONTACT_NUMBER}
+                <CustomContactInput
                   {...field}
                   hasError={!!errors.contactNumber}
                   errorMessage={errors.contactNumber?.message}
-                  isNumeric={true}
-
                 />
               )}
             />
@@ -170,7 +166,6 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
                   hasError={!!errors.npiNumber}
                   errorMessage={errors.npiNumber?.message}
                   isNumeric={true}
-
                 />
               )}
             />
@@ -231,50 +226,6 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
               )}
             />
           </Grid>
-
-          <Grid item xs={12}>
-            <CustomLabel label={ClinicianFormLabels.SIGNATURE} />
-            <Paper
-              elevation={0}
-              sx={{
-                p: 2,
-                border: "1px solid #E7E7E7",
-                borderRadius: 1,
-                backgroundColor: "#F5F8FF",
-                maxWidth: "275px",
-              }}
-            >
-              <Box sx={{ mb: 1 }}>
-                <img
-                  src={signatureImage}
-                  alt="Signature"
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "60px",
-                    objectFit: "contain",
-                  }}
-                />
-              </Box>
-              <Typography
-                variant={ClinicianDialogTypographyVariants.BODY_REGULAR_6}
-                sx={{
-                  fontSize: "12px",
-                  color: "#555",
-                }}
-              >
-                {ClinicianDialogTypographyVariants.SIGNED_BY_CLINICIAN}
-              </Typography>
-              <Typography
-                variant={ClinicianDialogTypographyVariants.BODY_REGULAR_6}
-                sx={{
-                  fontSize: "12px",
-                  color: "#555",
-                }}
-              >
-                {ClinicianDialogTypographyVariants.DATE_TIME}
-              </Typography>
-            </Paper>
-          </Grid>
         </Grid>
         <Grid
           flexDirection={"row"}
@@ -299,7 +250,7 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
             <Grid>
               <CustomButton
                 variant="outline"
-                label="Cancel"
+                label={ClinicianFormLabels.CANCEL}
                 isSubmitButton
                 onClick={handleClose}
               />
@@ -307,7 +258,7 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
             <Grid>
               <CustomButton
                 variant="filled"
-                label="Save"
+                label={ClinicianFormLabels.SAVE}
                 type="submit"
                 isSubmitButton
               />

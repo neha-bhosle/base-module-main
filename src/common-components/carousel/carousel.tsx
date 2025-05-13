@@ -26,8 +26,14 @@ function Carousel() {
           bgcolor: "#0068FF",
         }}
       >
-        <Grid mt={15}>
-          <Typography variant="h2SemiBold" color={"#FFFFFF"} ml={22}>
+        <Grid
+          mt={15}
+          alignItems={"center"}
+          display="flex"
+          justifyContent="center"
+          width="100%"
+        >
+          <Typography variant="h2SemiBold" color={"#FFFFFF"}>
             {loginConstants.PRACTICEEASILY}
           </Typography>
         </Grid>

@@ -98,6 +98,8 @@ export enum SettingsFormLabels {
   CONTACT_NUMBER = "Contact Number",
   EMAIL_ID = "Email ID",
   TAXONOMY = "Taxonomy",
+  SAVE = "Save",
+  CANCEL = "Cancel",
 
   // Billing Address Fields
   ADDRESS_LINE_1 = "Address line 1",
@@ -128,6 +130,8 @@ export enum SettingsFormPlaceholders {
 }
 
 export enum ContactFormLabels {
+  CANCEL = "Cancel",
+  SAVE = "Save",
   CONTACT_TYPE = "Select Contact Type",
   FULL_NAME = "Full Name",
   CONTACT_NUMBER = "Contact Number",
@@ -146,7 +150,7 @@ export enum ContactFormPlaceholders {
   ENTER_FAX_NUMBER = "Enter Fax Number",
   ENTER_EMAIL_ID = "Enter Email ID",
   ENTER_ADDRESS = "Enter Address",
-  SELECT_CITY = "Select City",
+  SELECT_CITY = "Enter City",
   SELECT_STATE = "Select State",
   ENTER_ZIP_CODE = "Enter Zip Code",
 }
@@ -158,6 +162,8 @@ export enum StaffFormLabels {
   CONTACT_NUMBER = "Contact Number",
   STATUS = "Status",
   ROLE = "Role",
+  CANCEL = "Cancel",
+  SAVE = "Save",
 }
 
 export enum StaffFormPlaceholders {
@@ -180,6 +186,8 @@ export enum ClinicianFormLabels {
   SUPERVISING_CLINICIAN = "Supervising Clinician",
   ROLE = "Role",
   SIGNATURE = "Signature",
+  CANCEL = "Cancel",
+  SAVE = "Save",
 }
 
 export enum ClinicianFormPlaceholders {
@@ -227,10 +235,10 @@ export enum LocationFormPlaceholders {
 
 export enum PracticeSettingsTabs {
   PROFILE = "Profile",
-  LOCATION = "Location",
-  USER = "User",
+  LOCATION = "Locations",
+  USER = "Users",
   ROLES = "Roles",
-  CONTACT = "Contact",
+  CONTACT = "Contacts",
 }
 export enum OtherSettingsTabs {
   AVAILABILITY = "Availability",
@@ -252,7 +260,9 @@ export enum PracticeSettingsRoutes {
 
 export enum UserTabs {
   STAFF = "Staff",
-  CLINICIAN = "Clinician",
+  CLINICIAN = "Clinicians",
+  ADD_CLINICIAN = "Add Clinician",
+  ADD_STAFF = "Add Staff",
 }
 
 export enum UserTabRoutes {
@@ -315,14 +325,15 @@ export enum ProfileValidationMessages {
 export enum SettingsFormConstants {
   PRACTICE_SETTINGS = "Practice Settings",
   EDIT_PROFILE = "Edit Profile",
-  ADD_NEW_LOCATION = "Add New Location",
-  ADD_NEW_CONTACT = "Add New Contact",
-  ADD_NEW_FEE_SCHEDULE = "Add New Fee Schedule",
+  ADD_NEW_LOCATION = "Add Location",
+  ADD_NEW_CONTACT = "Add Contact",
+  ADD_NEW_FEE_SCHEDULE = "Add Fee Schedule",
   ADD_FEE_SCHEDULE = "Add Fee Schedule",
   OTHER_SETTINGS = "Other Settings",
   SAVE = "Save",
   CANCEL = "Cancel",
-  ADD_NEW_PATIENT = "Add New Patient",
+  ADD_NEW_PATIENT = "Add Client",
+  ADD_NEW_CLIENT = "Add Client",
 }
 
 export enum FeeScheduleFormLabels {
@@ -406,6 +417,10 @@ export enum PatientFormSectionTitles {
   GUARDIAN_INFORMATION = "Guardian Information",
   CLINICIAN_INFORMATION = "Clinician Information",
   PRIVACY_CONSENT = "Privacy Consent",
+  INSURANCE = "Insurance",
+  PAYMENT_METHOD = "Payment Method",
+  PRIMARY_INSURANCE = "Primary Insurance",
+  SECONDARY_INSURANCE = "Secondary Insurance",
 }
 
 export enum PatientFormButtons {
@@ -471,10 +486,25 @@ export enum PatientTemplateActions {
   DOWNLOAD_TEMPLATE = "Download Template",
   TEMPLATE_SUCCESS_MESSAGE = "The CSV file has been successfully imported, containing records for 180 patients.",
   TEMPLATE = "Template Downloaded Successfully",
+  LOGIN_SUCCESS = "Logged in Successfully",
+  IMPORT_CLIENTS = "Import Clients",
 }
 
 export enum FileUploadActions {
   DROP_FILES = "Drop the files here ...Only pdf, png or jpeg.",
   CLICK_TO_UPLOAD = "Click here to upload",
   OR_DRAG_AND_DROP = "or drag and drop",
+}
+
+export enum AppointmentViewOptions {
+  LIST = "List",
+  CALENDAR = "Calendar",
+}
+
+export enum UploadFileComponentConstants {
+  DROP_FILES = "Drop the files here ...Only pdf, png or jpeg.",
+  CLICK_TO_UPLOAD = "Click here to upload",
+  OR_DRAG_AND_DROP = "or drag and drop",
+  FRONT_OF_CARD = "Click here to upload or drag and drop front of card",
+  BACK_OF_CARD = "Click here to upload or drag and drop back of card",
 }

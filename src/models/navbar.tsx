@@ -5,14 +5,14 @@ export const providerNavbar = [
     // route: "dashboard",
   },
   {
-    label: "Patient",
+    label: "Clients",
     type: "text",
     route: "patients",
   },
   {
     label: "Calendar",
     type: "text",
-    // route: "calendar",
+    route: "calendar",
   },
   {
     label: "Billing",

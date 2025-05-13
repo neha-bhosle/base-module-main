@@ -11,7 +11,7 @@ import {
 } from "../utils/localStorage";
 
 const BASE_URL = import.meta.env.VITE_BASE_API_URL;
-const VERSION = import.meta.env.VITE_PROJECT_VERSION;
+// const VERSION = import.meta.env.VITE_PROJECT_VERSION;
 const { BEARER } = commonComponentConstant;
 const { LOGIN } = apiPath;
 const axiosInstance = axios.create({
@@ -19,7 +19,6 @@ const axiosInstance = axios.create({
 });
 axiosInstance.interceptors.request.use(
   (request: InternalAxiosRequestConfig) => {
-
     const accessToken = getDataFromLocalStorage("token") || "";
     if (accessToken && request.url !== LOGIN) {
       request.headers.Authorization = `${BEARER} ${accessToken?.replace(/^"|"$/g, "")}`;
@@ -42,13 +41,14 @@ axiosInstance.interceptors.response.use(
       saveToLocalStorage("refresh_token", response.data?.data?.refresh_token);
 
       // Redirect to returnUrl after login
-      const returnUrl = localStorage.getItem("returnUrl") || "/";
-      window.location.replace(returnUrl);
+      // const returnUrl = localStorage.getItem("returnUrl") || "/";
+      // window.history.pushState({}, "", "/admin");
+      // nagivate("/admin");
     }
 
-    if (response.data.version !== VERSION) {
-      window.location.reload();
-    }
+    // if (response.data.version !== VERSION) {
+    //   window.location.reload();
+    // }
 
     return response.data;
   },
@@ -94,7 +94,6 @@ axiosInstance.interceptors.response.use(
           removeDataFromLocalStorage("token");
           removeDataFromLocalStorage("role");
           removeDataFromLocalStorage("refresh_token");
-
           window.parent.location.assign("/auth/login");
           window.location.assign("/auth/login");
         }
