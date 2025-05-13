@@ -1,6 +1,6 @@
 export type PromisedContentResponse<T> = Promise<ResponseContentEntity<T>>;
 
-export type ResponseContentEntity<T> = {
+export type ResponseArrayContentEntity<T> = {
   date: string;
   code: string;
   message: null;
@@ -10,8 +10,18 @@ export type ResponseContentEntity<T> = {
   version: string;
 };
 
+export type ResponseContentEntity<T> = {
+  date: string;
+  code: string;
+  message: null;
+  data: T;
+  path: string;
+  requestId: string;
+  version: string;
+};
+
 export type ContentObject<T> = {
-  content: T;
+  content: T[];
   pageable: PageableObject;
   last: boolean;
   totalElements: number;
@@ -41,3 +51,11 @@ export type SortObject = {
   ascending: boolean;
   descending: boolean;
 };
+
+export interface ErrorResponse {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+}

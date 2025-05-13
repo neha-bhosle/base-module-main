@@ -39,17 +39,7 @@ axiosInstance.interceptors.response.use(
     if (response.config.url === LOGIN && response.data?.data?.access_token) {
       saveToLocalStorage("token", response.data?.data?.access_token);
       saveToLocalStorage("refresh_token", response.data?.data?.refresh_token);
-
-      // Redirect to returnUrl after login
-      // const returnUrl = localStorage.getItem("returnUrl") || "/";
-      // window.history.pushState({}, "", "/admin");
-      // nagivate("/admin");
     }
-
-    // if (response.data.version !== VERSION) {
-    //   window.location.reload();
-    // }
-
     return response.data;
   },
   async (error) => {
@@ -98,12 +88,11 @@ axiosInstance.interceptors.response.use(
           window.location.assign("/auth/login");
         }
       }
-      return;
     }
-    return error?.response ===
-      "Cannot read properties of undefined (reading 'data')"
-      ? "Error occurred"
-      : error?.response;
+    // Return a rejected promise with the error response
+    return Promise.reject(
+      error?.response || { data: { message: "An error occurred" } }
+    );
   }
 );
 export default axiosInstance;

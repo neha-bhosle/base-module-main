@@ -6,12 +6,22 @@ import CustomButton from "../../../../../common-components/custom-button/custom-
 import {
   LocationFormLabels,
   LocationFormPlaceholders,
+  SettingsFormPlaceholders,
 } from "../../../../../constants/formConst";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LocationSchema } from "./location-schema";
 import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
-
+import { AppDispatch, RootState } from "../../../../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { addPracticeLocation } from "../../../../../redux/auth/profile/add-practice-reducer";
+import { addPracticeLocationReducerAction } from "../../../../../redux/auth/profile/add-practice-reducer";
+import { apiStatus } from "../../../../../models/apiStatus";
+import { loaderAction } from "../../../../../redux/auth/loaderReducer";
+import { useEffect } from "react";
+import { AlertSeverity } from "../../../../../common-components/snackbar-alert/snackbar-alert";
+import { getAllLocationDetails } from "../../../../../redux/auth/profile/get-location-details";
+import { snackbarAction } from "../../../../../redux/auth/snackbarReducer";
 interface AddLocationDialogProps {
   handleClose: () => void;
 }
@@ -38,24 +48,89 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
     resolver: yupResolver(LocationSchema),
   });
 
+  const {
+    // data: editPracticeResponse,
+    status: addLocationStatus,
+    error: addLocationError,
+  }: any = useSelector((state: RootState) => state.AddPracticeLocationReducer);
+
   const statusOptions = [
-    { value: "active", label: "Active" },
-    { value: "inactive", label: "Inactive" },
+    { value: true, label: "Active" },
+    { value: false, label: "Inactive" },
   ];
 
-  const cityOptions = [
-    { value: "city1", label: "City 1" },
-    { value: "city2", label: "City 2" },
-  ];
-
-  const stateOptions = [
-    { value: "state1", label: "State 1" },
-    { value: "state2", label: "State 2" },
-  ];
+  const dispatch = useDispatch<AppDispatch>();
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    const payload = {
+      locationName: data.locationName,
+      contactNumber: data.contactNumber,
+      emailId: data.emailId,
+      groupNpiNumber: data.groupNpiNumber,
+      status: data.status,
+      fax: data.fax,
+      address: {
+        line1: data.addressLine1,
+        line2: data.addressLine2,
+        city: data.city,
+        state: data.state,
+        zipcode: data.zipCode,
+      },
+    };
+    dispatch(addPracticeLocation(payload));
+    console.log("payload", payload);
   };
+
+  const {
+    data: getAllAmericanStatesData,
+    status: getAllAmericanStatesStatus,
+  }: any = useSelector((state: RootState) => state.GetAllAmericanStatesReducer);
+
+  const stateOptions =
+    getAllAmericanStatesData?.map((state: string) => ({
+      value: state,
+      label: state,
+    })) || [];
+
+  useEffect(() => {
+    switch (addLocationStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.SUCCESS,
+            message: "Location added successfully",
+          })
+        );
+        dispatch(
+          getAllLocationDetails({
+            xTenant: "default",
+            size: 10,
+            page: 0,
+            searchString: "",
+          })
+        );
+        dispatch(
+          addPracticeLocationReducerAction.resetAddPracticeLocationReducer()
+        );
+        handleClose();
+        break;
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.ERROR,
+            message: addLocationError,
+          })
+        );
+        break;
+    }
+  }, [addLocationStatus, dispatch, addLocationError, handleClose]);
 
   return (
     <Box>
@@ -97,7 +172,6 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                   control={control}
                   name="contactNumber"
                   render={({ field }) => (
-            
                     <CustomContactInput
                       {...field}
                       hasError={!!errors.contactNumber}
@@ -236,11 +310,17 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                   control={control}
                   name="city"
                   render={({ field }) => (
-                    <CustomSelect
-                      placeholder={LocationFormPlaceholders.SELECT_CITY}
+                    // <CustomSelect
+                    //   placeholder={LocationFormPlaceholders.SELECT_CITY}
+                    //   {...field}
+                    //   value={field.value}
+                    //   items={cityOptions}
+                    //   hasError={!!errors.city}
+                    //   errorMessage={errors.city?.message}
+                    // />
+                    <CustomInput
+                      placeholder={LocationFormPlaceholders.ENTER_CITY}
                       {...field}
-                      value={field.value}
-                      items={cityOptions}
                       hasError={!!errors.city}
                       errorMessage={errors.city?.message}
                     />
@@ -255,12 +335,12 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                   name="state"
                   render={({ field }) => (
                     <CustomSelect
-                      placeholder={LocationFormPlaceholders.SELECT_STATE}
+                      placeholder={SettingsFormPlaceholders.SELECT_STATE}
                       {...field}
-                      value={field.value || ""}
-                      items={stateOptions}
                       hasError={!!errors.state}
                       errorMessage={errors.state?.message}
+                      value={field.value || ""}
+                      items={stateOptions}
                     />
                   )}
                 />

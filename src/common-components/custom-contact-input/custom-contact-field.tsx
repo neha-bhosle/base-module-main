@@ -39,6 +39,17 @@ interface CustomContactInputProps {
 
 const CHARS_TO_EXCLUDE = ["(", ")", " ", "-"];
 
+const formatPhoneNumber = (value: string): string => {
+  // Remove all non-digit characters
+  const cleaned = value.replace(/\D/g, "");
+
+  // Format the number as (XXX)-XXX-XXXX
+  if (cleaned.length >= 10) {
+    return `(${cleaned.slice(0, 3)})-${cleaned.slice(3, 6)}-${cleaned.slice(6, 10)}`;
+  }
+  return cleaned;
+};
+
 export default function CustomContactInput(props: CustomContactInputProps) {
   const { value, hasError, errorMessage, isDisabled, onChange } = props;
 
@@ -48,7 +59,7 @@ export default function CustomContactInput(props: CustomContactInputProps) {
     const filteredVal = Array.from(event as string)
       .filter((char) => !CHARS_TO_EXCLUDE.includes(char))
       .join("");
-    onChange(filteredVal);
+    onChange(formatPhoneNumber(filteredVal));
   };
 
   const isIOS =

@@ -1,46 +1,96 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../../../../common-components/custom-button/custom-button";
+import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
 import CustomInput from "../../../../../common-components/custom-input/customInput";
 import CustomSelect from "../../../../../common-components/custom-select/customSelect";
 import CustomLabel from "../../../../../common-components/customLabel/customLabel";
 import UploadImage from "../../../../../common-components/image-upload/image-upload";
+import { AlertSeverity } from "../../../../../common-components/snackbar-alert/snackbar-alert";
 import {
   SettingsFormLabels,
   SettingsFormMessages,
   SettingsFormPlaceholders,
 } from "../../../../../constants/formConst";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { apiStatus } from "../../../../../models/apiStatus";
+import { loaderAction } from "../../../../../redux/auth/loaderReducer";
+import {
+  editPractice,
+  editPracticeReducerAction,
+} from "../../../../../redux/auth/profile/edit-practice-reducer";
+import { getAllAmericanStates } from "../../../../../redux/auth/profile/get-all-states-reducer";
+import { getAllPracticeDetails } from "../../../../../redux/auth/profile/get-profile-reducer";
+import { snackbarAction } from "../../../../../redux/auth/snackbarReducer";
+import { AppDispatch, RootState } from "../../../../../redux/store";
 import { EditProfileSchema } from "../profile/edit-profile-schema";
-import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
+
 interface EditProfileDialogProps {
   handleClose: () => void;
+  profileData: any; // TODO: Add proper type
 }
 
-const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
+const EditProfileDialog = ({
+  handleClose,
+  profileData,
+}: EditProfileDialogProps) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm({
     defaultValues: {
-      username: "",
-      clinicNpiNumber: "",
-      taxType: "",
-      taxNumber: "",
-      contactNumber: "",
-      emailId: "",
-      taxonomy: "",
-      addressLine1: "",
-      addressLine2: "",
-      city: "",
-      state: "",
-      zipCode: "",
+      clinicName: profileData?.clinicName || "",
+      npiNumber: profileData?.npiNumber || "",
+      taxType: profileData?.taxType || "",
+      taxNumber: profileData?.taxNumber || "",
+      contactNumber: profileData?.contactNumber || "",
+      emailId: profileData?.emailId || "",
+      taxonomy: profileData?.taxonomy || "",
+      line1: profileData?.address?.line1 || "",
+      line2: profileData?.address?.line2 || "",
+      city: profileData?.address?.city || "",
+      state: profileData?.address?.state || "",
+      zip: profileData?.address?.zipcode || "",
     },
     resolver: yupResolver(EditProfileSchema),
   });
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+
+  const {
+    // data: editPracticeResponse,
+    status: editPracticeStatus,
+    error: editPracticeError,
+  }: any = useSelector((state: RootState) => state.EditPracticeReducer);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const editPracticeState = useSelector(
+    (state: RootState) => state.EditPracticeReducer
+  );
+
+  const {
+    data: getAllAmericanStatesData,
+    status: getAllAmericanStatesStatus,
+  }: any = useSelector((state: RootState) => state.GetAllAmericanStatesReducer);
+
+  const stateOptions =
+    getAllAmericanStatesData?.map((state: string) => ({
+      value: state,
+      label: state,
+    })) || [];
+
+  const taxTypeOptions = [
+    { value: "TIN", label: "TIN" },
+    { value: "SSN", label: "SSN" },
+    { value: "EIN", label: "EIN" },
+  ];
+
+  useEffect(() => {
+    dispatch(getAllAmericanStates());
+  }, [dispatch]);
+
+  useEffect(() => {}, [getAllAmericanStatesStatus, getAllAmericanStatesData]);
 
   const handleSetImage = (file: File) => {
     const reader = new FileReader();
@@ -50,7 +100,69 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
     reader.readAsDataURL(file);
   };
 
-  const onSubmit = () => {};
+  const onSubmit = (values: any) => {
+    const payload = {
+      ...values,
+      uuid: profileData?.uuid,
+      clinicName: values.clinicName,
+      npiNumber: values.npiNumber,
+      taxType: values.taxType,
+      taxNumber: values.taxNumber,
+      contactNumber: values.contactNumber,
+      emailId: values.emailId,
+      taxonomy: values.taxonomy,
+      address: {
+        line1: values.line1,
+        line2: values.line2,
+        city: values.city,
+        state: values.state,
+        zipcode: values.zip,
+      },
+    };
+    dispatch(editPractice(payload));
+  };
+
+  const [profileImage, setProfileImage] = useState<string | null>(
+    profileData?.profileImage || null
+  );
+
+  useEffect(() => {
+    switch (editPracticeStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.SUCCESS,
+            message: "Practice updated successfully",
+          })
+        );
+        dispatch(
+          getAllPracticeDetails({
+            xTenant: "default",
+            size: 10,
+            page: 0,
+            searchString: "",
+          })
+        );
+        dispatch(editPracticeReducerAction.resetEditPracticeReducer());
+        handleClose();
+        break;
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.ERROR,
+            message: editPracticeError,
+          })
+        );
+        break;
+    }
+  }, [editPracticeStatus, dispatch, editPracticeError, handleClose]);
 
   return (
     <Box>
@@ -63,8 +175,8 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                 {SettingsFormLabels.PRACTICE_INFORMATION}
               </Typography>
             </Grid>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={3}>
+            <Grid container spacing={2} width={"100%"}>
+              {/* <Grid item xs={12} md={3}>
                 <Box
                   sx={{
                     display: "flex",
@@ -91,9 +203,9 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                     {SettingsFormMessages.SUPPORTED_FILES}
                   </Typography>
                 </Box>
-              </Grid>
+              </Grid> */}
 
-              <Grid item xs={12} md={9}>
+              <Grid item xs={12} width={"100%"}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <CustomLabel
@@ -102,15 +214,15 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                     />
                     <Controller
                       control={control}
-                      name="username"
+                      name="clinicName"
                       render={({ field }) => (
                         <CustomInput
                           placeholder={
                             SettingsFormPlaceholders.ENTER_CLINIC_NAME
                           }
                           {...field}
-                          hasError={!!errors.username}
-                          errorMessage={errors.username?.message}
+                          hasError={!!errors.clinicName}
+                          errorMessage={errors.clinicName?.message}
                           isNumeric={false}
                         />
                       )}
@@ -124,15 +236,15 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                     />
                     <Controller
                       control={control}
-                      name="clinicNpiNumber"
+                      name="npiNumber"
                       render={({ field }) => (
                         <CustomInput
                           placeholder={
                             SettingsFormPlaceholders.ENTER_CLINIC_NPI_NUMBER
                           }
                           {...field}
-                          hasError={!!errors.clinicNpiNumber}
-                          errorMessage={errors.clinicNpiNumber?.message}
+                          hasError={!!errors.npiNumber}
+                          errorMessage={errors.npiNumber?.message}
                           isNumeric={true}
                         />
                       )}
@@ -149,7 +261,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                           placeholder={SettingsFormPlaceholders.SELECT_TAX_TYPE}
                           {...field}
                           value={field.value || ""}
-                          items={[]}
+                          items={taxTypeOptions}
                         />
                       )}
                     />
@@ -233,7 +345,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
             </Grid>
             {/* </Paper> */}
           </Grid>
-          <Grid item xs={12} ml={1} borderRadius={2} mt={2}>
+          <Grid item xs={12} ml={1} borderRadius={2} mt={2} mr={2}>
             <Grid mb={2}>
               {" "}
               <Typography variant="bodyMedium3">
@@ -250,15 +362,15 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                   />
                   <Controller
                     control={control}
-                    name="addressLine1"
+                    name="line1"
                     render={({ field }) => (
                       <CustomInput
                         placeholder={
                           SettingsFormPlaceholders.ENTER_ADDRESS_LINE_1
                         }
                         {...field}
-                        hasError={!!errors.addressLine1}
-                        errorMessage={errors.addressLine1?.message}
+                        hasError={!!errors.line1}
+                        errorMessage={errors.line1?.message}
                         isNumeric={false}
                       />
                     )}
@@ -269,15 +381,15 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                   <CustomLabel label={SettingsFormLabels.ADDRESS_LINE_2} />
                   <Controller
                     control={control}
-                    name="addressLine2"
+                    name="line2"
                     render={({ field }) => (
                       <CustomInput
                         placeholder={
                           SettingsFormPlaceholders.ENTER_ADDRESS_LINE_2
                         }
                         {...field}
-                        hasError={!!errors.addressLine2}
-                        errorMessage={errors.addressLine2?.message}
+                        hasError={!!errors.line2}
+                        errorMessage={errors.line2?.message}
                         isNumeric={false}
                       />
                     )}
@@ -312,8 +424,8 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                         {...field}
                         hasError={!!errors.state}
                         errorMessage={errors.state?.message}
-                        value={field.value}
-                        items={[]}
+                        value={field.value || ""}
+                        items={stateOptions}
                       />
                     )}
                   />
@@ -323,13 +435,13 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
                   <CustomLabel label={SettingsFormLabels.ZIP_CODE} isRequired />
                   <Controller
                     control={control}
-                    name="zipCode"
+                    name="zip"
                     render={({ field }) => (
                       <CustomInput
                         placeholder={SettingsFormPlaceholders.ENTER_ZIP_CODE}
                         {...field}
-                        hasError={!!errors.zipCode}
-                        errorMessage={errors.zipCode?.message}
+                        hasError={!!errors.zip}
+                        errorMessage={errors.zip?.message}
                         isNumeric={true}
                       />
                     )}

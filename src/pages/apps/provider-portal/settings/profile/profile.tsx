@@ -4,48 +4,99 @@ import doctorProfileImg from "../../../../../assets/images/Practice Easily Logo.
 import { ProfileTypographyVariants } from "../../../../../constants/typography-variants";
 import { ProfileFieldLabels } from "../../../../../constants/formConst";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../../redux/store";
+import { getAllPracticeDetails } from "../../../../../redux/auth/profile/get-profile-reducer";
 
 interface FieldData {
   label: string;
   value: string;
 }
 
+interface Address {
+  uuid?: string;
+  line1: string;
+  line2?: string | null;
+  city: string;
+  state: string;
+  zipcode: string;
+}
+
+const formatAddress = (address: Address | string): string => {
+  if (typeof address === "string") return address;
+
+  const parts = [
+    address.line1,
+    address.line2,
+    address.city,
+    address.state,
+    address.zipcode,
+  ].filter(Boolean);
+
+  return parts.join(", ");
+};
+
 const Profile = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [leftColumnFields, setLeftColumnFields] = useState<FieldData[]>([]);
   const [rightColumnFields, setRightColumnFields] = useState<FieldData[]>([]);
 
+  const {
+    data: getAllPracticeDetailData,
+    status: getAllPracticeDetailStatus,
+    error: getAllPracticeDetailError,
+  }: any = useSelector(
+    (state: RootState) => state.GetAllPracticeDetailsReducer
+  );
+
   useEffect(() => {
-    setLeftColumnFields([
-      {
-        label: ProfileFieldLabels.CLINIC_NPI_NUMBER,
-        value: practiceData.clinicNPI,
-      },
+    // Fetch practice details when component mounts
+    dispatch(
+      getAllPracticeDetails({
+        xTenant: "default",
+        size: 10,
+        page: 0,
+        searchString: "",
+      })
+    );
+  }, [dispatch]);
 
-      {
-        label: ProfileFieldLabels.TAX_NUMBER,
-        value: practiceData.taxNumber,
-      },
-      {
-        label: ProfileFieldLabels.CONTACT_NUMBER,
-        value: practiceData.contactNumber,
-      },
-    ]);
+  useEffect(() => {
+    if (getAllPracticeDetailData) {
+      setLeftColumnFields([
+        {
+          label: ProfileFieldLabels.CLINIC_NPI_NUMBER,
+          value: getAllPracticeDetailData.npiNumber,
+        },
+        {
+          label: ProfileFieldLabels.TAX_NUMBER,
+          value: `${getAllPracticeDetailData.taxNumber}  (${getAllPracticeDetailData.taxType})`,
+        },
+        {
+          label: ProfileFieldLabels.CONTACT_NUMBER,
+          value: getAllPracticeDetailData.contactNumber,
+        },
+      ]);
 
-    setRightColumnFields([
-      {
-        label: ProfileFieldLabels.EMAIL_ID,
-        value: practiceData.emailID,
-      },
-      {
-        label: ProfileFieldLabels.TAXONOMY_CODE,
-        value: practiceData.taxonomyCode,
-      },
-      {
-        label: ProfileFieldLabels.ADDRESS,
-        value: practiceData.address,
-      },
-    ]);
-  }, []);
+      setRightColumnFields([
+        {
+          label: ProfileFieldLabels.EMAIL_ID,
+          value: getAllPracticeDetailData.emailId,
+        },
+        {
+          label: ProfileFieldLabels.TAXONOMY_CODE,
+          value: getAllPracticeDetailData.taxonomy,
+        },
+        {
+          label: ProfileFieldLabels.ADDRESS,
+          value: formatAddress(getAllPracticeDetailData.address),
+        },
+      ]);
+    }
+  }, [getAllPracticeDetailData]);
+
+  console.log("getAllPracticeDetailData", getAllPracticeDetailData?.clinicName);
 
   return (
     <Paper
@@ -83,7 +134,7 @@ const Profile = () => {
             <Typography
               variant={ProfileTypographyVariants.TITLE_MEDIUM_PROFILE_BOLD}
             >
-              {ProfileFieldLabels.PRACTICE_NAME}
+              {getAllPracticeDetailData?.clinicName}
             </Typography>
           </Grid>
           <Grid display={"flex"} flexDirection={"row"}>

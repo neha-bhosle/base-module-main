@@ -225,7 +225,7 @@ export enum LocationFormPlaceholders {
   ENTER_GROUP_NPI_NUMBER = "Enter Group NPI Number",
   SELECT_STATUS = "Select Status",
   ENTER_FAX = "Enter Fax",
-
+  ENTER_CITY = "Enter City",
   ENTER_ADDRESS_LINE_1 = "Enter address line 1",
   ENTER_ADDRESS_LINE_2 = "Enter address line 2",
   SELECT_CITY = "Select City",
@@ -261,13 +261,17 @@ export enum PracticeSettingsRoutes {
 export enum UserTabs {
   STAFF = "Staff",
   CLINICIAN = "Clinicians",
-  ADD_CLINICIAN = "Add Clinician",
+
+}
+export enum TabConst{
   ADD_STAFF = "Add Staff",
+  ADD_CLINICIAN = "Add Clinician",
 }
 
 export enum UserTabRoutes {
   STAFF = "staff",
   CLINICIAN = "clinician",
+  
 }
 
 export enum LocationTableLabels {

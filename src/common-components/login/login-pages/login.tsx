@@ -17,7 +17,7 @@ import { LoginpageSchema } from "./login-pages-schema/login-pages-schema";
 import { PatientTemplateActions } from "../../../constants/formConst";
 import { snackbarAction } from "../../../redux/auth/snackbarReducer";
 import { AlertSeverity } from "../../../common-components/snackbar-alert/snackbar-alert";
-import { AppDispatch } from "../../../redux/store";
+import { AppDispatch, RootState } from "../../../redux/store";
 
 interface LoginForm {
   username: string;
@@ -35,25 +35,33 @@ function Login() {
     password: "",
   });
 
+  const {
+    // data: editPracticeResponse,
+    status: loginStatus,
+    error: loginError,
+  }: any = useSelector((state: RootState) => state.loginReducer);
+
+  console.log("loginStatus", loginError);
+
   useEffect(() => {
     if (!isLogin) return;
-    if (isLogin?.data?.access_token && isLogin?.status === "succeeded") {
-      navigate("/admin/patients");
+    if (isLogin?.data?.access_token && loginStatus === "succeeded") {
+      navigate("/admin/settings-tabs/profile-tabs/profile");
       dispatch(
         snackbarAction.showSnackbarAction({
           severity: AlertSeverity.SUCCESS,
-          message: PatientTemplateActions.LOGIN_SUCCESS,
+          message: "Login successful",
         })
       );
-    } else if (isLogin?.status === "failed") {
+    } else if (loginStatus === "failed") {
       dispatch(
         snackbarAction.showSnackbarAction({
           severity: AlertSeverity.ERROR,
-          message: isLogin?.error,
+          message: loginError?.message || loginError,
         })
       );
     }
-  }, [isLogin]);
+  }, [isLogin, loginStatus]);
 
   const {
     control,

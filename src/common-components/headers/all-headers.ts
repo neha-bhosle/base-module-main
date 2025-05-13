@@ -143,5 +143,4 @@ export const appointmentTableHeaders = [
   { id: "clinician", label: "Clinician", type: "text" },
   { id: "status", label: "Status", type: "chip" },
   { id: "action", label: "Action", type: "action" },
-  ];
-  
+];
