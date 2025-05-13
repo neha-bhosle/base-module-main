@@ -364,7 +364,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
             <Grid>
               <CustomButton
                 variant="outline"
-                label="Cancel"
+                label={SettingsFormLabels.CANCEL}
                 isSubmitButton
                 onClick={handleClose}
               />
@@ -372,7 +372,7 @@ const EditProfileDialog = ({ handleClose }: EditProfileDialogProps) => {
             <Grid>
               <CustomButton
                 variant="filled"
-                label="Save"
+                label={SettingsFormLabels.SAVE}
                 type="submit"
                 isSubmitButton
               />

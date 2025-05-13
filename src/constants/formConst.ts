@@ -98,6 +98,8 @@ export enum SettingsFormLabels {
   CONTACT_NUMBER = "Contact Number",
   EMAIL_ID = "Email ID",
   TAXONOMY = "Taxonomy",
+  SAVE = "Save",
+  CANCEL = "Cancel",
 
   // Billing Address Fields
   ADDRESS_LINE_1 = "Address line 1",
@@ -128,6 +130,8 @@ export enum SettingsFormPlaceholders {
 }
 
 export enum ContactFormLabels {
+  CANCEL = "Cancel",
+  SAVE = "Save",
   CONTACT_TYPE = "Select Contact Type",
   FULL_NAME = "Full Name",
   CONTACT_NUMBER = "Contact Number",
@@ -158,6 +162,8 @@ export enum StaffFormLabels {
   CONTACT_NUMBER = "Contact Number",
   STATUS = "Status",
   ROLE = "Role",
+  CANCEL = "Cancel",
+  SAVE = "Save",
 }
 
 export enum StaffFormPlaceholders {
@@ -180,6 +186,8 @@ export enum ClinicianFormLabels {
   SUPERVISING_CLINICIAN = "Supervising Clinician",
   ROLE = "Role",
   SIGNATURE = "Signature",
+  CANCEL = "Cancel",
+  SAVE = "Save",
 }
 
 export enum ClinicianFormPlaceholders {
@@ -253,6 +261,8 @@ export enum PracticeSettingsRoutes {
 export enum UserTabs {
   STAFF = "Staff",
   CLINICIAN = "Clinicians",
+  ADD_CLINICIAN = "Add Clinician",
+  ADD_STAFF = "Add Staff",
 }
 
 export enum UserTabRoutes {

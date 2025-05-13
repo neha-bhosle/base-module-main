@@ -172,7 +172,7 @@ const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
             <Grid>
               <CustomButton
                 variant="outline"
-                label="Cancel"
+                label={StaffFormLabels.CANCEL}
                 isSubmitButton
                 onClick={handleClose}
               />
@@ -180,7 +180,7 @@ const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
             <Grid>
               <CustomButton
                 variant="filled"
-                label="Save"
+                label={StaffFormLabels.SAVE}
                 type="submit"
                 changePadding={false}
                 isSubmitButton

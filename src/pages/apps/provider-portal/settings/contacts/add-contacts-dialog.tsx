@@ -224,7 +224,7 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
             <Grid>
               <CustomButton
                 variant="outline"
-                label="Cancel"
+                label={ContactFormLabels.CANCEL}
                 isSubmitButton
                 onClick={handleClose}
               />
@@ -232,7 +232,7 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
             <Grid>
               <CustomButton
                 variant="filled"
-                label="Save"
+                label={ContactFormLabels.SAVE}
                 type="submit"
                 changePadding={false}
                 isSubmitButton

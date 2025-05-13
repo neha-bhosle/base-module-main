@@ -226,50 +226,6 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
               )}
             />
           </Grid>
-
-          {/* <Grid item xs={12}>
-            <CustomLabel label={ClinicianFormLabels.SIGNATURE} />
-            <Paper
-              elevation={0}
-              sx={{
-                p: 2,
-                border: "1px solid #E7E7E7",
-                borderRadius: 1,
-                backgroundColor: "#F5F8FF",
-                maxWidth: "275px",
-              }}
-            >
-              <Box sx={{ mb: 1 }}>
-                <img
-                  src={signatureImage}
-                  alt="Signature"
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "60px",
-                    objectFit: "contain",
-                  }}
-                />
-              </Box>
-              <Typography
-                variant={ClinicianDialogTypographyVariants.BODY_REGULAR_6}
-                sx={{
-                  fontSize: "12px",
-                  color: "#555",
-                }}
-              >
-                {ClinicianDialogTypographyVariants.SIGNED_BY_CLINICIAN}
-              </Typography>
-              <Typography
-                variant={ClinicianDialogTypographyVariants.BODY_REGULAR_6}
-                sx={{
-                  fontSize: "12px",
-                  color: "#555",
-                }}
-              >
-                {ClinicianDialogTypographyVariants.DATE_TIME}
-              </Typography>
-            </Paper>
-          </Grid> */}
         </Grid>
         <Grid
           flexDirection={"row"}
@@ -294,7 +250,7 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
             <Grid>
               <CustomButton
                 variant="outline"
-                label="Cancel"
+                label={ClinicianFormLabels.CANCEL}
                 isSubmitButton
                 onClick={handleClose}
               />
@@ -302,7 +258,7 @@ const AddClinicianDialog = ({ handleClose }: AddClinicianDialogProps) => {
             <Grid>
               <CustomButton
                 variant="filled"
-                label="Save"
+                label={ClinicianFormLabels.SAVE}
                 type="submit"
                 isSubmitButton
               />
