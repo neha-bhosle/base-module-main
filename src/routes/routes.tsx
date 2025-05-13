@@ -26,6 +26,8 @@ import UserTabs from "../pages/apps/provider-portal/settings/Users/user-tabs";
 import Patients from "../pages/apps/provider-portal/patients/patients";
 import AddPatients from "../pages/apps/provider-portal/patients/add-patients";
 import ViewAppointments from "../pages/apps/provider-portal/calendar/view-appointments";
+import PrivateRoute from "./private-route";
+
 export const router = createBrowserRouter([
   { path: "", element: <Navigate to={"/auth/login"} /> },
   {
@@ -47,11 +49,11 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      // <PrivateRoute>
-      <MainLayout>
-        <Outlet />
-      </MainLayout>
-      // </PrivateRoute>
+      <PrivateRoute>
+        <MainLayout>
+          <Outlet />
+        </MainLayout>
+      </PrivateRoute>
     ),
     children: [
       {

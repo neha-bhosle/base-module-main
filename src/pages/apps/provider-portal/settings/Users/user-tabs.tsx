@@ -36,7 +36,6 @@ export default function UserTabs() {
     const tab = searchParams.get("tab");
     if (tab) {
       setValue(+tab);
-      console.log("Tab changed:", +tab);
     } else {
       navigate(tabRoutes[0]);
     }

@@ -8,7 +8,7 @@ import { ResetLinkType } from "../../models/reset-linktype";
 
 class AuthService {
   login = (payload: {
-    username: string;
+    email: string;
     password: string;
   }): Promise<AxiosResponse<LoginResponse>> => {
     return axiosInstance.post(apiPath.LOGIN, payload);

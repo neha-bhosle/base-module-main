@@ -476,6 +476,8 @@ export enum PatientTemplateActions {
   DOWNLOAD_TEMPLATE = "Download Template",
   TEMPLATE_SUCCESS_MESSAGE = "The CSV file has been successfully imported, containing records for 180 patients.",
   TEMPLATE = "Template Downloaded Successfully",
+  LOGIN_SUCCESS = "Logged in Successfully",
+  IMPORT_CLIENTS = "Import Clients",
 }
 
 export enum FileUploadActions {

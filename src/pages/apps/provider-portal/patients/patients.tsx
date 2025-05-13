@@ -14,6 +14,7 @@ import {
   SettingsFormConstants,
   PatientTableLabels,
   PatientFormButtons,
+  PatientTemplateActions,
 } from "../../../../constants/formConst";
 import ImportPatientsDialog from "./import-patients-dialog";
 
@@ -108,7 +109,7 @@ const Patients = () => {
       </Grid>
 
       <Dialog
-        title="Import Clients"
+        title={PatientTemplateActions.IMPORT_CLIENTS}
         open={importDialogOpen}
         onClose={() => setImportDialogOpen(false)}
       >

@@ -70,9 +70,7 @@ const EnterOtp = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = () => {
-    console.log("");
-  };
+  const onSubmit = () => {};
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
