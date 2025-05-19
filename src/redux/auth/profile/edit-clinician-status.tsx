@@ -1,47 +1,50 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { apiStatus } from "../../../models/apiStatus";
 
-import { ErrorResponseEntity } from "../../../models/error-response";
 import { ResponseContentEntity } from "../../../models/response-content-entity";
-import { ClinicInfo } from "../../../models/providerGroup";
 import practiceProfileService from "../../../services/auth/practice-profile-service/practice-profile-service";
-export interface EditPracticeState {
+import { ErrorResponseEntity } from "src/models/error-response";
+
+export interface EditClinicianStatusState {
   data: string | null;
   status: string;
   error: string | null;
 }
 
-const initialState: EditPracticeState = {
+const initialState: EditClinicianStatusState = {
   data: null,
   status: apiStatus.IDLE,
   error: null,
 };
 
-export const editPractice = createAsyncThunk(
-  "EditPracticeReducer",
-  async (payload: ClinicInfo) => {
+export const editClinicianStatus = createAsyncThunk(
+  "EditClinicianStatusReducer",
+  async (payload: { clinicianId: string; flag: boolean }) => {
     try {
       const response: ResponseContentEntity<null> =
-        await practiceProfileService.editPracticeDetails(payload);
+        await practiceProfileService.editClinicianStatus(
+          payload.clinicianId,
+          payload.flag
+        );
       const statusCode = parseInt(response?.code || "0", 10);
       if (statusCode >= 400) {
-        throw new Error(response?.message || "Failed to update practice");
+        throw new Error(response?.message || "Failed to update clinician status");
       }
       return response?.message;
     } catch (error: unknown) {
       if ((error as ErrorResponseEntity)?.body?.message) {
         throw new Error((error as ErrorResponseEntity).body.message);
       }
-      throw new Error("Failed to update practice");
+      throw new Error("Failed to update clinician status");
     }
   }
 );
 
-const editPracticeReducerSlice = createSlice({
-  name: "EditPracticeReducer",
+const editClinicianStatusReducerSlice = createSlice({
+  name: "EditClinicianStatusReducer",
   initialState,
   reducers: {
-    resetEditPracticeReducer: (state) => {
+    resetEditClinicianStatusReducer: (state) => {
       state.data = null;
       state.status = apiStatus.IDLE;
       state.error = null;
@@ -49,20 +52,21 @@ const editPracticeReducerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(editPractice.pending, (state) => {
+      .addCase(editClinicianStatus.pending, (state) => {
         state.status = apiStatus.LOADING;
       })
-      .addCase(editPractice.fulfilled, (state, action) => {
+      .addCase(editClinicianStatus.fulfilled, (state, action) => {
         state.status = apiStatus.SUCCEEDED;
         state.data = action.payload;
       })
-      .addCase(editPractice.rejected, (state, action) => {
+      .addCase(editClinicianStatus.rejected, (state, action) => {
         state.status = apiStatus.FAILED;
         state.error = action.error.message ?? "An error occurred";
       });
   },
 });
 
-const EditPracticeReducer = editPracticeReducerSlice.reducer;
-export default EditPracticeReducer;
-export const editPracticeReducerAction = editPracticeReducerSlice.actions;
+const EditClinicianStatusReducer = editClinicianStatusReducerSlice.reducer;
+export default EditClinicianStatusReducer;
+export const editClinicianStatusReducerAction =
+  editClinicianStatusReducerSlice.actions;

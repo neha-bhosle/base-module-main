@@ -23,6 +23,8 @@ export const clinicianTableHeaders = [
   { id: "contact", label: "Contact Number", type: "text" },
   { id: "npinumber", label: "NPI Number", type: "text" },
   { id: "worklocation", label: "Work Location", type: "text" },
+  { id: "languagesSpoken", label: "Language", type: "text" },
+  { id: "supervisingClinician", label: "Supervising Clinician", type: "text" },
   { id: "status", label: "Status", type: "radio" },
   { id: "action", label: "Action", type: "action" },
 ];

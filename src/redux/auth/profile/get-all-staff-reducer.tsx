@@ -1,45 +1,46 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { StaffPayload } from "src/models/all-const";
+import { ErrorResponseEntity } from "src/models/error-response";
 import {
   ContentObject,
   ResponseArrayContentEntity,
 } from "src/models/response-content-entity";
 import { apiStatus } from "../../../models/apiStatus";
 import practiceProfileService from "../../../services/auth/practice-profile-service/practice-profile-service";
-import { ProfilePayload } from "src/models/all-const";
-import { ErrorResponseEntity } from "src/models/error-response";
-export interface getPracticeDetailsState {
-  data: ContentObject<ProfilePayload> | null;
+
+export interface getAllStaffState {
+  data: ContentObject<StaffPayload> | null;
   status: string;
   error: string | null;
 }
 
-const initialState: getPracticeDetailsState = {
+const initialState: getAllStaffState = {
   data: null,
   status: apiStatus.IDLE,
   error: null,
 };
 
-export const getAllPracticeDetails = createAsyncThunk(
-  "GetAllPracticeDetails",
-  async () => {
+export const getAllStaff = createAsyncThunk(
+  "GetAllStaff",
+  async (payload: StaffPayload) => {
     try {
-      const response: ResponseArrayContentEntity<ProfilePayload> =
-        await practiceProfileService.getPracticeDetails();
+      const response: ResponseArrayContentEntity<StaffPayload> =
+        await practiceProfileService.getAllStaff(payload);
       return response.data;
     } catch (error: unknown) {
       if ((error as ErrorResponseEntity)?.body?.message) {
         throw new Error((error as ErrorResponseEntity).body.message);
       }
-      throw new Error("Failed to get practice details");
+      throw new Error("Failed to get all staff");
     }
   }
 );
 
-const getAllPracticeDetailsReducerSlice = createSlice({
-  name: "GetAllPracticeDetails",
+const getAllStaffReducerSlice = createSlice({
+  name: "GetAllStaff",
   initialState,
   reducers: {
-    resetPracticeDetailsAction: (state) => {
+    resetStaffAction: (state) => {
       state.data = null;
       state.status = apiStatus.IDLE;
       state.error = null;
@@ -47,21 +48,20 @@ const getAllPracticeDetailsReducerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllPracticeDetails.pending, (state) => {
+      .addCase(getAllStaff.pending, (state) => {
         state.status = apiStatus.LOADING;
       })
-      .addCase(getAllPracticeDetails.fulfilled, (state, action) => {
+      .addCase(getAllStaff.fulfilled, (state, action) => {
         state.status = apiStatus.SUCCEEDED;
         state.data = action.payload;
       })
-      .addCase(getAllPracticeDetails.rejected, (state, action) => {
+      .addCase(getAllStaff.rejected, (state, action) => {
         state.status = apiStatus.FAILED;
         state.error = action.error.message ?? "An error occurred";
       });
   },
 });
 
-const GetAllPracticeDetailsReducer = getAllPracticeDetailsReducerSlice.reducer;
-export default GetAllPracticeDetailsReducer;
-export const getAllPracticeDetailsAction =
-  getAllPracticeDetailsReducerSlice.actions;
+const GetAllStaffReducer = getAllStaffReducerSlice.reducer;
+export default GetAllStaffReducer;
+export const getAllStaffAction = getAllStaffReducerSlice.actions;

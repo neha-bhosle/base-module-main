@@ -1,37 +1,67 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { LocationPayload } from "src/models/all-const";
+import { LocationInfo } from "src/models/providerGroup";
+import CustomButton from "../../../../../common-components/custom-button/custom-button";
+import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
 import CustomInput from "../../../../../common-components/custom-input/customInput";
 import CustomSelect from "../../../../../common-components/custom-select/customSelect";
 import CustomLabel from "../../../../../common-components/customLabel/customLabel";
-import CustomButton from "../../../../../common-components/custom-button/custom-button";
+import { AlertSeverity } from "../../../../../common-components/snackbar-alert/snackbar-alert";
 import {
   LocationFormLabels,
   LocationFormPlaceholders,
   SettingsFormPlaceholders,
 } from "../../../../../constants/formConst";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LocationSchema } from "./location-schema";
-import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
-import { AppDispatch, RootState } from "../../../../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { addPracticeLocation } from "../../../../../redux/auth/profile/add-practice-reducer";
-import { addPracticeLocationReducerAction } from "../../../../../redux/auth/profile/add-practice-reducer";
 import { apiStatus } from "../../../../../models/apiStatus";
 import { loaderAction } from "../../../../../redux/auth/loaderReducer";
-import { useEffect } from "react";
-import { AlertSeverity } from "../../../../../common-components/snackbar-alert/snackbar-alert";
+import {
+  addPracticeLocation,
+  addPracticeLocationReducerAction,
+} from "../../../../../redux/auth/profile/add-practice-location-reducer";
+import {
+  editLocation,
+  editLocationReducerAction,
+} from "../../../../../redux/auth/profile/edit-location-reducer";
+import { getAllAmericanStates } from "../../../../../redux/auth/profile/get-all-states-reducer";
 import { getAllLocationDetails } from "../../../../../redux/auth/profile/get-location-details";
 import { snackbarAction } from "../../../../../redux/auth/snackbarReducer";
-interface AddLocationDialogProps {
-  handleClose: () => void;
+import { AppDispatch, RootState } from "../../../../../redux/store";
+import { LocationSchema } from "./location-schema";
+interface LocationFormData {
+  locationName: string;
+  contactNumber: string;
+  emailId: string;
+  groupNpiNumber: string;
+  status?: string;
+  fax?: string;
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  zipCode: string;
 }
 
-const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
+interface AddLocationDialogProps {
+  handleClose: () => void;
+  isEdit?: boolean;
+  selectedLocation?: any;
+}
+
+const AddLocationDialog = ({
+  handleClose,
+  isEdit,
+  selectedLocation,
+}: AddLocationDialogProps) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm({
+    setValue,
+  } = useForm<LocationFormData>({
     defaultValues: {
       locationName: "",
       contactNumber: "",
@@ -48,26 +78,57 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
     resolver: yupResolver(LocationSchema),
   });
 
-  const {
-    // data: editPracticeResponse,
-    status: addLocationStatus,
-    error: addLocationError,
-  }: any = useSelector((state: RootState) => state.AddPracticeLocationReducer);
+  const { status: addLocationStatus, error: addLocationError }: any =
+    useSelector((state: RootState) => state.AddPracticeLocationReducer);
+
+  const { status: editLocationStatus, error: editLocationError }: any =
+    useSelector((state: RootState) => state.EditLocationReducer);
 
   const statusOptions = [
-    { value: true, label: "Active" },
-    { value: false, label: "Inactive" },
+    { value: "active", label: "Active" },
+    { value: "inactive", label: "Inactive" },
   ];
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const onSubmit = (data: any) => {
+  useEffect(() => {
+    dispatch(getAllAmericanStates());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isEdit && selectedLocation) {
+      setValue("locationName", selectedLocation.locationName);
+      setValue("contactNumber", selectedLocation.contactNumber);
+      setValue("emailId", selectedLocation.email);
+      setValue("groupNpiNumber", selectedLocation.groupNPI);
+      setValue("status", selectedLocation.status);
+      setValue("fax", selectedLocation.fax);
+
+      // Handle address
+      const addressParts = selectedLocation.address.split(", ");
+      if (addressParts.length >= 4) {
+        const [line1WithLine2, city, state, zipCode] = addressParts;
+        const [line1, line2] = line1WithLine2.split(", ");
+
+        setValue("addressLine1", line1);
+        setValue("addressLine2", line2 || "");
+        setValue("city", city);
+        setValue("state", state);
+        setValue("zipCode", zipCode);
+      }
+    }
+  }, [isEdit, selectedLocation, setValue]);
+
+  console.log("selectedLocation", selectedLocation);
+
+  const onSubmit = (data: LocationFormData) => {
     const payload = {
+      uuid: selectedLocation?.uuid,
       locationName: data.locationName,
       contactNumber: data.contactNumber,
       emailId: data.emailId,
       groupNpiNumber: data.groupNpiNumber,
-      status: data.status,
+      status: data.status == "active" ? true : false,
       fax: data.fax,
       address: {
         line1: data.addressLine1,
@@ -76,15 +137,22 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
         state: data.state,
         zipcode: data.zipCode,
       },
+      size: 10,
+      page: 0,
+      searchString: "",
+      xTenant: "default",
     };
-    dispatch(addPracticeLocation(payload));
-    console.log("payload", payload);
+
+    if (isEdit) {
+      dispatch(editLocation(payload as unknown as LocationInfo));
+    } else {
+      dispatch(addPracticeLocation(payload as unknown as LocationInfo));
+    }
   };
 
-  const {
-    data: getAllAmericanStatesData,
-    status: getAllAmericanStatesStatus,
-  }: any = useSelector((state: RootState) => state.GetAllAmericanStatesReducer);
+  const { data: getAllAmericanStatesData }: any = useSelector(
+    (state: RootState) => state.GetAllAmericanStatesReducer
+  );
 
   const stateOptions =
     getAllAmericanStatesData?.map((state: string) => ({
@@ -112,7 +180,7 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
             size: 10,
             page: 0,
             searchString: "",
-          })
+          } as LocationPayload)
         );
         dispatch(
           addPracticeLocationReducerAction.resetAddPracticeLocationReducer()
@@ -131,6 +199,44 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
         break;
     }
   }, [addLocationStatus, dispatch, addLocationError, handleClose]);
+
+  useEffect(() => {
+    switch (editLocationStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.SUCCESS,
+            message: "Location updated successfully",
+          })
+        );
+        dispatch(
+          getAllLocationDetails({
+            xTenant: "default",
+            size: 10,
+            page: 0,
+            searchString: "",
+          } as LocationPayload)
+        );
+        dispatch(editLocationReducerAction.resetEditLocationReducer());
+        handleClose();
+        break;
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.ERROR,
+            message: editLocationError,
+          })
+        );
+        break;
+    }
+  }, [editLocationStatus, dispatch, editLocationError, handleClose]);
 
   return (
     <Box>

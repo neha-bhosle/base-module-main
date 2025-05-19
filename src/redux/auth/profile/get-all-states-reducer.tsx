@@ -5,9 +5,10 @@ import {
 } from "src/models/response-content-entity";
 import { apiStatus } from "../../../models/apiStatus";
 import practiceProfileService from "../../../services/auth/practice-profile-service/practice-profile-service";
-
+import { USState } from "src/models/all-const";
+import { ErrorResponseEntity } from "src/models/error-response";
 export interface getAmericanStatesState {
-  data: ContentObject<any> | null;
+  data: ContentObject<USState> | null;
   status: string;
   error: string | null;
 }
@@ -22,16 +23,14 @@ export const getAllAmericanStates = createAsyncThunk(
   "GetAllAmericanStates",
   async () => {
     try {
-      console.log("Making API call to get states...");
-      const response: ResponseArrayContentEntity<any> =
+      const response: ResponseArrayContentEntity<USState> =
         await practiceProfileService.getAllStates();
-      console.log("States API response:", response);
       return response.data;
-    } catch (error: any) {
-      console.error("Error fetching states:", error);
-      throw new Error(
-        error?.data?.message || error?.message || "Failed to fetch states"
-      );
+    } catch (error: unknown) {
+      if ((error as ErrorResponseEntity)?.body?.message) {
+        throw new Error((error as ErrorResponseEntity).body.message);
+      }
+      throw new Error("Failed to get all states");
     }
   }
 );

@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { apiStatus } from "../../../models/apiStatus";
 
+import { ErrorResponseEntity } from "../../../models/error-response";
+import { LocationInfo } from "../../../models/providerGroup";
 import { ResponseContentEntity } from "../../../models/response-content-entity";
-import { PatientTypes } from "../../../models/providerGroup";
 import practiceProfileService from "../../../services/auth/practice-profile-service/practice-profile-service";
+
 export interface AddPracticeLocationState {
   data: string | null;
   status: string;
@@ -18,18 +20,20 @@ const initialState: AddPracticeLocationState = {
 
 export const addPracticeLocation = createAsyncThunk(
   "AddPracticeLocationReducer",
-  async (payload: PatientTypes) => {
+  async (payload: LocationInfo) => {
     try {
       const response: ResponseContentEntity<null> =
         await practiceProfileService.addLocation(payload);
-      if (response?.status >= 400) {
-        throw new Error(response?.message || "Failed to update practiceLocation");
+      const statusCode = parseInt(response?.code || "0", 10);
+      if (statusCode >= 400) {
+        throw new Error("Failed to update Practice Location");
       }
       return response?.message;
-    } catch (error: any) {
-      throw new Error(
-        error?.data?.message || error?.message || "Failed to update practiceLocation"
-      );
+    } catch (error: unknown) {
+      if ((error as ErrorResponseEntity)?.body?.message) {
+        throw new Error((error as ErrorResponseEntity).body.message);
+      }
+      throw new Error("Failed to update Practice Location");
     }
   }
 );
@@ -62,4 +66,5 @@ const addPracticeLocationReducerSlice = createSlice({
 
 const AddPracticeLocationReducer = addPracticeLocationReducerSlice.reducer;
 export default AddPracticeLocationReducer;
-export const addPracticeLocationReducerAction = addPracticeLocationReducerSlice.actions;
+export const addPracticeLocationReducerAction =
+  addPracticeLocationReducerSlice.actions;

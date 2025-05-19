@@ -10,4 +10,6 @@ export const ViewMode = {
   VIEW: "View",
   DELETE: "Delete",
   RESCHEDULE: "Reschedule",
+  ADD: "Add",
+  RESTORE: "Restore",
 };

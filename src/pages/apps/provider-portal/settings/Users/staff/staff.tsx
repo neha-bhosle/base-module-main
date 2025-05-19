@@ -1,16 +1,136 @@
 import { Box, Grid } from "@mui/material";
-import { useState } from "react";
-import CustomisedTable from "../../../../../../common-components/table/table";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import DrawerBS from "../../../../../../common-components/drawer-bs/custom-drawer";
 import { staffTableHeaders } from "../../../../../../common-components/headers/all-headers";
-import { staffMockData } from "../../../../../../common-components/mock-data/all-mock-data";
+import CustomisedTable from "../../../../../../common-components/table/table";
+import { capitalizeFirstLetter } from "../../../../../../common-components/utils/stringUtils";
+import { ViewMode } from "../../../../../../constants/formConst";
+import { StaffList } from "../../../../../../models/providerGroup";
+import { editStaffStatus } from "../../../../../../redux/auth/profile/edit-staff-status-reducer";
+import { getAllStaff } from "../../../../../../redux/auth/profile/get-all-staff-reducer";
+import { AppDispatch, RootState } from "../../../../../../redux/store";
+import AddStaffDialog from "./add-staff-dialog";
 
 const Staff = () => {
-  const [tableData, setTableData] = useState(staffMockData);
-  const [page, setPage] = useState(0);
+  const [tableData, setTableData] = useState<StaffList>([]);
+  const [pageDisplaySize, setPageDisplaySize] = useState("10");
+  const [page, setPage] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  // const [totalElements, setTotalElements] = useState<number>(0);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
+  const { data: getAllStaffData } = useSelector(
+    (state: RootState) => state.GetAllStaffReducer
+  );
+  const [openAddStaffDrawer, setOpenAddStaffDrawer] = useState(false);
+  const [drawerOpenType, setDrawerOpenType] = useState<ViewMode>();
+  const [selectedStaff, setSelectedStaff] = useState<
+    | {
+        name: string;
+        email: string;
+        contact: string;
+        role: string;
+        status: boolean;
+        uuid: string;
+        action: { label: string; route: string }[];
+      }
+    | undefined
+  >(undefined);
+
+  const handleOpenDrawer = (rowData: any, type: ViewMode) => {
+    setDrawerOpenType(type);
+    setSelectedStaff(rowData);
+    setOpenAddStaffDrawer(true);
   };
+
+  const handleCloseDrawer = () => {
+    setOpenAddStaffDrawer(false);
+    setSelectedStaff(undefined);
+  };
+
+  const handlePagechange = (value: number) => {
+    const newPage = value - 1;
+    setPage(newPage);
+    dispatch(
+      getAllStaff({
+        xTenant: "default",
+        size: parseInt(pageDisplaySize),
+        page: newPage,
+        searchString: "",
+      })
+    );
+  };
+
+  const handlePageSizeChange = (size: number) => {
+    const newSize = size.toString();
+    setPageDisplaySize(newSize);
+    setPage(0);
+    dispatch(
+      getAllStaff({
+        xTenant: "default",
+        size: size,
+        page: 0,
+        searchString: "",
+      })
+    );
+  };
+
+  const handleSwitch = async (flag: boolean, uuid: string) => {
+    try {
+      await dispatch(editStaffStatus({ staffId: uuid, flag })).unwrap();
+      // Refresh the staff list after status change
+      dispatch(
+        getAllStaff({
+          xTenant: "default",
+          size: parseInt(pageDisplaySize),
+          page: page,
+          searchString: "",
+        })
+      );
+    } catch (error) {
+      console.error("Failed to update staff status:", error);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(
+      getAllStaff({
+        xTenant: "default",
+        size: parseInt(pageDisplaySize),
+        page: page,
+        searchString: "",
+      })
+    );
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (getAllStaffData) {
+      const {
+        content,
+        totalPages: total,
+        // totalElements: elements,
+      } = getAllStaffData;
+      setTotalPages(total);
+      // setTotalElements(elements);
+
+      const modifiedStaffData = content.map((staff) => {
+        return {
+          name: staff?.firstName + " " + staff?.lastName,
+          email: staff?.emailId,
+          contact: staff?.contactNumber,
+          role: capitalizeFirstLetter(staff?.role || ""),
+          status: staff?.status,
+          uuid: staff?.uuid,
+          action: [
+            { label: "Edit", route: "" },
+            { label: "Delete", route: "" },
+          ],
+        };
+      });
+      setTableData(modifiedStaffData as unknown as StaffList);
+    }
+  }, [getAllStaffData]);
 
   const handleAction = (id: string) => {
     setTableData(tableData.filter((item) => item.name !== id));
@@ -22,13 +142,30 @@ const Staff = () => {
         <CustomisedTable
           headCells={staffTableHeaders}
           tableData={tableData}
-          page={page}
-          setPage={handlePageChange}
           showCPTAndICDPagination
-          handleDelete={handleAction}
+          setPage={handlePagechange}
+          pageSize={totalPages}
+          setPageDisplaySize={handlePageSizeChange}
+          pageDisplaySize={pageDisplaySize}
+          page={page + 1}
           setHeight="auto"
+          handleDelete={handleAction}
+          handleOpenDrawer={(e) => handleOpenDrawer(e, ViewMode.EDIT)}
+          handleSwitch={handleSwitch}
         />
       </Box>
+      <DrawerBS
+        anchor={"right"}
+        open={openAddStaffDrawer}
+        onClose={handleCloseDrawer}
+        title={drawerOpenType === ViewMode.EDIT ? "Edit Staff" : "Add Staff"}
+      >
+        <AddStaffDialog
+          handleClose={handleCloseDrawer}
+          isEdit={drawerOpenType === ViewMode.EDIT}
+          selectedStaff={selectedStaff}
+        />
+      </DrawerBS>
     </Grid>
   );
 };

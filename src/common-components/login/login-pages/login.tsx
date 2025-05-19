@@ -1,23 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-escape */
-import { Grid, Typography, Box } from "@mui/material";
-import { useState, useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Box, Grid, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../../common-components/custom-button/custom-button";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { AlertSeverity } from "../../../common-components/snackbar-alert/snackbar-alert";
 import { loginConstants } from "../../../constants/common-component";
 import { login } from "../../../redux/auth/loginReducer";
+import { snackbarAction } from "../../../redux/auth/snackbarReducer";
+import { AppDispatch, RootState } from "../../../redux/store";
 import { theme } from "../../../utils/theme";
 import CustomInput from "../../custom-input/customInput";
 import CustomLabel from "../../customLabel/customLabel";
 import { forgotPassword } from "../widgets/loginStyles";
 import { LoginpageSchema } from "./login-pages-schema/login-pages-schema";
-import { PatientTemplateActions } from "../../../constants/formConst";
-import { snackbarAction } from "../../../redux/auth/snackbarReducer";
-import { AlertSeverity } from "../../../common-components/snackbar-alert/snackbar-alert";
-import { AppDispatch, RootState } from "../../../redux/store";
 
 interface LoginForm {
   username: string;
@@ -40,8 +39,6 @@ function Login() {
     status: loginStatus,
     error: loginError,
   }: any = useSelector((state: RootState) => state.loginReducer);
-
-  console.log("loginStatus", loginError);
 
   useEffect(() => {
     if (!isLogin) return;

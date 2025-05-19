@@ -1,13 +1,11 @@
 import { Grid, Paper, Typography } from "@mui/material";
-import { practiceData } from "../../../../../common-components/mock-data/all-mock-data";
-import doctorProfileImg from "../../../../../assets/images/Practice Easily Logo.svg";
-import { ProfileTypographyVariants } from "../../../../../constants/typography-variants";
-import { ProfileFieldLabels } from "../../../../../constants/formConst";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import doctorProfileImg from "../../../../../assets/images/Practice Easily Logo.svg";
+import { ProfileFieldLabels } from "../../../../../constants/formConst";
+import { ProfileTypographyVariants } from "../../../../../constants/typography-variants";
 import { getAllPracticeDetails } from "../../../../../redux/auth/profile/get-profile-reducer";
+import { AppDispatch, RootState } from "../../../../../redux/store";
 
 interface FieldData {
   label: string;
@@ -42,24 +40,13 @@ const Profile = () => {
   const [leftColumnFields, setLeftColumnFields] = useState<FieldData[]>([]);
   const [rightColumnFields, setRightColumnFields] = useState<FieldData[]>([]);
 
-  const {
-    data: getAllPracticeDetailData,
-    status: getAllPracticeDetailStatus,
-    error: getAllPracticeDetailError,
-  }: any = useSelector(
+  const { data: getAllPracticeDetailData }: any = useSelector(
     (state: RootState) => state.GetAllPracticeDetailsReducer
   );
 
   useEffect(() => {
     // Fetch practice details when component mounts
-    dispatch(
-      getAllPracticeDetails({
-        xTenant: "default",
-        size: 10,
-        page: 0,
-        searchString: "",
-      })
-    );
+    dispatch(getAllPracticeDetails());
   }, [dispatch]);
 
   useEffect(() => {
@@ -95,8 +82,6 @@ const Profile = () => {
       ]);
     }
   }, [getAllPracticeDetailData]);
-
-  console.log("getAllPracticeDetailData", getAllPracticeDetailData?.clinicName);
 
   return (
     <Paper

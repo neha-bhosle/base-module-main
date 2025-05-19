@@ -466,3 +466,54 @@ export interface ServiceModal {
   category?: string;
   order?: number;
 }
+
+type ClinicAddress = {
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  zipcode: string;
+};
+
+export interface ClinicInfo {
+  uuid: string;
+  clinicName: string;
+  npiNumber: string;
+  taxType: "EIN" | "SSN"; // Assuming these are the only types; adjust if needed
+  taxNumber: string;
+  contactNumber: string;
+  emailId: string;
+  taxonomy: string;
+  address: ClinicAddress;
+}
+
+type LocationAddress = {
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  zipcode: string;
+};
+
+export interface LocationInfo {
+  locationName: string;
+  contactNumber: string;
+  emailId: string;
+  groupNpiNumber: string;
+  status: boolean;
+  fax: string;
+  address: LocationAddress;
+}
+
+type StaffMember = {
+  name: string;
+  uuid: string;
+  firstName: string;
+  lastName: string;
+  emailId: string;
+  contactNumber: string;
+  status: boolean;
+  role: "PRACTICE_OWNER" | "ADMIN" | "PROVIDER" | "STAFF"; // Add other roles as needed
+};
+
+export type StaffList = StaffMember[];

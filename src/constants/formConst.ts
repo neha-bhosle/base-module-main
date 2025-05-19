@@ -196,8 +196,8 @@ export enum ClinicianFormPlaceholders {
   ENTER_EMAIL_ID = "Enter Email ID",
   ENTER_CONTACT_NUMBER = "Enter Contact Number",
   ENTER_NPI_NUMBER = "Enter NPI Number",
-  SELECT_WORK_LOCATIONS = "Select",
-  SELECT_LANGUAGES = "Select",
+  SELECT_WORK_LOCATIONS = "Select Work Locations",
+  SELECT_LANGUAGES = "Select Languages Spoken",
   SELECT_SUPERVISING_CLINICIAN = "Select Supervising Clinician",
   SELECT_ROLE = "Select Role",
 }

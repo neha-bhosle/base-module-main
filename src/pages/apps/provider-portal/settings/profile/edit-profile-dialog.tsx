@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../../../../common-components/custom-button/custom-button";
@@ -8,11 +8,9 @@ import CustomContactInput from "../../../../../common-components/custom-contact-
 import CustomInput from "../../../../../common-components/custom-input/customInput";
 import CustomSelect from "../../../../../common-components/custom-select/customSelect";
 import CustomLabel from "../../../../../common-components/customLabel/customLabel";
-import UploadImage from "../../../../../common-components/image-upload/image-upload";
 import { AlertSeverity } from "../../../../../common-components/snackbar-alert/snackbar-alert";
 import {
   SettingsFormLabels,
-  SettingsFormMessages,
   SettingsFormPlaceholders,
 } from "../../../../../constants/formConst";
 import { apiStatus } from "../../../../../models/apiStatus";
@@ -65,9 +63,6 @@ const EditProfileDialog = ({
   }: any = useSelector((state: RootState) => state.EditPracticeReducer);
 
   const dispatch = useDispatch<AppDispatch>();
-  const editPracticeState = useSelector(
-    (state: RootState) => state.EditPracticeReducer
-  );
 
   const {
     data: getAllAmericanStatesData,
@@ -92,13 +87,13 @@ const EditProfileDialog = ({
 
   useEffect(() => {}, [getAllAmericanStatesStatus, getAllAmericanStatesData]);
 
-  const handleSetImage = (file: File) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setProfileImage(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
+  // const handleSetImage = (file: File) => {
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setProfileImage(reader.result as string);
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
 
   const onSubmit = (values: any) => {
     const payload = {
@@ -122,9 +117,9 @@ const EditProfileDialog = ({
     dispatch(editPractice(payload));
   };
 
-  const [profileImage, setProfileImage] = useState<string | null>(
-    profileData?.profileImage || null
-  );
+  // const [, setProfileImage] = useState<string | null>(
+  //   profileData?.profileImage || null
+  // );
 
   useEffect(() => {
     switch (editPracticeStatus) {
@@ -140,14 +135,7 @@ const EditProfileDialog = ({
             message: "Practice updated successfully",
           })
         );
-        dispatch(
-          getAllPracticeDetails({
-            xTenant: "default",
-            size: 10,
-            page: 0,
-            searchString: "",
-          })
-        );
+        dispatch(getAllPracticeDetails());
         dispatch(editPracticeReducerAction.resetEditPracticeReducer());
         handleClose();
         break;

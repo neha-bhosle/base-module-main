@@ -4,14 +4,11 @@ import {
   ResponseArrayContentEntity,
 } from "src/models/response-content-entity";
 import { apiStatus } from "../../../models/apiStatus";
-import {
-  GetAllProviderPayload,
-  providerResponse,
-} from "src/models/providerModel";
 import practiceProfileService from "../../../services/auth/practice-profile-service/practice-profile-service";
-
+import { LocationPayload } from "src/models/all-const";
+import { ErrorResponseEntity } from "src/models/error-response";
 export interface getLocationDetailsState {
-  data: ContentObject<any> | null;
+  data: ContentObject<LocationPayload> | null;
   status: string;
   error: string | null;
 }
@@ -24,16 +21,21 @@ const initialState: getLocationDetailsState = {
 
 export const getAllLocationDetails = createAsyncThunk(
   "GetAllLocationDetails",
-  async (payload: any) => {
+  async (payload: LocationPayload) => {
     try {
-      const response: ResponseArrayContentEntity<any> =
+      const response: ResponseArrayContentEntity<LocationPayload> =
         await practiceProfileService.getLocationDetails(payload);
       return response.data;
-    } catch (error) {
-      throw new Error(error?.data?.message);
+    } catch (error: unknown) {
+      if ((error as ErrorResponseEntity)?.body?.message) {
+        throw new Error((error as ErrorResponseEntity).body.message);
+      }
+      throw new Error("Failed to get location details");
     }
   }
 );
+
+
 
 const getAllLocationDetailsReducerSlice = createSlice({
   name: "GetAllLocationDetails",

@@ -44,7 +44,6 @@ export default function UserTabs() {
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    console.log("Tab changed:", newValue);
     navigate(tabRoutes[newValue]);
   };
 

@@ -5,41 +5,42 @@ import {
 } from "src/models/response-content-entity";
 import { apiStatus } from "../../../models/apiStatus";
 import practiceProfileService from "../../../services/auth/practice-profile-service/practice-profile-service";
-import { ProfilePayload } from "src/models/all-const";
+import { GetClinicianPayload } from "src/models/all-const";
 import { ErrorResponseEntity } from "src/models/error-response";
-export interface getPracticeDetailsState {
-  data: ContentObject<ProfilePayload> | null;
+
+export interface getClinicianByIdState {
+  data: ContentObject<any> | null;
   status: string;
   error: string | null;
 }
 
-const initialState: getPracticeDetailsState = {
+const initialState: getClinicianByIdState = {
   data: null,
   status: apiStatus.IDLE,
   error: null,
 };
 
-export const getAllPracticeDetails = createAsyncThunk(
-  "GetAllPracticeDetails",
-  async () => {
+export const getClinicianById = createAsyncThunk(
+  "GetClinicianById",
+  async (payload: GetClinicianPayload) => {
     try {
-      const response: ResponseArrayContentEntity<ProfilePayload> =
-        await practiceProfileService.getPracticeDetails();
+      const response: ResponseArrayContentEntity<GetClinicianPayload> =
+        await practiceProfileService.getClinicianById(payload.uuid);
       return response.data;
     } catch (error: unknown) {
       if ((error as ErrorResponseEntity)?.body?.message) {
         throw new Error((error as ErrorResponseEntity).body.message);
       }
-      throw new Error("Failed to get practice details");
+      throw new Error("Failed to get clinician by id");
     }
   }
 );
 
-const getAllPracticeDetailsReducerSlice = createSlice({
-  name: "GetAllPracticeDetails",
+const getClinicianByIdReducerSlice = createSlice({
+  name: "GetClinicianById",
   initialState,
   reducers: {
-    resetPracticeDetailsAction: (state) => {
+    resetCliniciansAction: (state) => {
       state.data = null;
       state.status = apiStatus.IDLE;
       state.error = null;
@@ -47,21 +48,20 @@ const getAllPracticeDetailsReducerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllPracticeDetails.pending, (state) => {
+      .addCase(getClinicianById.pending, (state) => {
         state.status = apiStatus.LOADING;
       })
-      .addCase(getAllPracticeDetails.fulfilled, (state, action) => {
+      .addCase(getClinicianById.fulfilled, (state, action) => {
         state.status = apiStatus.SUCCEEDED;
         state.data = action.payload;
       })
-      .addCase(getAllPracticeDetails.rejected, (state, action) => {
+      .addCase(getClinicianById.rejected, (state, action) => {
         state.status = apiStatus.FAILED;
         state.error = action.error.message ?? "An error occurred";
       });
   },
 });
 
-const GetAllPracticeDetailsReducer = getAllPracticeDetailsReducerSlice.reducer;
-export default GetAllPracticeDetailsReducer;
-export const getAllPracticeDetailsAction =
-  getAllPracticeDetailsReducerSlice.actions;
+const GetClinicianByIdReducer = getClinicianByIdReducerSlice.reducer;
+export default GetClinicianByIdReducer;
+export const getClinicianByIdAction = getClinicianByIdReducerSlice.actions;
