@@ -10,6 +10,10 @@ import { ViewMode } from "../../../../../../constants/formConst";
 import AddClinicianDialog from "./add-clinician-dialog";
 import { editClinicianStatus } from "../../../../../../redux/auth/profile/edit-clinician-status";
 import { ClinicianPayload } from "../../../../../../models/all-const";
+import { apiStatus } from "../../../../../../models/apiStatus";
+import { loaderAction } from "../../../../../../redux/auth/loaderReducer";
+import { snackbarAction } from "../../../../../../redux/auth/snackbarReducer";
+
 const Clinician = () => {
   const [pageDisplaySize, setPageDisplaySize] = useState("10");
   const [page, setPage] = useState<number>(0);
@@ -22,9 +26,8 @@ const Clinician = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const { data: getAllCliniciansData }: any = useSelector(
-    (state: RootState) => state.GetAllCliniciansReducer
-  );
+  const { data: getAllCliniciansData, status: getAllCliniciansStatus }: any =
+    useSelector((state: RootState) => state.GetAllCliniciansReducer);
 
   const handlePageChange = (value: number) => {
     const newPage = value - 1;
@@ -56,7 +59,6 @@ const Clinician = () => {
   const handleOpenDrawer = (rowData: any, type: ViewMode) => {
     setDrawerOpenType(type);
     setSelectedClinician(rowData);
-    console.log("rowData", rowData);
     setOpenAddClinicianDrawer(true);
   };
 
@@ -64,6 +66,18 @@ const Clinician = () => {
     setOpenAddClinicianDrawer(false);
     setSelectedClinician(null);
   };
+
+  useEffect(() => {
+    switch (getAllCliniciansStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        break;
+    }
+  }, [getAllCliniciansStatus, dispatch]);
 
   const handleSwitch = async (flag: boolean, uuid: string) => {
     try {
@@ -77,8 +91,20 @@ const Clinician = () => {
           searchString: "",
         } as ClinicianPayload)
       );
+      dispatch(
+        snackbarAction.showSnackbarAction({
+          severity: "success",
+          message: `Clinician status ${flag ? "activated" : "deactivated"} successfully`,
+        })
+      );
     } catch (error) {
       console.error("Failed to update clinician status:", error);
+      dispatch(
+        snackbarAction.showSnackbarAction({
+          severity: "error",
+          message: "Failed to update clinician status",
+        })
+      );
     }
   };
 
@@ -104,7 +130,6 @@ const Clinician = () => {
       setTotalElements(elements);
 
       const modifiedCliniciansData = content?.map((clinician: any) => {
-        console.log("clinician?.languagesSpoken", clinician);
         const mappedData = {
           uuid: clinician?.uuid,
           firstName: clinician?.firstName,

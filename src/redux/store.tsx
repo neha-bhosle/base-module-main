@@ -25,6 +25,7 @@ import GetAllSupervisingCliniciansReducer from "./auth/profile/get-all-supervisi
 import AddClinicianReducer from "./auth/profile/add-clinician-reducer";
 import EditClinicianReducer from "./auth/profile/edit-clinician-reducer";
 import GetClinicianByIdReducer from "./auth/profile/get-clinician-by-id-reducer";
+import GetLocationByIdReducer from "./auth/profile/get-location-by-id-reducer";
 const store = configureStore({
   reducer: {
     loginReducer: loginReducer,
@@ -52,6 +53,7 @@ const store = configureStore({
     AddClinicianReducer: AddClinicianReducer,
     EditClinicianReducer: EditClinicianReducer,
     GetClinicianByIdReducer: GetClinicianByIdReducer,
+    GetLocationByIdReducer: GetLocationByIdReducer,
   },
 });
 

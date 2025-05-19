@@ -105,6 +105,27 @@ const AddStaffDialog = ({
     "Records Custodian": "RECORDS_CUSTODIAN",
   };
 
+  const onSubmit = (values: StaffFormValues) => {
+    const payload = {
+      uuid: selectedStaff?.uuid,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      emailId: values.emailId,
+      contactNumber: values.contactNumber,
+      status: values.status === "active",
+      role: values.role
+        ? roleToEnumMap[values.role as keyof typeof roleToEnumMap]
+        : undefined,
+      xTenant: "default",
+    };
+
+    if (isEdit) {
+      dispatch(editStaff(payload as unknown as PatientTypes));
+    } else {
+      dispatch(addStaff(payload as unknown as AllTypes));
+    }
+  };
+
   useEffect(() => {
     if (selectedStaff) {
       const nameParts = selectedStaff.name.split(" ");
@@ -192,27 +213,6 @@ const AddStaffDialog = ({
         break;
     }
   }, [editStaffStatus, dispatch, editStaffError, handleClose]);
-
-  const onSubmit = (values: StaffFormValues) => {
-    const payload = {
-      uuid: selectedStaff?.uuid,
-      firstName: values.firstName,
-      lastName: values.lastName,
-      emailId: values.emailId,
-      contactNumber: values.contactNumber,
-      status: values.status === "active",
-      role: values.role
-        ? roleToEnumMap[values.role as keyof typeof roleToEnumMap]
-        : undefined,
-      xTenant: "default",
-    };
-
-    if (isEdit) {
-      dispatch(editStaff(payload as unknown as PatientTypes));
-    } else {
-      dispatch(addStaff(payload as unknown as AllTypes));
-    }
-  };
 
   return (
     <Box>

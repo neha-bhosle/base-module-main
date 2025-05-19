@@ -28,6 +28,7 @@ import {
 } from "../../../../../redux/auth/profile/edit-location-reducer";
 import { getAllAmericanStates } from "../../../../../redux/auth/profile/get-all-states-reducer";
 import { getAllLocationDetails } from "../../../../../redux/auth/profile/get-location-details";
+import { getLocationById } from "../../../../../redux/auth/profile/get-location-by-id-reducer";
 import { snackbarAction } from "../../../../../redux/auth/snackbarReducer";
 import { AppDispatch, RootState } from "../../../../../redux/store";
 import { LocationSchema } from "./location-schema";
@@ -84,6 +85,10 @@ const AddLocationDialog = ({
   const { status: editLocationStatus, error: editLocationError }: any =
     useSelector((state: RootState) => state.EditLocationReducer);
 
+  const { data: locationData, status: locationStatus }: any = useSelector(
+    (state: RootState) => state.GetLocationByIdReducer
+  );
+
   const statusOptions = [
     { value: "active", label: "Active" },
     { value: "inactive", label: "Inactive" },
@@ -93,33 +98,74 @@ const AddLocationDialog = ({
 
   useEffect(() => {
     dispatch(getAllAmericanStates());
-  }, [dispatch]);
 
+    // Fetch location data by ID if in edit mode
+    if (isEdit && selectedLocation?.uuid) {
+      dispatch(
+        getLocationById({
+          uuid: selectedLocation.uuid,
+          xTenant: "default",
+        } as LocationPayload)
+      );
+    }
+  }, [dispatch, isEdit, selectedLocation]);
+
+  // Use data from the GetLocationByIdReducer to populate form fields
   useEffect(() => {
-    if (isEdit && selectedLocation) {
-      setValue("locationName", selectedLocation.locationName);
-      setValue("contactNumber", selectedLocation.contactNumber);
-      setValue("emailId", selectedLocation.email);
-      setValue("groupNpiNumber", selectedLocation.groupNPI);
-      setValue("status", selectedLocation.status);
-      setValue("fax", selectedLocation.fax);
+    if (locationStatus === apiStatus.SUCCEEDED && locationData) {
+      setValue("locationName", locationData.locationName || "");
+      setValue("contactNumber", locationData.contactNumber || "");
+      setValue("emailId", locationData.emailId || "");
+      setValue("groupNpiNumber", locationData.groupNpiNumber || "");
+      setValue("status", locationData.status === true ? "active" : "inactive");
+      setValue("fax", locationData.fax || "");
 
-      // Handle address
-      const addressParts = selectedLocation.address.split(", ");
-      if (addressParts.length >= 4) {
-        const [line1WithLine2, city, state, zipCode] = addressParts;
-        const [line1, line2] = line1WithLine2.split(", ");
+      if (locationData.address) {
+        setValue("addressLine1", locationData.address.line1 || "");
+        setValue("addressLine2", locationData.address.line2 || "");
+        setValue("city", locationData.address.city || "");
+        setValue("state", locationData.address.state || "");
+        setValue("zipCode", locationData.address.zipcode || "");
+      }
+    } else if (isEdit && selectedLocation) {
+      // Fallback to using the selectedLocation prop directly if API call hasn't succeeded
+      setValue("locationName", selectedLocation.locationName || "");
+      setValue("contactNumber", selectedLocation.contactNumber || "");
+      setValue("emailId", selectedLocation.emailId || "");
+      setValue("groupNpiNumber", selectedLocation.groupNpiNumber || "");
+      setValue(
+        "status",
+        selectedLocation.status === true ? "active" : "inactive"
+      );
+      setValue("fax", selectedLocation.fax || "");
 
-        setValue("addressLine1", line1);
-        setValue("addressLine2", line2 || "");
-        setValue("city", city);
-        setValue("state", state);
-        setValue("zipCode", zipCode);
+      if (selectedLocation.address) {
+        if (typeof selectedLocation.address === "object") {
+          setValue("addressLine1", selectedLocation.address.line1 || "");
+          setValue("addressLine2", selectedLocation.address.line2 || "");
+          setValue("city", selectedLocation.address.city || "");
+          setValue("state", selectedLocation.address.state || "");
+          setValue("zipCode", selectedLocation.address.zipcode || "");
+        } else {
+          const addressParts = selectedLocation.address.split(", ");
+          if (addressParts.length >= 4) {
+            const [line1WithLine2, city, state, zipCode] = addressParts;
+            if (line1WithLine2.includes(", ")) {
+              const [line1, line2] = line1WithLine2.split(", ");
+              setValue("addressLine1", line1);
+              setValue("addressLine2", line2 || "");
+            } else {
+              setValue("addressLine1", line1WithLine2);
+              setValue("addressLine2", "");
+            }
+            setValue("city", city);
+            setValue("state", state);
+            setValue("zipCode", zipCode);
+          }
+        }
       }
     }
-  }, [isEdit, selectedLocation, setValue]);
-
-  console.log("selectedLocation", selectedLocation);
+  }, [isEdit, selectedLocation, setValue, locationData, locationStatus]);
 
   const onSubmit = (data: LocationFormData) => {
     const payload = {

@@ -10,6 +10,47 @@ import AddContactsDialog from "./add-contacts-dialog";
 import { ViewMode } from "../../../../../constants/formConst";
 import { capitalizeFirstLetter } from "../../../../../common-components/utils/stringUtils";
 import { ContactPayload } from "src/models/all-const";
+import { apiStatus } from "../../../../../models/apiStatus";
+import { loaderAction } from "../../../../../redux/auth/loaderReducer";
+
+// Define interfaces for contact data
+interface Address {
+  line1: string;
+  line2?: string;
+  city: string;
+  state: string;
+  zipcode: string;
+}
+
+interface ContactData {
+  name: string;
+  contactType: string;
+  emailId: string;
+  contactNumber: string;
+  faxNumber: string;
+  uuid: string;
+  address?: Address;
+  workLocation: string[] | string;
+}
+
+interface ContactResponse {
+  content: ContactData[];
+  totalPages: number;
+  totalElements: number;
+}
+
+interface TableContactData {
+  name: string;
+  contacttype: string;
+  email: string;
+  address: string;
+  contact: string;
+  fax: string;
+  uuid: string;
+  workLocation: string;
+  originalContact: ContactData;
+  action: Array<{ label: string; route: string }>;
+}
 
 const Contact = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,27 +58,33 @@ const Contact = () => {
   const [page, setPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [, setTotalElements] = useState<number>(0);
-  const [tableData, setTableData] = useState<
-    | Array<{
-        name: string;
-        contacttype: string;
-        email: string;
-        address: string;
-        contact: string;
-        fax: string;
-        originalContact: any;
-        action: Array<{ label: string; route: string }>;
-      }>
-    | undefined
-  >(undefined);
+  const [tableData, setTableData] = useState<TableContactData[] | undefined>(
+    undefined
+  );
 
   const [openContactDrawer, setOpenContactDrawer] = useState(false);
   const [drawerOpenType, setDrawerOpenType] = useState<ViewMode>();
-  const [selectedContact, setSelectedContact] = useState<any>(null);
+  const [selectedContact, setSelectedContact] =
+    useState<TableContactData | null>(null);
 
-  const { data: getAllContactsData }: any = useSelector(
-    (state: RootState) => state.GetAllContactsReducer
-  );
+  const { data: getAllContactsData, status: getAllContactsStatus } =
+    useSelector((state: RootState) => state.GetAllContactsReducer) as {
+      data: ContactResponse | null;
+      status: string;
+    };
+
+  // Handle loader based on get all contacts API status
+  useEffect(() => {
+    switch (getAllContactsStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        break;
+    }
+  }, [getAllContactsStatus, dispatch]);
 
   const handleCloseDrawer = () => {
     setOpenContactDrawer(false);
@@ -71,7 +118,7 @@ const Contact = () => {
     );
   };
 
-  const handleOpenDrawer = (rowData: any, type: ViewMode) => {
+  const handleOpenDrawer = (rowData: TableContactData, type: ViewMode) => {
     setDrawerOpenType(type);
     setSelectedContact(rowData);
     setOpenContactDrawer(true);
@@ -98,7 +145,7 @@ const Contact = () => {
       setTotalPages(total);
       setTotalElements(elements);
 
-      const modifiedContactsData = content?.map((contact: any) => {
+      const modifiedContactsData = content?.map((contact: ContactData) => {
         const address = contact?.address;
         const addressStr = address
           ? `${address.line1}${address.line2 ? `, ${address.line2}` : ""}, ${address.city}, ${address.state}, ${address.zipcode}`

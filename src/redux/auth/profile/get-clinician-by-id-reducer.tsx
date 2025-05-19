@@ -1,15 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { GetClinicianPayload } from "src/models/all-const";
+import { ErrorResponseEntity } from "src/models/error-response";
 import {
-  ContentObject,
-  ResponseArrayContentEntity,
+  ResponseContentEntity
 } from "src/models/response-content-entity";
 import { apiStatus } from "../../../models/apiStatus";
 import practiceProfileService from "../../../services/auth/practice-profile-service/practice-profile-service";
-import { GetClinicianPayload } from "src/models/all-const";
-import { ErrorResponseEntity } from "src/models/error-response";
 
 export interface getClinicianByIdState {
-  data: ContentObject<any> | null;
+  data: GetClinicianPayload | null;
   status: string;
   error: string | null;
 }
@@ -22,11 +21,18 @@ const initialState: getClinicianByIdState = {
 
 export const getClinicianById = createAsyncThunk(
   "GetClinicianById",
-  async (payload: GetClinicianPayload) => {
+  async (payload: GetClinicianPayload | string) => {
     try {
-      const response: ResponseArrayContentEntity<GetClinicianPayload> =
-        await practiceProfileService.getClinicianById(payload.uuid);
-      return response.data;
+      let uuid: string;
+      if (typeof payload === "string") {
+        uuid = payload;
+      } else {
+        uuid = payload.uuid;
+      }
+
+      const response: ResponseContentEntity<GetClinicianPayload> =
+        await practiceProfileService.getClinicianById(uuid);
+      return response;
     } catch (error: unknown) {
       if ((error as ErrorResponseEntity)?.body?.message) {
         throw new Error((error as ErrorResponseEntity).body.message);
@@ -53,7 +59,7 @@ const getClinicianByIdReducerSlice = createSlice({
       })
       .addCase(getClinicianById.fulfilled, (state, action) => {
         state.status = apiStatus.SUCCEEDED;
-        state.data = action.payload;
+        state.data = action.payload.data;
       })
       .addCase(getClinicianById.rejected, (state, action) => {
         state.status = apiStatus.FAILED;

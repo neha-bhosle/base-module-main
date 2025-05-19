@@ -1,10 +1,21 @@
 import { apiPath } from "../../../constants/apiPath";
 import axiosInstance from "../../../interceptor/interceptor";
 import {
+  AllTypes,
+  ClinicianPayload,
+  ContactPayload,
+  LocationPayload,
+  USState
+} from "../../../models/all-const";
+import {
+  ClinicInfo,
+  LocationInfo,
+  PatientTypes,
+} from "../../../models/providerGroup";
+import {
   ResponseArrayContentEntity,
   ResponseContentEntity,
 } from "../../../models/response-content-entity";
-
 class PracticeProfileService {
   getPracticeDetails = (): Promise<ResponseArrayContentEntity<any>> => {
     return axiosInstance.get(`${apiPath.GET_PRACTICE_PROFILE}`);
@@ -14,23 +25,27 @@ class PracticeProfileService {
     size: number;
     page: number;
     searchString: string;
-  }): Promise<ResponseArrayContentEntity<any>> => {
+  }): Promise<ResponseArrayContentEntity<LocationPayload>> => {
     return axiosInstance.get(
       `${apiPath.GET_LOCATION_DETAILS}?pageSize=${payload.size}&page=${payload.page}`
     );
   };
   editPracticeDetails = (
-    payload: any
+    payload: ClinicInfo
   ): Promise<ResponseContentEntity<null>> => {
     return axiosInstance.put(`${apiPath.UPDATE_PRACTICE_PROFILE}`, payload);
   };
-  getAllStates = (): Promise<ResponseArrayContentEntity<any>> => {
+  getAllStates = (): Promise<ResponseArrayContentEntity<USState>> => {
     return axiosInstance.get(`${apiPath.GET_ALL_STATES}`);
   };
-  addLocation = (payload: any): Promise<ResponseContentEntity<null>> => {
+  addLocation = (
+    payload: LocationInfo
+  ): Promise<ResponseContentEntity<null>> => {
     return axiosInstance.post(`${apiPath.ADD_LOCATION}`, payload);
   };
-  editLocation = (payload: any): Promise<ResponseContentEntity<null>> => {
+  editLocation = (
+    payload: LocationInfo
+  ): Promise<ResponseContentEntity<null>> => {
     return axiosInstance.put(`${apiPath.EDIT_LOCATION}`, payload);
   };
   editLocationStatus = (
@@ -51,10 +66,10 @@ class PracticeProfileService {
       `${apiPath.GET_ALL_STAFF}?pageSize=${payload.size}&page=${payload.page}`
     );
   };
-  addStaff = (payload: any): Promise<ResponseContentEntity<null>> => {
+  addStaff = (payload: AllTypes): Promise<ResponseContentEntity<null>> => {
     return axiosInstance.post(`${apiPath.ADD_STAFF}`, payload);
   };
-  editStaff = (payload: any): Promise<ResponseContentEntity<null>> => {
+  editStaff = (payload: PatientTypes): Promise<ResponseContentEntity<null>> => {
     return axiosInstance.put(`${apiPath.EDIT_STAFF}`, payload);
   };
   editStaffStatus = (
@@ -70,15 +85,17 @@ class PracticeProfileService {
     size: number;
     page: number;
     searchString: string;
-  }): Promise<ResponseArrayContentEntity<any>> => {
+  }): Promise<ResponseArrayContentEntity<ContactPayload>> => {
     return axiosInstance.get(
       `${apiPath.GET_ALL_CONTACTS}?pageSize=${payload.size}&page=${payload.page}`
     );
   };
-  addContact = (payload: any): Promise<ResponseContentEntity<null>> => {
+  addContact = (payload: AllTypes): Promise<ResponseContentEntity<null>> => {
     return axiosInstance.post(`${apiPath.ADD_CONTACT}`, payload);
   };
-  editContact = (payload: any): Promise<ResponseContentEntity<null>> => {
+  editContact = (
+    payload: PatientTypes
+  ): Promise<ResponseContentEntity<null>> => {
     return axiosInstance.put(`${apiPath.EDIT_CONTACT}`, payload);
   };
   getAllClinicians = (payload: {
@@ -86,7 +103,7 @@ class PracticeProfileService {
     size: number;
     page: number;
     searchString: string;
-  }): Promise<ResponseArrayContentEntity<any>> => {
+  }): Promise<ResponseArrayContentEntity<ClinicianPayload>> => {
     return axiosInstance.get(
       `${apiPath.GET_ALL_CLINICIAN_DETAILS}?pageSize=${payload.size}&page=${payload.page}`
     );
@@ -101,10 +118,14 @@ class PracticeProfileService {
   }> => {
     return axiosInstance.get(`${apiPath.GET_ALL_WORK_LOCATION_CLINICIAN}`);
   };
-  addClinician = (payload: any): Promise<ResponseContentEntity<null>> => {
+  addClinician = (
+    payload: ClinicianPayload
+  ): Promise<ResponseContentEntity<null>> => {
     return axiosInstance.post(`${apiPath.ADD_CLINICIAN}`, payload);
   };
-  editClinician = (payload: any): Promise<ResponseContentEntity<null>> => {
+  editClinician = (
+    payload: PatientTypes
+  ): Promise<ResponseContentEntity<null>> => {
     return axiosInstance.put(`${apiPath.EDIT_CLINICIAN}`, payload);
   };
   editClinicianStatus = (
@@ -127,8 +148,15 @@ class PracticeProfileService {
   };
   getClinicianById = (
     clinicianId: string
-  ): Promise<ResponseContentEntity<any>> => {
+  ): Promise<ResponseContentEntity<ClinicianPayload>> => {
     return axiosInstance.get(`${apiPath.GET_CLINICIAN_BY_ID}/${clinicianId}`);
+  };
+  getLocationById = (
+    locationId: string
+  ): Promise<ResponseContentEntity<LocationPayload>> => {
+    return axiosInstance.get(
+      `${apiPath.GET_LOCATION_DETAILS_BY_ID}/${locationId}`
+    );
   };
 }
 const practiceProfileService = new PracticeProfileService();

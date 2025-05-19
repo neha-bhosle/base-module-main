@@ -35,8 +35,6 @@ export const getAllLocationDetails = createAsyncThunk(
   }
 );
 
-
-
 const getAllLocationDetailsReducerSlice = createSlice({
   name: "GetAllLocationDetails",
   initialState,

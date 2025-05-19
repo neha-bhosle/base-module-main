@@ -109,69 +109,15 @@ const AddClinicianDialog = ({
     (state: RootState) => state.GetClinicianByIdReducer
   );
 
-  console.log("asdfdsd", selectedClinician?.uuid);
-  console.log("getClinicianByIdData", getClinicianByIdData);
-
-  useEffect(() => {
-    if (selectedClinician?.uuid) {
-      dispatch(getClinicianById(selectedClinician.uuid));
-    }
-  }, [selectedClinician, dispatch]);
-
   const { data: getAllWorkLocationClinicianData = {} }: any =
     useSelector(
       (state: RootState) => state.GetAllWorkLocationClinicianReducer
     ) || {};
 
-  useEffect(() => {
-    dispatch(getAllWorkLocationClinician());
-  }, [dispatch]);
-
   const { data: getAllSupervisingCliniciansData }: any =
     useSelector(
       (state: RootState) => state.GetAllSupervisingCliniciansReducer
     ) || {};
-
-  useEffect(() => {
-    dispatch(getAllSupervisingClinicians());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (
-      isEdit &&
-      getClinicianByIdData &&
-      Object.keys(getClinicianByIdData).length > 0
-    ) {
-      console.log(
-        "Using getClinicianByIdData for form population",
-        getClinicianByIdData
-      );
-
-      setValue("firstName", getClinicianByIdData.firstName || "");
-      setValue("lastName", getClinicianByIdData.lastName || "");
-      setValue("emailId", getClinicianByIdData.emailId || "");
-      setValue("contactNumber", getClinicianByIdData.contactNumber || "");
-      setValue("npiNumber", getClinicianByIdData.npiNumber || "");
-
-      const locationUuids = getClinicianByIdData.locationUuids || [];
-      setValue(
-        "workLocations",
-        Array.isArray(locationUuids) ? locationUuids : []
-      );
-
-      const languagesList = getClinicianByIdData.languagesSpoken || [];
-      setValue(
-        "languagesSpoken",
-        Array.isArray(languagesList) ? languagesList : []
-      );
-
-      setValue(
-        "supervisingClinician",
-        getClinicianByIdData?.supervisorClinicianId || ""
-      );
-      setValue("role", getClinicianByIdData?.role || "");
-    }
-  }, [isEdit, getClinicianByIdData, setValue]);
 
   const displaySupervisingClinicians = Object.entries(
     getAllSupervisingCliniciansData || {}
@@ -236,14 +182,82 @@ const AddClinicianDialog = ({
       locationNames: [],
     };
 
-    console.log("payload", payload);
-
     if (isEdit) {
       dispatch(editClinician(payload as unknown as PatientTypes));
     } else {
       dispatch(addClinician(payload as unknown as AllTypes));
     }
   };
+
+  useEffect(() => {
+    if (selectedClinician?.uuid) {
+      dispatch(getClinicianById(selectedClinician?.uuid));
+    }
+  }, [selectedClinician, dispatch]);
+
+  useEffect(() => {
+    dispatch(getAllWorkLocationClinician());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getAllSupervisingClinicians());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (
+      isEdit &&
+      getClinicianByIdData &&
+      Object.keys(getClinicianByIdData).length > 0
+    ) {
+      console.log(
+        "Using getClinicianByIdData for form population",
+        getClinicianByIdData
+      );
+
+      setValue("firstName", getClinicianByIdData.firstName || "");
+      setValue("lastName", getClinicianByIdData.lastName || "");
+      setValue("emailId", getClinicianByIdData.emailId || "");
+      setValue("contactNumber", getClinicianByIdData.contactNumber || "");
+      setValue("npiNumber", getClinicianByIdData.npiNumber || "");
+
+      const locationUuids = getClinicianByIdData.locationUuids || [];
+      setValue(
+        "workLocations",
+        Array.isArray(locationUuids) ? locationUuids : []
+      );
+
+      const languagesList = getClinicianByIdData.languagesSpoken || [];
+      setValue(
+        "languagesSpoken",
+        Array.isArray(languagesList) ? languagesList : []
+      );
+
+      setValue(
+        "supervisingClinician",
+        getClinicianByIdData?.supervisorClinicianId || ""
+      );
+
+      // Map backend role values to form values
+      let roleValue = "";
+      switch (getClinicianByIdData?.role) {
+        case "THERAPIST":
+          roleValue = "THERAPIST";
+          break;
+        case "PSYCHIATRIST":
+          roleValue = "PSYCHIATRIST";
+          break;
+        case "SUPERVISOR":
+          roleValue = "SUPERVISOR";
+          break;
+        case "PRACTICE_OWNER":
+          roleValue = "PRACTICE_OWNER";
+          break;
+        default:
+          roleValue = getClinicianByIdData?.role || "";
+      }
+      setValue("role", roleValue);
+    }
+  }, [isEdit, getClinicianByIdData, setValue]);
 
   useEffect(() => {
     switch (addClinicianStatus) {

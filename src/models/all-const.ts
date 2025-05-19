@@ -22,6 +22,7 @@ export type AllTypes = {
   searchString: string;
   xTenant: string;
   faxNumber: string;
+  email: string;
 };
 
 type Address = {

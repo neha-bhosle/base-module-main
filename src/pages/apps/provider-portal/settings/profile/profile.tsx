@@ -6,6 +6,7 @@ import { ProfileFieldLabels } from "../../../../../constants/formConst";
 import { ProfileTypographyVariants } from "../../../../../constants/typography-variants";
 import { getAllPracticeDetails } from "../../../../../redux/auth/profile/get-profile-reducer";
 import { AppDispatch, RootState } from "../../../../../redux/store";
+import { ProfilePayload } from "../../../../../models/all-const";
 
 interface FieldData {
   label: string;
@@ -40,7 +41,7 @@ const Profile = () => {
   const [leftColumnFields, setLeftColumnFields] = useState<FieldData[]>([]);
   const [rightColumnFields, setRightColumnFields] = useState<FieldData[]>([]);
 
-  const { data: getAllPracticeDetailData }: any = useSelector(
+  const { data: getAllPracticeDetailData } = useSelector(
     (state: RootState) => state.GetAllPracticeDetailsReducer
   );
 
@@ -51,33 +52,34 @@ const Profile = () => {
 
   useEffect(() => {
     if (getAllPracticeDetailData) {
+      const profileData = getAllPracticeDetailData as unknown as ProfilePayload;
       setLeftColumnFields([
         {
           label: ProfileFieldLabels.CLINIC_NPI_NUMBER,
-          value: getAllPracticeDetailData.npiNumber,
+          value: profileData.npiNumber,
         },
         {
           label: ProfileFieldLabels.TAX_NUMBER,
-          value: `${getAllPracticeDetailData.taxNumber}  (${getAllPracticeDetailData.taxType})`,
+          value: `${profileData.taxNumber}  (${profileData.taxType})`,
         },
         {
           label: ProfileFieldLabels.CONTACT_NUMBER,
-          value: getAllPracticeDetailData.contactNumber,
+          value: profileData.contactNumber,
         },
       ]);
 
       setRightColumnFields([
         {
           label: ProfileFieldLabels.EMAIL_ID,
-          value: getAllPracticeDetailData.emailId,
+          value: profileData.emailId,
         },
         {
           label: ProfileFieldLabels.TAXONOMY_CODE,
-          value: getAllPracticeDetailData.taxonomy,
+          value: profileData.taxonomy,
         },
         {
           label: ProfileFieldLabels.ADDRESS,
-          value: formatAddress(getAllPracticeDetailData.address),
+          value: formatAddress(profileData.address),
         },
       ]);
     }
@@ -119,7 +121,9 @@ const Profile = () => {
             <Typography
               variant={ProfileTypographyVariants.TITLE_MEDIUM_PROFILE_BOLD}
             >
-              {getAllPracticeDetailData?.clinicName}
+              {getAllPracticeDetailData &&
+                (getAllPracticeDetailData as unknown as ProfilePayload)
+                  .clinicName}
             </Typography>
           </Grid>
           <Grid display={"flex"} flexDirection={"row"}>

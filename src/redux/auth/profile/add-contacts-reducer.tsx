@@ -20,7 +20,7 @@ const initialState: AddContactsState = {
 
 export const addContacts = createAsyncThunk(
   "AddContactsReducer",
-  async (payload: AllTypes  ) => {
+  async (payload: AllTypes) => {
     try {
       const response: ResponseContentEntity<null> =
         await practiceProfileService.addContact(payload);

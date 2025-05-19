@@ -23,4 +23,5 @@ export const apiPath = {
   EDIT_CLINICIAN: "api/master/clinician",
   EDIT_CLINICIAN_STATUS: "api/master/clinician/change-status",
   GET_CLINICIAN_BY_ID: "api/master/clinician",
+  GET_LOCATION_DETAILS_BY_ID: "api/master/location",
 };

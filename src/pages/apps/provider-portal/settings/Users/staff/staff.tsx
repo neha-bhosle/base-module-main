@@ -11,6 +11,9 @@ import { editStaffStatus } from "../../../../../../redux/auth/profile/edit-staff
 import { getAllStaff } from "../../../../../../redux/auth/profile/get-all-staff-reducer";
 import { AppDispatch, RootState } from "../../../../../../redux/store";
 import AddStaffDialog from "./add-staff-dialog";
+import { apiStatus } from "../../../../../../models/apiStatus";
+import { loaderAction } from "../../../../../../redux/auth/loaderReducer";
+import { snackbarAction } from "../../../../../../redux/auth/snackbarReducer";
 
 const Staff = () => {
   const [tableData, setTableData] = useState<StaffList>([]);
@@ -20,9 +23,10 @@ const Staff = () => {
   // const [totalElements, setTotalElements] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { data: getAllStaffData } = useSelector(
+  const { data: getAllStaffData, status: getAllStaffStatus } = useSelector(
     (state: RootState) => state.GetAllStaffReducer
   );
+
   const [openAddStaffDrawer, setOpenAddStaffDrawer] = useState(false);
   const [drawerOpenType, setDrawerOpenType] = useState<ViewMode>();
   const [selectedStaff, setSelectedStaff] = useState<
@@ -76,6 +80,10 @@ const Staff = () => {
     );
   };
 
+  const handleAction = (id: string) => {
+    setTableData(tableData.filter((item) => item.name !== id));
+  };
+
   const handleSwitch = async (flag: boolean, uuid: string) => {
     try {
       await dispatch(editStaffStatus({ staffId: uuid, flag })).unwrap();
@@ -88,10 +96,34 @@ const Staff = () => {
           searchString: "",
         })
       );
+      dispatch(
+        snackbarAction.showSnackbarAction({
+          severity: "success",
+          message: `Staff status ${flag ? "activated" : "deactivated"} successfully`,
+        })
+      );
     } catch (error) {
       console.error("Failed to update staff status:", error);
+      dispatch(
+        snackbarAction.showSnackbarAction({
+          severity: "error",
+          message: "Failed to update staff status",
+        })
+      );
     }
   };
+
+  useEffect(() => {
+    switch (getAllStaffStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        break;
+    }
+  }, [getAllStaffStatus, dispatch]);
 
   useEffect(() => {
     dispatch(
@@ -131,10 +163,6 @@ const Staff = () => {
       setTableData(modifiedStaffData as unknown as StaffList);
     }
   }, [getAllStaffData]);
-
-  const handleAction = (id: string) => {
-    setTableData(tableData.filter((item) => item.name !== id));
-  };
 
   return (
     <Grid>
