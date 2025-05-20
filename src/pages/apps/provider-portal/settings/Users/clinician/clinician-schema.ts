@@ -9,14 +9,20 @@ export const ClinicianSchema = yup.object().shape({
     .email("Please enter a valid email address"),
   contactNumber: yup
     .string()
-    .optional()
+    .required("Contact number is required")
     .matches(/^[0-9-+()]*$/, "Please enter a valid contact number"),
   npiNumber: yup
     .string()
-    .optional()
+    .required("NPI number is required")
     .matches(/^\d{10}$/, "Please enter a valid 10-digit NPI number"),
-  workLocations: yup.string().optional(),
-  languages: yup.string().optional(),
+  workLocations: yup
+    .array()
+    .of(yup.string().defined())
+    .required("Work locations are required"),
+  languagesSpoken: yup
+    .array()
+    .of(yup.string().defined())
+    .required("Languages are required"),
   supervisingClinician: yup.string().optional(),
-  role: yup.string().optional(),
+  role: yup.string().required("Role is required"),
 });

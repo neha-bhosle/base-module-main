@@ -16,6 +16,8 @@ import { tabLabel, tabSx } from "../../../../constants/tabs-widget";
 import AddContactsDialog from "./contacts/add-contacts-dialog";
 import AddLocationDialog from "./location/add-location-dialog";
 import EditProfileDialog from "./profile/edit-profile-dialog";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
 
 function a11yProps(index: number) {
   return {
@@ -34,6 +36,11 @@ export default function SettingsTab() {
   const [searchParams] = useSearchParams();
   const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
+
+  // Get profile data from redux store
+  const { data: profileData } = useSelector(
+    (state: RootState) => state.GetAllPracticeDetailsReducer
+  );
 
   const tabRoutes = Object.values(PracticeSettingsRoutes);
 
@@ -135,9 +142,12 @@ export default function SettingsTab() {
         open={editProfileDialog}
         onClose={() => setEditProfileDialog(false)}
         anchor={"right"}
-        drawerWidth="62vw"
+        drawerWidth="50vw"
       >
-        <EditProfileDialog handleClose={() => setEditProfileDialog(false)} />
+        <EditProfileDialog
+          handleClose={() => setEditProfileDialog(false)}
+          profileData={profileData}
+        />
       </DrawerBS>
       <DrawerBS
         title={SettingsFormConstants.ADD_NEW_LOCATION}

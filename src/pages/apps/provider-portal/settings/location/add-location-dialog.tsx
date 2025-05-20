@@ -1,27 +1,68 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { LocationPayload } from "src/models/all-const";
+import { LocationInfo } from "src/models/providerGroup";
+import CustomButton from "../../../../../common-components/custom-button/custom-button";
+import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
 import CustomInput from "../../../../../common-components/custom-input/customInput";
 import CustomSelect from "../../../../../common-components/custom-select/customSelect";
 import CustomLabel from "../../../../../common-components/customLabel/customLabel";
-import CustomButton from "../../../../../common-components/custom-button/custom-button";
+import { AlertSeverity } from "../../../../../common-components/snackbar-alert/snackbar-alert";
 import {
   LocationFormLabels,
   LocationFormPlaceholders,
+  SettingsFormPlaceholders,
 } from "../../../../../constants/formConst";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { apiStatus } from "../../../../../models/apiStatus";
+import { loaderAction } from "../../../../../redux/auth/loaderReducer";
+import {
+  addPracticeLocation,
+  addPracticeLocationReducerAction,
+} from "../../../../../redux/auth/profile/add-practice-location-reducer";
+import {
+  editLocation,
+  editLocationReducerAction,
+} from "../../../../../redux/auth/profile/edit-location-reducer";
+import { getAllAmericanStates } from "../../../../../redux/auth/profile/get-all-states-reducer";
+import { getAllLocationDetails } from "../../../../../redux/auth/profile/get-location-details";
+import { getLocationById } from "../../../../../redux/auth/profile/get-location-by-id-reducer";
+import { snackbarAction } from "../../../../../redux/auth/snackbarReducer";
+import { AppDispatch, RootState } from "../../../../../redux/store";
 import { LocationSchema } from "./location-schema";
-import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
+interface LocationFormData {
+  locationName: string;
+  contactNumber: string;
+  emailId: string;
+  groupNpiNumber: string;
+  status?: string;
+  fax?: string;
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  zipCode: string;
+}
 
 interface AddLocationDialogProps {
   handleClose: () => void;
+  isEdit?: boolean;
+  selectedLocation?: any;
 }
 
-const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
+const AddLocationDialog = ({
+  handleClose,
+  isEdit,
+  selectedLocation,
+}: AddLocationDialogProps) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm({
+    setValue,
+  } = useForm<LocationFormData>({
     defaultValues: {
       locationName: "",
       contactNumber: "",
@@ -38,24 +79,210 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
     resolver: yupResolver(LocationSchema),
   });
 
+  const { status: addLocationStatus, error: addLocationError }: any =
+    useSelector((state: RootState) => state.AddPracticeLocationReducer);
+
+  const { status: editLocationStatus, error: editLocationError }: any =
+    useSelector((state: RootState) => state.EditLocationReducer);
+
+  const { data: locationData, status: locationStatus }: any = useSelector(
+    (state: RootState) => state.GetLocationByIdReducer
+  );
+
   const statusOptions = [
     { value: "active", label: "Active" },
     { value: "inactive", label: "Inactive" },
   ];
 
-  const cityOptions = [
-    { value: "city1", label: "City 1" },
-    { value: "city2", label: "City 2" },
-  ];
+  const dispatch = useDispatch<AppDispatch>();
 
-  const stateOptions = [
-    { value: "state1", label: "State 1" },
-    { value: "state2", label: "State 2" },
-  ];
+  useEffect(() => {
+    dispatch(getAllAmericanStates());
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+    // Fetch location data by ID if in edit mode
+    if (isEdit && selectedLocation?.uuid) {
+      dispatch(
+        getLocationById({
+          uuid: selectedLocation.uuid,
+          xTenant: "default",
+        } as LocationPayload)
+      );
+    }
+  }, [dispatch, isEdit, selectedLocation]);
+
+  // Use data from the GetLocationByIdReducer to populate form fields
+  useEffect(() => {
+    if (locationStatus === apiStatus.SUCCEEDED && locationData) {
+      setValue("locationName", locationData.locationName || "");
+      setValue("contactNumber", locationData.contactNumber || "");
+      setValue("emailId", locationData.emailId || "");
+      setValue("groupNpiNumber", locationData.groupNpiNumber || "");
+      setValue("status", locationData.status === true ? "active" : "inactive");
+      setValue("fax", locationData.fax || "");
+
+      if (locationData.address) {
+        setValue("addressLine1", locationData.address.line1 || "");
+        setValue("addressLine2", locationData.address.line2 || "");
+        setValue("city", locationData.address.city || "");
+        setValue("state", locationData.address.state || "");
+        setValue("zipCode", locationData.address.zipcode || "");
+      }
+    } else if (isEdit && selectedLocation) {
+      // Fallback to using the selectedLocation prop directly if API call hasn't succeeded
+      setValue("locationName", selectedLocation.locationName || "");
+      setValue("contactNumber", selectedLocation.contactNumber || "");
+      setValue("emailId", selectedLocation.emailId || "");
+      setValue("groupNpiNumber", selectedLocation.groupNpiNumber || "");
+      setValue(
+        "status",
+        selectedLocation.status === true ? "active" : "inactive"
+      );
+      setValue("fax", selectedLocation.fax || "");
+
+      if (selectedLocation.address) {
+        if (typeof selectedLocation.address === "object") {
+          setValue("addressLine1", selectedLocation.address.line1 || "");
+          setValue("addressLine2", selectedLocation.address.line2 || "");
+          setValue("city", selectedLocation.address.city || "");
+          setValue("state", selectedLocation.address.state || "");
+          setValue("zipCode", selectedLocation.address.zipcode || "");
+        } else {
+          const addressParts = selectedLocation.address.split(", ");
+          if (addressParts.length >= 4) {
+            const [line1WithLine2, city, state, zipCode] = addressParts;
+            if (line1WithLine2.includes(", ")) {
+              const [line1, line2] = line1WithLine2.split(", ");
+              setValue("addressLine1", line1);
+              setValue("addressLine2", line2 || "");
+            } else {
+              setValue("addressLine1", line1WithLine2);
+              setValue("addressLine2", "");
+            }
+            setValue("city", city);
+            setValue("state", state);
+            setValue("zipCode", zipCode);
+          }
+        }
+      }
+    }
+  }, [isEdit, selectedLocation, setValue, locationData, locationStatus]);
+
+  const onSubmit = (data: LocationFormData) => {
+    const payload = {
+      uuid: selectedLocation?.uuid,
+      locationName: data.locationName,
+      contactNumber: data.contactNumber,
+      emailId: data.emailId,
+      groupNpiNumber: data.groupNpiNumber,
+      status: data.status == "active" ? true : false,
+      fax: data.fax,
+      address: {
+        line1: data.addressLine1,
+        line2: data.addressLine2,
+        city: data.city,
+        state: data.state,
+        zipcode: data.zipCode,
+      },
+      size: 10,
+      page: 0,
+      searchString: "",
+      xTenant: "default",
+    };
+
+    if (isEdit) {
+      dispatch(editLocation(payload as unknown as LocationInfo));
+    } else {
+      dispatch(addPracticeLocation(payload as unknown as LocationInfo));
+    }
   };
+
+  const { data: getAllAmericanStatesData }: any = useSelector(
+    (state: RootState) => state.GetAllAmericanStatesReducer
+  );
+
+  const stateOptions =
+    getAllAmericanStatesData?.map((state: string) => ({
+      value: state,
+      label: state,
+    })) || [];
+
+  useEffect(() => {
+    switch (addLocationStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.SUCCESS,
+            message: "Location added successfully",
+          })
+        );
+        dispatch(
+          getAllLocationDetails({
+            xTenant: "default",
+            size: 10,
+            page: 0,
+            searchString: "",
+          } as LocationPayload)
+        );
+        dispatch(
+          addPracticeLocationReducerAction.resetAddPracticeLocationReducer()
+        );
+        handleClose();
+        break;
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.ERROR,
+            message: addLocationError,
+          })
+        );
+        break;
+    }
+  }, [addLocationStatus, dispatch, addLocationError, handleClose]);
+
+  useEffect(() => {
+    switch (editLocationStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.SUCCESS,
+            message: "Location updated successfully",
+          })
+        );
+        dispatch(
+          getAllLocationDetails({
+            xTenant: "default",
+            size: 10,
+            page: 0,
+            searchString: "",
+          } as LocationPayload)
+        );
+        dispatch(editLocationReducerAction.resetEditLocationReducer());
+        handleClose();
+        break;
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.ERROR,
+            message: editLocationError,
+          })
+        );
+        break;
+    }
+  }, [editLocationStatus, dispatch, editLocationError, handleClose]);
 
   return (
     <Box>
@@ -97,7 +324,6 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                   control={control}
                   name="contactNumber"
                   render={({ field }) => (
-            
                     <CustomContactInput
                       {...field}
                       hasError={!!errors.contactNumber}
@@ -236,11 +462,17 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                   control={control}
                   name="city"
                   render={({ field }) => (
-                    <CustomSelect
-                      placeholder={LocationFormPlaceholders.SELECT_CITY}
+                    // <CustomSelect
+                    //   placeholder={LocationFormPlaceholders.SELECT_CITY}
+                    //   {...field}
+                    //   value={field.value}
+                    //   items={cityOptions}
+                    //   hasError={!!errors.city}
+                    //   errorMessage={errors.city?.message}
+                    // />
+                    <CustomInput
+                      placeholder={LocationFormPlaceholders.ENTER_CITY}
                       {...field}
-                      value={field.value}
-                      items={cityOptions}
                       hasError={!!errors.city}
                       errorMessage={errors.city?.message}
                     />
@@ -255,12 +487,12 @@ const AddLocationDialog = ({ handleClose }: AddLocationDialogProps) => {
                   name="state"
                   render={({ field }) => (
                     <CustomSelect
-                      placeholder={LocationFormPlaceholders.SELECT_STATE}
+                      placeholder={SettingsFormPlaceholders.SELECT_STATE}
                       {...field}
-                      value={field.value || ""}
-                      items={stateOptions}
                       hasError={!!errors.state}
                       errorMessage={errors.state?.message}
+                      value={field.value || ""}
+                      items={stateOptions}
                     />
                   )}
                 />

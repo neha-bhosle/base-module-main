@@ -282,24 +282,34 @@ function CustomisedTable(props: CustomisedTableProps) {
                                       opacity: 1,
                                     },
                                   },
+                                  "&:not(.Mui-checked)": {
+                                    "& + .MuiSwitch-track": {
+                                      backgroundColor: "#D3D3D3",
+                                      opacity: 0.7,
+                                    },
+                                  },
                                 },
                                 "& .MuiSwitch-thumb": {
-                                  backgroundColor: "#049B22",
+                                  backgroundColor: row[cell.id]
+                                    ? "#049B22"
+                                    : "#808080",
                                 },
                                 "& .MuiSwitch-track": {
                                   borderRadius: 22 / 2,
-                                  backgroundColor: "#7EEB83",
+                                  backgroundColor: row[cell.id]
+                                    ? "#7EEB83"
+                                    : "#D3D3D3",
                                 },
                               }}
                             />
-                            {row[cell.id] && (
-                              <Typography
-                                variant="switchSmallBlack"
-                                // sx={{ color: "#049B22" }}
-                              >
-                                Active
-                              </Typography>
-                            )}
+                            <Typography
+                              variant="switchSmallBlack"
+                              sx={{
+                                color: row[cell.id] ? "#049B22" : "#808080",
+                              }}
+                            >
+                              {row[cell.id] ? "Active" : "Inactive"}
+                            </Typography>
                           </Box>
                         </TableCell>
                       ) : cell.type === "chip" ? (

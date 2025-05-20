@@ -11,6 +11,7 @@ import AddStaffDialog from "./staff/add-staff-dialog";
 import {
   UserTabs as UserTabsEnum,
   UserTabRoutes,
+  TabConst,
 } from "../../../../../constants/formConst";
 
 function a11yProps(index: number) {
@@ -43,7 +44,6 @@ export default function UserTabs() {
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    console.log("Tab changed:", newValue);
     navigate(tabRoutes[newValue]);
   };
 
@@ -73,7 +73,7 @@ export default function UserTabs() {
             <Grid>
               <CustomButton
                 variant="filled"
-                label={UserTabsEnum.ADD_STAFF}
+                label={TabConst.ADD_STAFF}
                 startIcon={<AddIcon />}
                 changePadding={true}
                 onClick={() => setAddStaffDialog(true)}
@@ -84,7 +84,7 @@ export default function UserTabs() {
             <Grid>
               <CustomButton
                 variant="filled"
-                label={UserTabsEnum.ADD_CLINICIAN}
+                label={TabConst.ADD_CLINICIAN}
                 startIcon={<AddIcon />}
                 changePadding={true}
                 onClick={() => setAddClinicianDialog(true)}
@@ -98,7 +98,7 @@ export default function UserTabs() {
       </Box>
 
       <DrawerBS
-        title={UserTabsEnum.ADD_STAFF}
+        title={TabConst.ADD_STAFF}
         open={addStaffDialog}
         onClose={() => setAddStaffDialog(false)}
         anchor={"right"}
@@ -107,7 +107,7 @@ export default function UserTabs() {
         <AddStaffDialog handleClose={() => setAddStaffDialog(false)} />
       </DrawerBS>
       <DrawerBS
-        title={UserTabsEnum.ADD_CLINICIAN}
+        title={TabConst.ADD_CLINICIAN}
         open={addClinicianDialog}
         onClose={() => setAddClinicianDialog(false)}
         anchor={"right"}

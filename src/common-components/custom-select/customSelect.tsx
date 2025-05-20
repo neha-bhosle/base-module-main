@@ -46,6 +46,13 @@ function CustomSelect(props: CustomSelectProps) {
             backgroundColor || (bgWhite === true ? "inherit" : "inherit"),
           ...(props.tablepagination && { border: "none" }),
         }}
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxHeight: 300,
+            },
+          },
+        }}
         displayEmpty
         name={props?.name}
         value={getLabel(props.value)}

@@ -1,51 +1,89 @@
 import { Grid, Paper, Typography } from "@mui/material";
-import { practiceData } from "../../../../../common-components/mock-data/all-mock-data";
-import doctorProfileImg from "../../../../../assets/images/Practice Easily Logo.svg";
-import { ProfileTypographyVariants } from "../../../../../constants/typography-variants";
-import { ProfileFieldLabels } from "../../../../../constants/formConst";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import doctorProfileImg from "../../../../../assets/images/Practice Easily Logo.svg";
+import { ProfileFieldLabels } from "../../../../../constants/formConst";
+import { ProfileTypographyVariants } from "../../../../../constants/typography-variants";
+import { getAllPracticeDetails } from "../../../../../redux/auth/profile/get-profile-reducer";
+import { AppDispatch, RootState } from "../../../../../redux/store";
+import { ProfilePayload } from "../../../../../models/all-const";
 
 interface FieldData {
   label: string;
   value: string;
 }
 
+interface Address {
+  uuid?: string;
+  line1: string;
+  line2?: string | null;
+  city: string;
+  state: string;
+  zipcode: string;
+}
+
+const formatAddress = (address: Address | string): string => {
+  if (typeof address === "string") return address;
+
+  const parts = [
+    address.line1,
+    address.line2,
+    address.city,
+    address.state,
+    address.zipcode,
+  ].filter(Boolean);
+
+  return parts.join(", ");
+};
+
 const Profile = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [leftColumnFields, setLeftColumnFields] = useState<FieldData[]>([]);
   const [rightColumnFields, setRightColumnFields] = useState<FieldData[]>([]);
 
+  const { data: getAllPracticeDetailData } = useSelector(
+    (state: RootState) => state.GetAllPracticeDetailsReducer
+  );
+
   useEffect(() => {
-    setLeftColumnFields([
-      {
-        label: ProfileFieldLabels.CLINIC_NPI_NUMBER,
-        value: practiceData.clinicNPI,
-      },
+    // Fetch practice details when component mounts
+    dispatch(getAllPracticeDetails());
+  }, [dispatch]);
 
-      {
-        label: ProfileFieldLabels.TAX_NUMBER,
-        value: practiceData.taxNumber,
-      },
-      {
-        label: ProfileFieldLabels.CONTACT_NUMBER,
-        value: practiceData.contactNumber,
-      },
-    ]);
+  useEffect(() => {
+    if (getAllPracticeDetailData) {
+      const profileData = getAllPracticeDetailData as unknown as ProfilePayload;
+      setLeftColumnFields([
+        {
+          label: ProfileFieldLabels.CLINIC_NPI_NUMBER,
+          value: profileData.npiNumber,
+        },
+        {
+          label: ProfileFieldLabels.TAX_NUMBER,
+          value: `${profileData.taxNumber}  (${profileData.taxType})`,
+        },
+        {
+          label: ProfileFieldLabels.CONTACT_NUMBER,
+          value: profileData.contactNumber,
+        },
+      ]);
 
-    setRightColumnFields([
-      {
-        label: ProfileFieldLabels.EMAIL_ID,
-        value: practiceData.emailID,
-      },
-      {
-        label: ProfileFieldLabels.TAXONOMY_CODE,
-        value: practiceData.taxonomyCode,
-      },
-      {
-        label: ProfileFieldLabels.ADDRESS,
-        value: practiceData.address,
-      },
-    ]);
-  }, []);
+      setRightColumnFields([
+        {
+          label: ProfileFieldLabels.EMAIL_ID,
+          value: profileData.emailId,
+        },
+        {
+          label: ProfileFieldLabels.TAXONOMY_CODE,
+          value: profileData.taxonomy,
+        },
+        {
+          label: ProfileFieldLabels.ADDRESS,
+          value: formatAddress(profileData.address),
+        },
+      ]);
+    }
+  }, [getAllPracticeDetailData]);
 
   return (
     <Paper
@@ -83,7 +121,9 @@ const Profile = () => {
             <Typography
               variant={ProfileTypographyVariants.TITLE_MEDIUM_PROFILE_BOLD}
             >
-              {ProfileFieldLabels.PRACTICE_NAME}
+              {getAllPracticeDetailData &&
+                (getAllPracticeDetailData as unknown as ProfilePayload)
+                  .clinicName}
             </Typography>
           </Grid>
           <Grid display={"flex"} flexDirection={"row"}>

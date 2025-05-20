@@ -1,27 +1,72 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid } from "@mui/material";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import CustomButton from "../../../../../../common-components/custom-button/custom-button";
+import CustomContactInput from "../../../../../../common-components/custom-contact-input/custom-contact-field";
 import CustomInput from "../../../../../../common-components/custom-input/customInput";
 import CustomSelect from "../../../../../../common-components/custom-select/customSelect";
 import CustomLabel from "../../../../../../common-components/customLabel/customLabel";
-import CustomButton from "../../../../../../common-components/custom-button/custom-button";
+import { AlertSeverity } from "../../../../../../common-components/snackbar-alert/snackbar-alert";
 import {
   StaffFormLabels,
   StaffFormPlaceholders,
 } from "../../../../../../constants/formConst";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { AllTypes } from "../../../../../../models/all-const";
+import { apiStatus } from "../../../../../../models/apiStatus";
+import { PatientTypes } from "../../../../../../models/providerGroup";
+import { loaderAction } from "../../../../../../redux/auth/loaderReducer";
+import {
+  addStaff,
+  addStaffReducerAction,
+} from "../../../../../../redux/auth/profile/add-staff-reducer";
+import {
+  editStaff,
+  editStaffReducerAction,
+} from "../../../../../../redux/auth/profile/edit-staff-reducer";
+import { getAllStaff } from "../../../../../../redux/auth/profile/get-all-staff-reducer";
+import { snackbarAction } from "../../../../../../redux/auth/snackbarReducer";
+import { AppDispatch, RootState } from "../../../../../../redux/store";
 import { StaffSchema } from "./staff-schema";
-import CustomContactInput from "../../../../../../common-components/custom-contact-input/custom-contact-field";
 
 interface AddStaffDialogProps {
   handleClose: () => void;
+  selectedStaff?: {
+    name: string;
+    email: string;
+    contact: string;
+    role: string;
+    status: boolean;
+    uuid: string;
+    action: Array<{
+      label: string;
+      route: string;
+    }>;
+  };
+  isEdit?: boolean;
 }
 
-const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
+interface StaffFormValues {
+  firstName: string;
+  lastName: string;
+  emailId: string;
+  contactNumber?: string;
+  status?: string;
+  role?: string;
+}
+
+const AddStaffDialog = ({
+  handleClose,
+  selectedStaff,
+  isEdit,
+}: AddStaffDialogProps) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm({
+    setValue,
+  } = useForm<StaffFormValues>({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -33,18 +78,141 @@ const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
     resolver: yupResolver(StaffSchema),
   });
 
+  const { status: addStaffStatus, error: addStaffError } = useSelector(
+    (state: RootState) => state.AddStaffReducer
+  );
+
+  const { status: editStaffStatus, error: editStaffError } = useSelector(
+    (state: RootState) => state.EditStaffReducer
+  );
+
+  const dispatch = useDispatch<AppDispatch>();
+
   const statusOptions = [
     { value: "active", label: "Active" },
     { value: "inactive", label: "Inactive" },
   ];
 
   const roleOptions = [
-    { value: "admin", label: "Front Office Admin" },
-    { value: "staff", label: "Nurse" },
-    { value: "receptionist", label: "Record Custodian" },
+    { value: "Front Office Admin", label: "Front Office Admin" },
+    { value: "Practice Owner", label: "Practice Owner" },
+    { value: "Records Custodian", label: "Records Custodian" },
   ];
 
-  const onSubmit = () => {};
+  const roleToEnumMap = {
+    "Front Office Admin": "FRONT_OFFICE_ADMIN",
+    "Practice Owner": "PRACTICE_OWNER",
+    "Records Custodian": "RECORDS_CUSTODIAN",
+  };
+
+  const onSubmit = (values: StaffFormValues) => {
+    const payload = {
+      uuid: selectedStaff?.uuid,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      emailId: values.emailId,
+      contactNumber: values.contactNumber,
+      status: values.status === "active",
+      role: values.role
+        ? roleToEnumMap[values.role as keyof typeof roleToEnumMap]
+        : undefined,
+      xTenant: "default",
+    };
+
+    if (isEdit) {
+      dispatch(editStaff(payload as unknown as PatientTypes));
+    } else {
+      dispatch(addStaff(payload as unknown as AllTypes));
+    }
+  };
+
+  useEffect(() => {
+    if (selectedStaff) {
+      const nameParts = selectedStaff.name.split(" ");
+      setValue("firstName", nameParts[0] || "");
+      setValue("lastName", nameParts.slice(1).join(" ") || "");
+      setValue("emailId", selectedStaff.email || "");
+      setValue("contactNumber", selectedStaff.contact || "");
+      setValue("status", selectedStaff.status ? "active" : "inactive");
+      setValue("role", selectedStaff.role || "");
+    }
+  }, [selectedStaff, setValue]);
+
+  useEffect(() => {
+    switch (addStaffStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.SUCCESS,
+            message: "Staff added successfully",
+          })
+        );
+        dispatch(
+          getAllStaff({
+            xTenant: "default",
+            size: 10,
+            page: 0,
+            searchString: "",
+          })
+        );
+        dispatch(addStaffReducerAction.resetAddStaffReducer());
+        handleClose();
+        break;
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.ERROR,
+            message: addStaffError || "An error occurred",
+          })
+        );
+        break;
+    }
+  }, [addStaffStatus, dispatch, addStaffError, handleClose]);
+
+  useEffect(() => {
+    switch (editStaffStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.SUCCESS,
+            message: "Staff updated successfully",
+          })
+        );
+        dispatch(
+          getAllStaff({
+            xTenant: "default",
+            size: 10,
+            page: 0,
+            searchString: "",
+          })
+        );
+        dispatch(editStaffReducerAction.resetEditStaffReducer());
+        handleClose();
+        break;
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.ERROR,
+            message: editStaffError || "An error occurred",
+          })
+        );
+        break;
+    }
+  }, [editStaffStatus, dispatch, editStaffError, handleClose]);
 
   return (
     <Box>
@@ -59,6 +227,7 @@ const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
                 <CustomInput
                   placeholder={StaffFormPlaceholders.ENTER_FIRST_NAME}
                   {...field}
+                  value={field.value || ""}
                   hasError={!!errors.firstName}
                   errorMessage={errors.firstName?.message}
                 />
@@ -75,6 +244,7 @@ const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
                 <CustomInput
                   placeholder={StaffFormPlaceholders.ENTER_LAST_NAME}
                   {...field}
+                  value={field.value || ""}
                   hasError={!!errors.lastName}
                   errorMessage={errors.lastName?.message}
                 />
@@ -91,6 +261,7 @@ const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
                 <CustomInput
                   placeholder={StaffFormPlaceholders.ENTER_EMAIL_ID}
                   {...field}
+                  value={field.value || ""}
                   hasError={!!errors.emailId}
                   errorMessage={errors.emailId?.message}
                 />
@@ -106,6 +277,7 @@ const AddStaffDialog = ({ handleClose }: AddStaffDialogProps) => {
               render={({ field }) => (
                 <CustomContactInput
                   {...field}
+                  value={field.value || ""}
                   hasError={!!errors.contactNumber}
                   errorMessage={errors.contactNumber?.message}
                 />

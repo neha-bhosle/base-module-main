@@ -1,25 +1,53 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid } from "@mui/material";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { AlertSeverity } from "../../../../../common-components/alert/alert";
+import CustomButton from "../../../../../common-components/custom-button/custom-button";
+import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
 import CustomInput from "../../../../../common-components/custom-input/customInput";
 import CustomSelect from "../../../../../common-components/custom-select/customSelect";
 import CustomLabel from "../../../../../common-components/customLabel/customLabel";
-import CustomButton from "../../../../../common-components/custom-button/custom-button";
 import {
   ContactFormLabels,
   ContactFormPlaceholders,
+  SettingsFormPlaceholders,
 } from "../../../../../constants/formConst";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { apiStatus } from "../../../../../models/apiStatus";
+import { loaderAction } from "../../../../../redux/auth/loaderReducer";
+import {
+  addContacts,
+  addContactsReducerAction,
+} from "../../../../../redux/auth/profile/add-contacts-reducer";
+import {
+  editContacts,
+  editContactsReducerAction,
+} from "../../../../../redux/auth/profile/edit-contacts-reducer";
+import { getAllContacts } from "../../../../../redux/auth/profile/get-all-contacts-reducer";
+import { getAllAmericanStates } from "../../../../../redux/auth/profile/get-all-states-reducer";
+import { snackbarAction } from "../../../../../redux/auth/snackbarReducer";
+import { AppDispatch, RootState } from "../../../../../redux/store";
 import { ContactsSchema } from "./contacts-schema";
-import CustomContactInput from "../../../../../common-components/custom-contact-input/custom-contact-field";
+import { ContactPayload } from "src/models/all-const";
+
 interface AddContactsDialogProps {
   handleClose: () => void;
+  isEdit?: boolean;
+  selectedContact?: any;
 }
 
-const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
+const AddContactsDialog = ({
+  handleClose,
+  isEdit,
+  selectedContact,
+}: AddContactsDialogProps) => {
+  const dispatch = useDispatch<AppDispatch>();
   const {
     control,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm({
     defaultValues: {
       contactType: "",
@@ -36,17 +64,151 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
   });
 
   const contactTypeOptions = [
-    { value: "emergency", label: "Referral" },
-    { value: "primary", label: "Lab" },
-  ];
-  const stateOptions = [
-    { value: "state1", label: "Oklahoma" },
-    { value: "state2", label: "Kansas" },
+    { value: "REFERRAL", label: "Referral" },
+    { value: "LAB", label: "Lab" },
   ];
 
+  const { data: getAllAmericanStatesData = [] }: any =
+    useSelector((state: RootState) => state.GetAllAmericanStatesReducer) || {};
+
+  useEffect(() => {
+    dispatch(getAllAmericanStates());
+  }, [dispatch]);
+
+  const { status: addContactsStatus, error: addContactsError }: any =
+    useSelector((state: RootState) => state.AddContactsReducer) || {};
+
+  const { status: editContactsStatus, error: editContactsError }: any =
+    useSelector((state: RootState) => state.EditContactsReducer) || {};
+
+  const stateOptions =
+    getAllAmericanStatesData?.map((state: string) => ({
+      value: state,
+      label: state,
+    })) || [];
+
+  useEffect(() => {
+    if (isEdit && selectedContact) {
+      // Use the original contact data for prepopulation
+      const originalContact = selectedContact.originalContact;
+      setValue("contactType", originalContact.contactType);
+      setValue("fullName", originalContact.name);
+      setValue("contactNumber", originalContact.contactNumber);
+      setValue("faxNumber", originalContact.faxNumber);
+      setValue("emailId", originalContact.emailId);
+
+      // Handle address from the original contact data
+      const address = originalContact.address;
+      if (address) {
+        setValue("address", address.line1);
+        setValue("city", address.city);
+        setValue("state", address.state);
+        setValue("zipCode", address.zipcode);
+      }
+    }
+  }, [isEdit, selectedContact, setValue]);
+
   const onSubmit = (data: any) => {
-    console.log(data);
+    const payload = {
+      uuid: isEdit ? selectedContact?.originalContact?.uuid : undefined,
+      contactType: data?.contactType,
+      name: data?.fullName,
+      contactNumber: data?.contactNumber,
+      faxNumber: data?.faxNumber,
+      emailId: data?.emailId,
+      address: {
+        line1: data?.address,
+        city: data?.city,
+        state: data?.state,
+        zipcode: data?.zipCode,
+      },
+      size: 10,
+      page: 0,
+      searchString: "",
+      xTenant: "default",
+    };
+    if (isEdit) {
+      dispatch(editContacts(payload as any));
+    } else {
+      dispatch(addContacts(payload as any));
+    }
   };
+
+  useEffect(() => {
+    switch (addContactsStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.SUCCESS,
+            message: "Contact added successfully",
+          })
+        );
+        dispatch(
+          getAllContacts({
+            xTenant: "default",
+            size: 10,
+            page: 0,
+            searchString: "",
+          } as ContactPayload)
+        );
+        dispatch(addContactsReducerAction.resetAddContactsReducer());
+        handleClose();
+        break;
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.ERROR,
+            message: addContactsError,
+          })
+        );
+        break;
+    }
+  }, [addContactsStatus, dispatch, addContactsError, handleClose]);
+
+  useEffect(() => {
+    switch (editContactsStatus) {
+      case apiStatus.LOADING:
+        dispatch(loaderAction.showLoader());
+        break;
+      case apiStatus.SUCCEEDED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.SUCCESS,
+            message: "Contact updated successfully",
+          })
+        );
+        dispatch(
+          getAllContacts({
+            xTenant: "default",
+            size: 10,
+            page: 0,
+            searchString: "",
+          } as ContactPayload)
+        );
+        dispatch(editContactsReducerAction.resetEditContactsReducer());
+        handleClose();
+        break;
+      case apiStatus.FAILED:
+        dispatch(loaderAction.hideLoader());
+        dispatch(
+          snackbarAction.showSnackbarAction({
+            isSnackbarOpen: true,
+            severity: AlertSeverity.ERROR,
+            message: editContactsError,
+          })
+        );
+        break;
+    }
+  }, [editContactsStatus, dispatch, editContactsError, handleClose]);
 
   return (
     <Box>
@@ -173,12 +335,12 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
               name="state"
               render={({ field }) => (
                 <CustomSelect
-                  placeholder={ContactFormPlaceholders.SELECT_STATE}
+                  placeholder={SettingsFormPlaceholders.SELECT_STATE}
                   {...field}
-                  value={field.value}
-                  items={stateOptions}
                   hasError={!!errors.state}
                   errorMessage={errors.state?.message}
+                  value={field.value || ""}
+                  items={stateOptions}
                 />
               )}
             />
@@ -224,7 +386,7 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
             <Grid>
               <CustomButton
                 variant="outline"
-                label={ContactFormLabels.CANCEL}
+                label="Cancel"
                 isSubmitButton
                 onClick={handleClose}
               />
@@ -232,7 +394,7 @@ const AddContactsDialog = ({ handleClose }: AddContactsDialogProps) => {
             <Grid>
               <CustomButton
                 variant="filled"
-                label={ContactFormLabels.SAVE}
+                label="Save"
                 type="submit"
                 changePadding={false}
                 isSubmitButton

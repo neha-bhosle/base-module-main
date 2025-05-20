@@ -49,7 +49,9 @@ const loginSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.status = apiStatus.FAILED;
-        state.error = action.error.message ?? "An error occurred";
+        state.error =
+          action.error.message ||
+          "Invalid credentials. Please check your email and password and try again.";
       });
   },
 });
