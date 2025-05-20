@@ -27,6 +27,9 @@ import Patients from "../pages/apps/provider-portal/patients/patients";
 import AddPatients from "../pages/apps/provider-portal/patients/add-patients";
 import ViewAppointments from "../pages/apps/provider-portal/calendar/view-appointments";
 import PrivateRoute from "./private-route";
+import PatientProfile from "../pages/apps/provider-portal/patients/patient-profile";
+import PatientProfileToggleMyProfile from "../pages/apps/provider-portal/patients/patient-profile-toggle/patient-profile-toggle-myProfile";
+
 
 export const router = createBrowserRouter([
   { path: "", element: <Navigate to={"/auth/login"} /> },
@@ -61,12 +64,26 @@ export const router = createBrowserRouter([
         element: <Patients />,
       },
       {
-        path: "calendar",
-        element: <ViewAppointments />,
-      },
-      {
         path: "patients/add-patient",
         element: <AddPatients />,
+      },
+      {
+        path: "patient-profile/:id",
+        element: <PatientProfile/>,
+        children:[
+          {
+            path:"",
+            element:<PatientProfileToggleMyProfile/>
+          },
+              // {
+              //   path:"appointments",
+              //   element:<PatientProfileToggleMyProfile/>
+              // }
+        ]
+      },
+      {
+        path: "calendar",
+        element: <ViewAppointments />,
       },
       {
         path: "settings-tabs",

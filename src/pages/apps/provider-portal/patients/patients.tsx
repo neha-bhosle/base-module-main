@@ -39,6 +39,26 @@ const Patients = () => {
     setImportDialogOpen(true);
   };
 
+
+  interface PatientData {
+    clinician: string;
+    contactNumber: string;
+    dob: string;
+    emailId: string;
+    memberSince: string;
+    mrn: string;
+    patientName: string;
+    paymentMethod: string;
+    status: string;
+  }
+
+  const handleNavigate = (row: PatientData) => {
+
+    console.log("row>", row);
+    navigate(`/admin/patient-profile/${row.mrn}`,{state: row});
+  };
+
+
   return (
     <Grid container flexDirection="column" gap={2}>
       <Grid flexDirection="row" display="flex">
@@ -105,6 +125,7 @@ const Patients = () => {
           showCPTAndICDPagination
           setHeight="75vh"
           removeRadius={false}
+          handleNavigate={handleNavigate}
         />
       </Grid>
 

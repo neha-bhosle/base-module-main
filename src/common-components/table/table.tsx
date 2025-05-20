@@ -199,11 +199,11 @@ function CustomisedTable(props: CustomisedTableProps) {
     }
   };
 
-  const handleRowClick = (index: any) => {
-    if (handleNavigate) {
-      handleNavigate(tableData[index]);
-    }
-  };
+  // const handleRowClick = (index: any) => {
+  //   if (handleNavigate) {
+  //     handleNavigate(tableData[index]);
+  //   }
+  // };
 
   const handleSwitchChange = (val: boolean, uuid: string) => {
     if (handleSwitch) {
@@ -233,7 +233,7 @@ function CustomisedTable(props: CustomisedTableProps) {
               tableData?.map((row: unknown, index: number) => {
                 return (
                   <TableRow
-                    onClick={() => handleRowClick(index)}
+                    onClick={() => handleNavigate(row)}
                     hover
                     role="checkbox"
                     tabIndex={-1}
