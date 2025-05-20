@@ -53,6 +53,80 @@ export enum AppointmentStatus {
   CONFIRMED = "CONFIRMED",
 }
 
+export enum PatientProfileToggleRoutes {
+  PROFILE = "Profile",
+  LOGIN_HISTORY = "Login History",
+  PAYMENT_CARDS = "Payment Cards",
+}
+
+export enum PatientNavCardLabels{
+  PATIENT_BALANCE = "Patient Balance",
+  PRIMARY_CLINICIAN = "Primary Clinician",
+  LAST_VISIT_DATE_AND_TIME = "Last Visit Date and Time",
+  ALERT_NOTE = "Alert Note",
+  NOTES = "Notes",
+}
+
+export enum PatientProfileOutletLabels {
+  DEMOGRAPHICS = "Demographics",
+  GUARDIAN_INFORMATION = "Guardian Information",
+  EMERGENCY_CONTACT_DETAILS = "Emergency Contact Details",
+  CLINICIANS = "Clinicians",
+  PRIVACY = "Privacy ",
+  PAYMENT_METHOD = "Payment Method",
+  ASSIGN_GROUPS = "Assign Groups",
+}
+
+export enum PatientDemographicsLabels {
+  LANGUAGES = 'Languages',
+  RACE = 'Race',
+  ETHNICITY = 'Ethnicity',
+  LEGAL_SEX = 'Legal Sex',
+  FAX = 'Fax',
+  ACCOUNT_CREATOR = 'Account creator',
+  ACCOUNT_CREATED_ON = 'Account created on',
+}
+
+export enum PatientPrivacyLabels {
+  PHONE_APPOINTMENT_REMINDERS = 'Phone Appointment Reminders',
+  EMAIL_APPOINTMENT_REMINDERS = 'Email Appointment Reminders',
+}
+
+export enum PatientGuardianLabels {
+  NAME = "Name",
+  ADDRESS_LINE_1 = "Address Line 1",
+  COUNTRY = "Country",
+  ADDRESS_LINE_2 = "Address Line 2",
+  CITY = "City",
+  EMAIL_ID = "Email ID",    
+  RELATIONSHIP_WITH_PATIENT = "Relationship with Patient",
+  PHONE_NO = "Phone no",
+  STATE = "State",
+  ZIP_CODE = "Zip Code",
+}
+
+export enum PatientEmergencyContactLabels {
+  NAME = "Name",
+  ADDRESS_LINE_1 = "Address Line 1",
+  COUNTRY = "Country",
+  ADDRESS_LINE_2 = "Address Line 2",
+  CITY = "City",
+  EMAIL_ID = "Email ID",
+  RELATIONSHIP_WITH_PATIENT = "Relationship with Patient",
+  PHONE_NO = "Phone no",
+  STATE = "State",
+  ZIP_CODE = "Zip Code",  
+}
+
+export enum PatientClinicianLabels {
+  PRIMARY_CLINICIAN = "Primary Clinician",
+  OTHER_CLINICIANS = "Other Clinicians",
+}
+
+export enum PatientAssignedGroupsLabels {
+  GROUP_NAME = "Group Name",
+}
+
 export enum UserRole {
   PROVIDER_GROUP_ADMIN = "PROVIDER_GROUP_ADMIN",
   FRONTDESK = "FRONTDESK",

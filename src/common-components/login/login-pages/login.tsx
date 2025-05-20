@@ -81,7 +81,7 @@ function Login() {
           <Grid item>
             <Grid container flexDirection="column">
               <Typography variant="titleMediumBold">
-                {loginConstants.LOG_IN_TO_ACC}
+                {loginConstants.LOG_IN_TO_ACC}  {" "}
               </Typography>
               <Grid mt={1}>
                 <Typography variant="titleSmallRegular" color={"#74797B"}>
