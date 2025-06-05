@@ -1,50 +1,45 @@
-import { loginConstants } from "src/constants/common-component";
 import * as yup from "yup";
+import { ValidationMessages } from "../../../../constants/formConst";
 
 export const EnterOtpSchema = yup.object().shape({
-  email: yup
+  otp: yup
     .string()
-    .required("Enter Email")
-    .transform((value) => value?.toLowerCase())
-    .matches(/^\w+([\.-]?\w+)*(\+\w+)?@\w+([\.-]?\w+)*(\.\w{2,})$/, {
-      message: "Please Enter a valid Email",
-    })
-    .required(loginConstants.ENTER_VALID)
-    .max(255, "Email should be at most 255 characters"),
+    .required(ValidationMessages.OtpRequired)
+    .length(6, ValidationMessages.OtpLength),
 });
 
 export const SetPasswordSchema = yup.object().shape({
   newPassword: yup
     .string()
-    .required("Please enter your new password")
-    .min(6, "Password must be at least 6 characters"),
+    .required(ValidationMessages.NewPasswordRequired)
+    .min(6, ValidationMessages.PasswordMinLength),
   confirmPassword: yup
     .string()
-    .required("Please confirm your password")
-    .oneOf([yup.ref("newPassword")], "Passwords must match"),
+    .required(ValidationMessages.ConfirmPasswordRequired)
+    .oneOf([yup.ref("newPassword")], ValidationMessages.PasswordsMustMatch),
 });
 
 export const LoginpageSchema = yup.object().shape({
   username: yup
     .string()
-    .required("Enter Email")
+    .required(ValidationMessages.EmailRequired)
     .transform((value) => value?.toLowerCase())
     .matches(/^\w+([\.-]?\w+)*(\+\w+)?@\w+([\.-]?\w+)*(\.\w{2,})$/, {
-      message: "Please Enter a valid Email",
+      message: ValidationMessages.ValidEmailRequired,
     })
-    .required("Please enter a valid Email")
-    .max(255, "Email should be at most 255 characters"),
-  password: yup.string().required("Enter Password"),
+    .required(ValidationMessages.ValidEmailRequired)
+    .max(255, ValidationMessages.EmailMaxLength),
+  password: yup.string().required(ValidationMessages.PasswordRequired),
 });
 
 export const ForgotPasswordSchema = yup.object().shape({
   email: yup
     .string()
-    .required("Enter Email")
+    .required(ValidationMessages.EmailRequired)
     .transform((value) => value?.toLowerCase())
     .matches(/^\w+([\.-]?\w+)*(\+\w+)?@\w+([\.-]?\w+)*(\.\w{2,})$/, {
-      message: "Please Enter a valid Email",
+      message: ValidationMessages.ValidEmailRequired,
     })
-    .required("Please enter a valid Email")
-    .max(255, "Email should be at most 255 characters"),
+    .required(ValidationMessages.ValidEmailRequired)
+    .max(255, ValidationMessages.EmailMaxLength),
 });

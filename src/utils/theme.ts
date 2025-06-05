@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 
 declare module "@mui/material/Typography" {
@@ -50,7 +50,11 @@ declare module "@mui/material/Typography" {
     titleSmallRegular: true;
     titleSmallMini: true;
     titleSmallRegularBolder: true;
-    titleSmallMediumBold:true
+    titleSmallMediumBold: true;
+    titleMediumProfileBold: true;
+    titleSmallProfileGrey: true;
+    titleSmallProfileGreyLight: true;
+    switchSmallBlack: true;
   }
 }
 interface ExtendedTypographyOptions extends TypographyOptions {
@@ -90,7 +94,11 @@ interface ExtendedTypographyOptions extends TypographyOptions {
   titleSmallRegular: React.CSSProperties;
   titleSmallMini: React.CSSProperties;
   titleSmallRegularBolder: React.CSSProperties;
-  titleSmallMediumBold:React.CSSProperties
+  titleSmallMediumBold: React.CSSProperties;
+  titleMediumProfileBold: React.CSSProperties;
+  titleSmallProfileGrey: React.CSSProperties;
+  titleSmallProfileGreyLight: React.CSSProperties;
+  switchSmallBlack: React.CSSProperties;
 }
 
 // Typescript module augmentation
@@ -125,14 +133,19 @@ const palette = {
 export const theme = createTheme({
   breakpoints: {
     values: {
+      xxs: 360, // Extra extra small devices
       xs: 0, // Extra small devices (portrait phones)
+      xs1: 390, // Extra small devices plus
       sm: 600, // Small devices (landscape phones)
+      sm1: 834, // Small devices plus
       md: 960, // Medium devices (tablets)
+      md1: 1133, // Medium devices plus
       lg: 1280, // Large devices (desktops)
-      lg1: 1366, // Large devices (desktops)
-      xl: 1440, // Extra large devices (large desktops)
-      xl1: 1536, // Large devices (desktops)
-      xxl: 1920, // Extra extra large devices (large desktops)
+      lg1: 1366, // Large devices plus
+      xl: 1440, // Extra large devices
+      xl1: 1536, // Extra large devices plus
+      xl2: 1650, // Extra large devices plus plus
+      xxl: 1920, // Extra extra large devices
     },
   },
   palette: {
@@ -148,7 +161,7 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "",
+    fontFamily: "Figtree",
     bodyRegular1: {
       fontFamily: "Figtree",
       fontSize: "24px",
@@ -421,7 +434,7 @@ export const theme = createTheme({
       letterSpacing: "0em",
       textAlign: "left",
     },
-    titleSmallMediumBold:{
+    titleSmallMediumBold: {
       fontFamily: "Figtree",
       fontSize: "16px",
       fontWeight: 500,
@@ -444,6 +457,41 @@ export const theme = createTheme({
       lineHeight: "19px",
       letterSpacing: "0em",
       textAlign: "left",
+    },
+    titleMediumProfileBold: {
+      fontFamily: "Figtree",
+      fontSize: "20px",
+      fontWeight: 500,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+    },
+    titleSmallProfileGrey: {
+      fontFamily: "Figtree",
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+      color: "#74797B",
+    },
+    titleSmallProfileGreyLight: {
+      fontFamily: "Figtree",
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+      color: "#21262B",
+    },
+    switchSmallBlack: {
+      fontFamily: "Figtree",
+      fontSize: "12px",
+      fontWeight: 500,
+      lineHeight: "19px",
+      letterSpacing: "0em",
+      textAlign: "left",
+      color: "#21262B",
     },
   } as ExtendedTypographyOptions,
   components: {
@@ -498,6 +546,15 @@ export const theme = createTheme({
         root: {
           "& .MuiSvgIcon-root": {
             fontSize: "14px",
+          },
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          "& input::placeholder": {
+            fontFamily: "Figtree !important",
           },
         },
       },

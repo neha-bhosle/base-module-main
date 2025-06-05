@@ -1,7 +1,7 @@
 import { Divider, Grid, Typography } from "@mui/material";
-import LocationIcon from "src/assets/Projectsvgs/apartmenticon";
-import Callicon from "src/assets/Projectsvgs/callicon";
-import { loginConstants } from "src/constants/common-component";
+import LocationIcon from "../../assets/Projectsvgs/apartmenticon";
+import Callicon from "../../assets/Projectsvgs/callicon";
+import { loginConstants } from "../../constants/common-component";
 
 function Carousel() {
   return (
@@ -26,8 +26,14 @@ function Carousel() {
           bgcolor: "#0068FF",
         }}
       >
-        <Grid mt={15}>
-          <Typography variant="h2SemiBold" color={"#FFFFFF"} ml={22}>
+        <Grid
+          mt={15}
+          alignItems={"center"}
+          display="flex"
+          justifyContent="center"
+          width="100%"
+        >
+          <Typography variant="h2SemiBold" color={"#FFFFFF"}>
             {loginConstants.PRACTICEEASILY}
           </Typography>
         </Grid>

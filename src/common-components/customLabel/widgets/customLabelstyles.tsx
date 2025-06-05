@@ -2,7 +2,7 @@ import { makeStyles } from "@mui/styles";
 
 export const customLabelStyles = makeStyles({
   headerLabel: {
-    color: "var(--Grey-60, var(--Grey-60, #8F8F8F)) !important",
+    color: "var(--Grey-60, var(--Grey-60, #595F63)) !important",
     fontFamily: "Figtree !important",
     fontSize: "12px !important",
     fontStyle: "normal !important",
@@ -11,7 +11,7 @@ export const customLabelStyles = makeStyles({
     letterSpacing: "0.024px",
   },
   authLabel: {
-    color: "var(--Grey-60, var(--Grey-60, #8F8F8F)) !important",
+    color: "var(--Grey-60, var(--Grey-60, #595F63)) !important",
     fontFamily: "Figtree !important",
     fontSize: "14px !important",
     fontStyle: "normal !important",

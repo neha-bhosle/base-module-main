@@ -1,20 +1,12 @@
-import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-
+import react from "@vitejs/plugin-react-swc";
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 4200
-  },
-  preview: {
-    port: 4200
-  },
   optimizeDeps: {
-    include: ["dayjs"]
+    include: ["@emotion/react", "@emotion/styled"],
   },
-  resolve: {
-    alias: {
-      src: "/src"
-    }
-  }
+  server: {
+    allowedHosts: ["5090-125-22-180-170.ngrok-free.app"],
+  },
 });

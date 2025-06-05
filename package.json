@@ -1,35 +1,53 @@
 {
-  "name": "health-emr",
+  "name": "bright-care",
   "private": true,
   "version": "0.0.0",
-  "author": "health-emr",
+  "author": "bright-care",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --mode development",
-    "build:qa": "vite build --mode qa",
-    "build:prod": "vite build --mode production",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "build": "tsc -b && vite build --mode development",
+    "build:qa": "tsc && vite build --mode qa",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "eslint:clear": "eslint --clear-cache"
+  },
+  "lint-staged": {
+    "*.{css,scss}": [
+      "npx prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "npx prettier --write"
+    ]
   },
   "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@hookform/resolvers": "^3.3.4",
     "@mui/icons-material": "^5.15.10",
     "@mui/lab": "^5.0.0-alpha.161",
-    "@mui/material": "^5.15.10",
+    "@mui/material": "^6.4.11",
     "@mui/styles": "^5.15.6",
+    "@mui/x-date-pickers": "^8.2.0",
     "@reduxjs/toolkit": "^2.1.0",
     "@tanstack/react-query": "^5.28.9",
     "axios": "^1.6.5",
+    "dayjs": "^1.11.13",
     "file-saver": "^2.0.5",
     "howler": "^2.2.4",
+    "i": "^0.3.7",
     "jwt-decode": "^4.0.0",
-    "mui-one-time-password-input": "^5.0.0",
-    "react": "^18.3.1",
+    "material-ui-phone-number": "^3.0.0",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.48",
+    "mui-one-time-password-input": "^2.0.2",
+    "mui-phone-number": "^3.0.3",
+    "npm": "^11.3.0",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",
+    "react-dropzone": "^14.3.8",
     "react-hook-form": "^7.49.3",
     "react-icons": "^5.0.1",
     "react-infinite-scroll-component": "^6.1.0",
@@ -40,6 +58,7 @@
     "react-router-dom": "^6.21.3",
     "react-scripts": "^5.0.1",
     "react-timer-hook": "^3.0.7",
+    "redux-thunk": "^3.1.0",
     "styled-components": "^6.1.17",
     "yup": "^1.3.3"
   },
@@ -50,6 +69,7 @@
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react-swc": "^3.9.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
@@ -61,6 +81,7 @@
     "eslint-plugin-unused-imports": "^3.0.0",
     "prettier": "^3.2.4",
     "sass": "^1.71.0",
+    "typescript": "^5.8.3",
     "vite": "^5.0.8"
   }
 }

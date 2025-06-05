@@ -1,6 +1,6 @@
 import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
-import { loginConstants } from "src/constants/common-component";
+import { loginConstants } from "../constants/common-component";
 import logo from "../assets/images/favicon.png";
 import Carousel from "../common-components/carousel/carousel";
 import { theme } from "../utils/theme";
@@ -17,8 +17,12 @@ const AuthLayout = (props: React.PropsWithChildren) => {
         </Grid>
       )}
       <Grid item xs={!matchesTablet ? 8 : 12}>
-        <Grid ml={"520px"} mt={11}>
-          {" "}
+        <Grid
+          container
+          justifyContent={"center"}
+          pr={isMobile ? 0 : 8}
+          mt={11}
+        >
           <img src={logo} width={isMobile ? "163px" : "160px"} />
         </Grid>
         <Box

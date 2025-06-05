@@ -12,12 +12,12 @@ export interface MyApiState {
 const initialState: MyApiState = {
   data: null,
   status: "idle",
-  error: null
+  error: null,
 };
 
 export const login = createAsyncThunk(
   "Login",
-  async (payload: { username: string; password: string }) => {
+  async (payload: { email: string; password: string }) => {
     const response: any = await authService.login(payload);
 
     if (response?.status >= 400) {
@@ -36,7 +36,7 @@ const loginSlice = createSlice({
       state.data = null;
       state.status = "idle";
       state.error = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -49,9 +49,11 @@ const loginSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.status = apiStatus.FAILED;
-        state.error = action.error.message ?? "An error occurred";
+        state.error =
+          action.error.message ||
+          "Invalid credentials. Please check your email and password and try again.";
       });
-  }
+  },
 });
 
 const loginReducer = loginSlice.reducer;
